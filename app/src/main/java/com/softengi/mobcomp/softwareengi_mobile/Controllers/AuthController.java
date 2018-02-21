@@ -43,6 +43,32 @@ public class AuthController {
             return;
         }
 
+        // this is stub////////////////////////////////////////////////////////////
+        if(!username.equals("bob") || !password.equals("pass")){
+            etPassword.setError("Incorrect username or password");
+            etPassword.requestFocus();
+            return;
+        }
+
+        User user = new User(
+                0,
+                "bob",
+                "bob@email.com"
+        );
+
+        // store the user in shared prefs
+        SharedPrefManager.getInstance(context).userLogin(user);
+
+        // go to profile
+        Intent intent = new Intent(context, ProfileActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+
+        return;
+        // end of stub/////////////////////////////////////////////////////////////////
+
+        /* The real code not needed yet
+
         RequestQueue queue = Volley.newRequestQueue(context);
 
         final String url = "http://httpbin.org/post";
@@ -72,6 +98,7 @@ public class AuthController {
                                 context.startActivity(new Intent(context, ProfileActivity.class));
                             }
 
+
                         } catch(JSONException e) {
                             e.printStackTrace();
                         }
@@ -99,7 +126,7 @@ public class AuthController {
             }
         };
 
-        queue.add(postRequest);
+        queue.add(postRequest);*/
 
     }
 
