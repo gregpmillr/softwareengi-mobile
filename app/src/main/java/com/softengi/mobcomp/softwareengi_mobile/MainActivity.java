@@ -1,5 +1,6 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,9 +25,18 @@ public class MainActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
 
+        final Context context = getApplicationContext();
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                AuthController.postLogin(getApplicationContext(), etUsername, etPassword);
+                boolean success = AuthController.postLogin(
+                        context, etUsername, etPassword);
+                if(success){
+                    // go to profile
+                    Intent intent = new Intent(context, ProfileActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
             }
         });
 

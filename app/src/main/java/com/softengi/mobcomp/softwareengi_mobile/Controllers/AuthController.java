@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class AuthController {
 
-    static public void postLogin(
+    static public boolean postLogin(
             final Context context,
             EditText etUsername,
             EditText etPassword
@@ -34,20 +34,20 @@ public class AuthController {
         if(TextUtils.isEmpty(username)) {
             etUsername.setError("Please enter your username");
             etUsername.requestFocus();
-            return;
+            return false;
         }
 
         if(TextUtils.isEmpty(password)) {
             etPassword.setError("Please enter your password");
             etPassword.requestFocus();
-            return;
+            return false;
         }
 
         // this is stub////////////////////////////////////////////////////////////
         if(!username.equals("bob") || !password.equals("pass")){
             etPassword.setError("Incorrect username or password");
             etPassword.requestFocus();
-            return;
+            return false;
         }
 
         User user = new User(
@@ -64,7 +64,7 @@ public class AuthController {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
 
-        return;
+        return true;
         // end of stub/////////////////////////////////////////////////////////////////
 
         /* The real code not needed yet
