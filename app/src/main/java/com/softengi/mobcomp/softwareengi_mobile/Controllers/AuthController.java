@@ -22,7 +22,22 @@ import java.util.Map;
 
 public class AuthController {
 
-    static public boolean postLogin(
+    /**
+     * Checks if user info is in DB and can login.
+     * @param user Username.
+     * @param pass Password.
+     * @return Whether data in in DB.
+     */
+    public static boolean checkLogin(String user, String pass){
+        // this is stub!!! ////////////////////////////////////////////////////////////
+        if(!user.equals("bob") || !pass.equals("pass")){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public static boolean postLogin(
             final Context context,
             EditText etUsername,
             EditText etPassword
@@ -43,13 +58,13 @@ public class AuthController {
             return false;
         }
 
-        // this is stub////////////////////////////////////////////////////////////
-        if(!username.equals("bob") || !password.equals("pass")){
+        if(!checkLogin(username,password)){
             etPassword.setError("Incorrect username or password");
             etPassword.requestFocus();
             return false;
         }
 
+        // replace with real data after
         User user = new User(
                 0,
                 "bob",
@@ -58,11 +73,6 @@ public class AuthController {
 
         // store the user in shared prefs
         SharedPrefManager.getInstance(context).userLogin(user);
-
-        // go to profile
-        Intent intent = new Intent(context, ProfileActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
 
         return true;
         // end of stub/////////////////////////////////////////////////////////////////
