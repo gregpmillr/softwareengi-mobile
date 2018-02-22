@@ -20,7 +20,7 @@ public class LoginUnitTest {
      * @throws Exception
      */
     @Test
-    public void testLogin() throws Exception {
+    public void testLoginInfo() throws Exception {
         Assert.assertFalse(AuthController.checkLogin("not bob", "wrong"));
         Assert.assertFalse(AuthController.checkLogin("bob", "wrong"));
         Assert.assertTrue(AuthController.checkLogin("bob", "pass"));
