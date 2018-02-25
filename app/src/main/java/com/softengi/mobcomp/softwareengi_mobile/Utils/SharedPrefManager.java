@@ -1,19 +1,18 @@
 package com.softengi.mobcomp.softwareengi_mobile.Utils;
 
-import com.softengi.mobcomp.softwareengi_mobile.Models.User;
+import com.auth0.android.jwt.Claim;
+import com.auth0.android.jwt.JWT;
 import com.softengi.mobcomp.softwareengi_mobile.MainActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
-
 
 public class SharedPrefManager {
     // constants
     public static final String SHARED_PREF_NAME = "softwareengisharedpref";
     public static final String KEY_USERNAME = "keyusername";
     public static final String KEY_EMAIL = "keyemail";
-    public static final String KEY_ID = "keyid";
+    public static final String KEY_COACH = "keycoach";
 
     private static SharedPrefManager mInstance;
     private static Context mCtx;
@@ -31,14 +30,17 @@ public class SharedPrefManager {
 
     /**
      * Stores the user login information into shared preferences
-     * @param user
+     * @param token
      */
-    public void userLogin(User user) {
+    public void userLogin(String token) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(KEY_ID, user.getId());
-        editor.putString(KEY_USERNAME, user.getUsername());
-        editor.putString(KEY_EMAIL, user.getEmail());
+
+        JWT jwt = new JWT(token);
+
+        editor.putString(KEY_USERNAME, jwt.getClaim("username").asString());
+        editor.putString(KEY_EMAIL, jwt.getClaim("email").asString());
+        editor.putBoolean(KEY_COACH, jwt.getClaim("coach").asBoolean());
         editor.apply();
     }
 
@@ -49,6 +51,11 @@ public class SharedPrefManager {
     public boolean isLoggedIn() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_USERNAME, null) != null;
+    }
+
+    public String getUsername() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_USERNAME, "No username Exists");
     }
 
     /**

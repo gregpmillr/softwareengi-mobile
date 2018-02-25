@@ -1,19 +1,19 @@
 package com.softengi.mobcomp.softwareengi_mobile.Controllers;
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.softengi.mobcomp.softwareengi_mobile.ProfileActivity;
-import com.softengi.mobcomp.softwareengi_mobile.Models.User;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,6 +22,8 @@ import java.util.Map;
 
 public class AuthController {
 
+    private boolean success = false;
+
     /**
      * Checks if user info is in DB and can login.
      * @param user Username.
@@ -29,7 +31,6 @@ public class AuthController {
      * @return Whether data in in DB.
      */
     public static boolean checkLogin(String user, String pass){
-        // this is stub!!! ////////////////////////////////////////////////////////////
         if(!user.equals("bob") || !pass.equals("pass")){
             return false;
         }else{
@@ -49,83 +50,55 @@ public class AuthController {
         if(TextUtils.isEmpty(username)) {
             etUsername.setError("Please enter your username");
             etUsername.requestFocus();
-            return false;
         }
 
         if(TextUtils.isEmpty(password)) {
             etPassword.setError("Please enter your password");
             etPassword.requestFocus();
-            return false;
         }
 
         if(!checkLogin(username,password)){
             etPassword.setError("Incorrect username or password");
             etPassword.requestFocus();
-            return false;
         }
 
-        // replace with real data after
-        User user = new User(
-                0,
-                "bob",
-                "bob@email.com"
-        );
+        String url = "http://192.168.2.14:8000/auth";
 
-        // store the user in shared prefs
-        SharedPrefManager.getInstance(context).userLogin(user);
-
-        return true;
-        // end of stub/////////////////////////////////////////////////////////////////
-
-        /* The real code not needed yet
-
-        RequestQueue queue = Volley.newRequestQueue(context);
-
-        final String url = "http://httpbin.org/post";
-
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
+        return getResponse(url, null,
+                new VolleyCallback() {
                     @Override
-                    public void onResponse(String response) {
-
+                    public void onSuccessResponse(String result) {
                         try {
-                            JSONObject obj = new JSONObject(response);
+                            JSONObject response = new JSONObject(result);
 
-                            if(obj.getBoolean("success")) {
-                                //getting the user from the response
-                                JSONObject userJson = obj.getJSONObject("user");
+                            SharedPrefManager.getInstance(context).userLogin(
+                                    response.getString("token")
+                            );
 
-                                User user = new User(
-                                        userJson.getInt("id"),
-                                        userJson.getString("username"),
-                                        userJson.getString("email")
-                                );
-
-                                // store the user in shared prefs
-                                SharedPrefManager.getInstance(context).userLogin(user);
-
-                                // go to profile
-                                context.startActivity(new Intent(context, ProfileActivity.class));
-                            }
-
-
-                        } catch(JSONException e) {
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                }, context, username, password);
 
-                        Toast.makeText(context, "Error logging in",Toast.LENGTH_SHORT);
+    }
 
-                        Log.d("Error.Response", error.getMessage());
+    static boolean getResponse(String url, JSONObject jsonValue, final VolleyCallback callback, final Context mCtx, final String username, final String password) {
+        RequestQueue queue = Volley.newRequestQueue(mCtx);
 
-                    }
-                }
-        ) {
+        StringRequest strreq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                callback.onSuccessResponse(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError e) {
+                e.printStackTrace();
+                Toast.makeText(mCtx, e + "error", Toast.LENGTH_LONG).show();
+            }
+        })
+        {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
@@ -134,11 +107,17 @@ public class AuthController {
 
                 return params;
             }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                return headers;
+            }
         };
 
-        queue.add(postRequest);*/
+        queue.add(strreq);
 
+        return true;
     }
-
 
 }
