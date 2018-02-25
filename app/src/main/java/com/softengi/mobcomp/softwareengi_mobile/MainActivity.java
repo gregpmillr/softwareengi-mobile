@@ -12,7 +12,7 @@ import com.softengi.mobcomp.softwareengi_mobile.Controllers.AuthController;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnLogin;
+    private Button btnLogin, btnRegister;
     private EditText etUsername;
     private EditText etPassword;
 
@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btnLogin = findViewById(R.id.btnLogin);
+        btnRegister = findViewById(R.id.btnRegister);
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
 
@@ -37,6 +38,14 @@ public class MainActivity extends AppCompatActivity {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }
+            }
+        });
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                context.startActivity(intent);
             }
         });
 

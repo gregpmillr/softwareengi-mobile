@@ -3,5 +3,6 @@
     <string name="main_et_username">Enter Your Username</string>
     <string name="main_et_password">Enter Your Password</string>
     <string name="main_btn_login">Login</string>
+    <string name="main_btn_register">Register</string>
     <string name="profile_title">Login</string>
 </resources>
