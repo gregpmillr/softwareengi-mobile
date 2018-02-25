@@ -22,7 +22,22 @@ import java.util.Map;
 
 public class AuthController {
 
-    static public void postLogin(
+    /**
+     * Checks if user info is in DB and can login.
+     * @param user Username.
+     * @param pass Password.
+     * @return Whether data in in DB.
+     */
+    public static boolean checkLogin(String user, String pass){
+        // this is stub!!! ////////////////////////////////////////////////////////////
+        if(!user.equals("bob") || !pass.equals("pass")){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public static boolean postLogin(
             final Context context,
             EditText etUsername,
             EditText etPassword
@@ -34,14 +49,35 @@ public class AuthController {
         if(TextUtils.isEmpty(username)) {
             etUsername.setError("Please enter your username");
             etUsername.requestFocus();
-            return;
+            return false;
         }
 
         if(TextUtils.isEmpty(password)) {
             etPassword.setError("Please enter your password");
             etPassword.requestFocus();
-            return;
+            return false;
         }
+
+        if(!checkLogin(username,password)){
+            etPassword.setError("Incorrect username or password");
+            etPassword.requestFocus();
+            return false;
+        }
+
+        // replace with real data after
+        User user = new User(
+                0,
+                "bob",
+                "bob@email.com"
+        );
+
+        // store the user in shared prefs
+        SharedPrefManager.getInstance(context).userLogin(user);
+
+        return true;
+        // end of stub/////////////////////////////////////////////////////////////////
+
+        /* The real code not needed yet
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -72,6 +108,7 @@ public class AuthController {
                                 context.startActivity(new Intent(context, ProfileActivity.class));
                             }
 
+
                         } catch(JSONException e) {
                             e.printStackTrace();
                         }
@@ -99,7 +136,7 @@ public class AuthController {
             }
         };
 
-        queue.add(postRequest);
+        queue.add(postRequest);*/
 
     }
 

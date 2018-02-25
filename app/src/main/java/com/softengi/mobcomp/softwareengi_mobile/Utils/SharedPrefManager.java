@@ -10,10 +10,10 @@ import android.content.SharedPreferences;
 
 public class SharedPrefManager {
     // constants
-    private static final String SHARED_PREF_NAME = "softwareengisharedpref";
-    private static final String KEY_USERNAME = "keyusername";
-    private static final String KEY_EMAIL = "keyemail";
-    private static final String KEY_ID = "keyid";
+    public static final String SHARED_PREF_NAME = "softwareengisharedpref";
+    public static final String KEY_USERNAME = "keyusername";
+    public static final String KEY_EMAIL = "keyemail";
+    public static final String KEY_ID = "keyid";
 
     private static SharedPrefManager mInstance;
     private static Context mCtx;
