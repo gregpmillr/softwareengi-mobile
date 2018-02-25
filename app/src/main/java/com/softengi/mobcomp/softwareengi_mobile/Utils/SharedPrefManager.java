@@ -62,10 +62,16 @@ public class SharedPrefManager {
      * Log the user out
      */
     public void logout() {
+        clear();
+    }
+
+    /**
+     * Clear SharedPreferences
+     */
+    public void clear() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        mCtx.startActivity(new Intent(mCtx, MainActivity.class));
     }
 }
