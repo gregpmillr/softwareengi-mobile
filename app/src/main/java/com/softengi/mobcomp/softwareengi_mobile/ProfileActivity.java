@@ -18,8 +18,9 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         tvUser = findViewById(R.id.tvUsername);
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(
-                SharedPrefManager.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        tvUser.setText(sharedPreferences.getString(SharedPrefManager.KEY_USERNAME, "fail"));
+        SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(getApplicationContext());
+
+        tvUser.setText(sharedPrefManager.getUsername());
+
     }
 }
