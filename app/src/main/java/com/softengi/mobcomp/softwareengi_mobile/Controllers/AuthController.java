@@ -1,6 +1,7 @@
 package com.softengi.mobcomp.softwareengi_mobile.Controllers;
 import android.content.Context;
 import android.text.TextUtils;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -64,7 +65,7 @@ public class AuthController {
 
         String url = "http://192.168.2.14:8000/auth";
 
-        return getResponse(url, null,
+        return getLoginResponse(url, null,
                 new VolleyCallback() {
                     @Override
                     public void onSuccessResponse(String result) {
@@ -83,7 +84,7 @@ public class AuthController {
 
     }
 
-    static boolean getResponse(String url, JSONObject jsonValue, final VolleyCallback callback, final Context mCtx, final String username, final String password) {
+    static boolean getLoginResponse(String url, JSONObject jsonValue, final VolleyCallback callback, final Context mCtx, final String username, final String password) {
         RequestQueue queue = Volley.newRequestQueue(mCtx);
 
         StringRequest strreq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -104,6 +105,107 @@ public class AuthController {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("username", username);
                 params.put("password", password);
+
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                return headers;
+            }
+        };
+
+        queue.add(strreq);
+
+        return true;
+    }
+
+    public static boolean postRegister(
+            final Context context,
+            EditText etUsername,
+            EditText etEmail,
+            EditText etPassword,
+            EditText etLanguage,
+            CheckBox chkCoach
+    ) {
+
+        final String username = etUsername.getText().toString();
+        final String email    = etEmail.getText().toString();
+        final String language = etEmail.getText().toString();
+        final String password = etPassword.getText().toString();
+        final String coach    = chkCoach.isChecked() ? "true" : "false";
+
+        if(TextUtils.isEmpty(username)) {
+            etUsername.setError("Please enter your username");
+            etUsername.requestFocus();
+        }
+
+        if(TextUtils.isEmpty(email)) {
+            etEmail.setError("Please enter your email");
+            etEmail.requestFocus();
+        }
+
+        if(TextUtils.isEmpty(language)) {
+            etEmail.setError("Please enter your language");
+            etEmail.requestFocus();
+        }
+
+        if(TextUtils.isEmpty(password)) {
+            etPassword.setError("Please enter your password");
+            etPassword.requestFocus();
+        }
+
+        if(!checkLogin(username,password)){
+            etPassword.setError("Incorrect username or password");
+            etPassword.requestFocus();
+        }
+
+        String url = "http://192.168.2.14:8000/users";
+
+        return getRegisterResponse(url, null,
+                new VolleyCallback() {
+                    @Override
+                    public void onSuccessResponse(String result) {
+                        try {
+                            JSONObject response = new JSONObject(result);
+
+                            SharedPrefManager.getInstance(context).userLogin(
+                                    response.getString("token")
+                            );
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, context, username, email, password, coach, language);
+
+    }
+
+    static boolean getRegisterResponse(String url, JSONObject jsonValue, final VolleyCallback callback, final Context mCtx, final String username, final String email, final String password, final String coach, final String language) {
+        RequestQueue queue = Volley.newRequestQueue(mCtx);
+
+        StringRequest strreq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                callback.onSuccessResponse(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError e) {
+                e.printStackTrace();
+                Toast.makeText(mCtx, e + "error", Toast.LENGTH_LONG).show();
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", username);
+                params.put("email", email);
+                params.put("password", password);
+                params.put("coach", coach);
+                params.put("language", language);
 
                 return params;
             }
