@@ -9,4 +9,6 @@
     <string name="main_btn_register">Register</string>
     <string name="profile_title">Login</string>
     <string name="profile_btn_logout">Logout</string>
+    <string name="profile_btn_update">Update</string>
+
 </resources>

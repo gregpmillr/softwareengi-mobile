@@ -1,10 +1,7 @@
 package com.softengi.mobcomp.softwareengi_mobile.Utils;
 
-import com.auth0.android.jwt.Claim;
 import com.auth0.android.jwt.JWT;
-import com.softengi.mobcomp.softwareengi_mobile.MainActivity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 
 public class SharedPrefManager {
@@ -55,7 +52,12 @@ public class SharedPrefManager {
 
     public String getUsername() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(KEY_USERNAME, "No username Exists");
+        return sharedPreferences.getString(KEY_USERNAME, "No username exists");
+    }
+
+    public String getEmail() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_EMAIL, "No email exists");
     }
 
     /**

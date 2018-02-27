@@ -23,8 +23,6 @@ import java.util.Map;
 
 public class AuthController {
 
-    private boolean success = false;
-
     /**
      * Checks if user info is in DB and can login.
      * @param user Username.
@@ -39,6 +37,14 @@ public class AuthController {
         }
     }
 
+    /**
+     * Checks if all fields are entered when registering
+     * @param username Username of user to register
+     * @param password Password of user to register
+     * @param email Email of user to register
+     * @param language Preferred language of user to register
+     * @return Whether validation passed
+     */
     public static boolean checkRegister(
             String username, String password, String email, String language) {
 
@@ -50,6 +56,13 @@ public class AuthController {
 
     }
 
+    /**
+     * POST request to API server
+     * @param context Current context
+     * @param etUsername Username of user to login
+     * @param etPassword Password of user to login
+     * @return Whether the user is logged in or not
+     */
     public static boolean postLogin(
             final Context context,
             EditText etUsername,
@@ -99,6 +112,16 @@ public class AuthController {
 
     }
 
+    /**
+     * Get the response from POST request when logging in
+     * @param url URL for API endpoint
+     * @param jsonValue Json value
+     * @param callback Callback when call is successful
+     * @param mCtx Current context
+     * @param username Username of user to login
+     * @param password Password of user to login
+     * @return whether the request was successful (200) or not (400)
+     */
     static boolean getLoginResponse(String url, JSONObject jsonValue, final VolleyCallback callback, final Context mCtx, final String username, final String password) {
         RequestQueue queue = Volley.newRequestQueue(mCtx);
 
@@ -136,6 +159,16 @@ public class AuthController {
         return true;
     }
 
+    /**
+     *
+     * @param context Current context
+     * @param etUsername Username to register
+     * @param etEmail Email to register
+     * @param etPassword Password to register
+     * @param etLanguage Language to register
+     * @param chkCoach Whether the user is a coach or not
+     * @return Whether the POST request is successful or not
+     */
     public static boolean postRegister(
             final Context context,
             EditText etUsername,
@@ -202,6 +235,19 @@ public class AuthController {
 
     }
 
+    /**
+     * Get the response from the POST request to register users
+     * @param url URL of API endpoint
+     * @param jsonValue Json value
+     * @param callback Callback for when POST request is successful
+     * @param mCtx Current context
+     * @param username Username of user to register
+     * @param email Email of user to register
+     * @param password Password of user to register
+     * @param coach Whether the user is a coach or not
+     * @param language Preferred language of the user
+     * @return Whether the POST request was successful or not
+     */
     static boolean getRegisterResponse(String url, JSONObject jsonValue, final VolleyCallback callback, final Context mCtx, final String username, final String email, final String password, final String coach, final String language) {
         RequestQueue queue = Volley.newRequestQueue(mCtx);
 
