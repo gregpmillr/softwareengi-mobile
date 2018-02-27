@@ -39,31 +39,46 @@ public class AuthController {
         }
     }
 
+    public static boolean checkRegister(
+            String username, String password, String email, String language) {
+
+        if(username.isEmpty() || password.isEmpty() || email.isEmpty() || language.isEmpty()) {
+            return false;
+        }
+
+        return true;
+
+    }
+
     public static boolean postLogin(
             final Context context,
             EditText etUsername,
             EditText etPassword
     ) {
 
+        String url = "http://192.168.2.14:8000/auth";
         final String username = etUsername.getText().toString();
         final String password = etPassword.getText().toString();
+        boolean passedValidation = true;
 
         if(TextUtils.isEmpty(username)) {
             etUsername.setError("Please enter your username");
             etUsername.requestFocus();
+            passedValidation = false;
         }
 
         if(TextUtils.isEmpty(password)) {
             etPassword.setError("Please enter your password");
             etPassword.requestFocus();
+            passedValidation = false;
         }
 
-        if(!checkLogin(username,password)){
-            etPassword.setError("Incorrect username or password");
-            etPassword.requestFocus();
-        }
 
-        String url = "http://192.168.2.14:8000/auth";
+        if(!passedValidation) {
+            Toast.makeText(context,"Unable to register!",
+                    Toast.LENGTH_SHORT);
+           return false;
+        }
 
         return getLoginResponse(url, null,
                 new VolleyCallback() {
@@ -132,36 +147,41 @@ public class AuthController {
 
         final String username = etUsername.getText().toString();
         final String email    = etEmail.getText().toString();
-        final String language = etEmail.getText().toString();
+        final String language = etLanguage.getText().toString();
         final String password = etPassword.getText().toString();
         final String coach    = chkCoach.isChecked() ? "true" : "false";
+        String url = "http://192.168.2.14:8000/users";
+        boolean passedValidation = true;
 
         if(TextUtils.isEmpty(username)) {
             etUsername.setError("Please enter your username");
             etUsername.requestFocus();
+            passedValidation = false;
         }
 
         if(TextUtils.isEmpty(email)) {
             etEmail.setError("Please enter your email");
             etEmail.requestFocus();
+            passedValidation = false;
         }
 
         if(TextUtils.isEmpty(language)) {
-            etEmail.setError("Please enter your language");
-            etEmail.requestFocus();
+            etLanguage.setError("Please enter your language");
+            etLanguage.requestFocus();
+            passedValidation = false;
         }
 
         if(TextUtils.isEmpty(password)) {
             etPassword.setError("Please enter your password");
             etPassword.requestFocus();
+            passedValidation = false;
         }
 
-        if(!checkLogin(username,password)){
-            etPassword.setError("Incorrect username or password");
-            etPassword.requestFocus();
+        if(!passedValidation) {
+            Toast.makeText(context,"Unable to register!",
+                    Toast.LENGTH_SHORT);
+            return false;
         }
-
-        String url = "http://192.168.2.14:8000/users";
 
         return getRegisterResponse(url, null,
                 new VolleyCallback() {

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.softengi.mobcomp.softwareengi_mobile.Controllers.AuthController;
 
@@ -31,16 +32,20 @@ public class RegisterActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean success = AuthController.postRegister(
-                        getApplicationContext(), etUsername, etEmail, etPassword, etLanguage, chkCoach
+
+                boolean successfulPost = AuthController.postRegister(
+                        getApplicationContext(), etUsername, etEmail,
+                        etPassword, etLanguage, chkCoach
                 );
 
-                if(success) {
+                if(successfulPost) {
                     // make user login
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getApplicationContext().startActivity(intent);
                 }
+
+
             }
         });
 

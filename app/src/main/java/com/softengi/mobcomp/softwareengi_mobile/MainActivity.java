@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.softengi.mobcomp.softwareengi_mobile.Controllers.AuthController;
 
@@ -30,14 +31,20 @@ public class MainActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                boolean success = AuthController.postLogin(
+
+                boolean successfulPost = AuthController.postLogin(
                         context, etUsername, etPassword);
-                if(success){
+
+                if(successfulPost){
                     // go to profile
                     Intent intent = new Intent(context, ProfileActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(),"Unable to login!",
+                            Toast.LENGTH_SHORT);
                 }
+
             }
         });
 
