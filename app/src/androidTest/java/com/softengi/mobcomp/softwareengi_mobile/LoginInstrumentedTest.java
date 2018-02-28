@@ -46,7 +46,7 @@ public class LoginInstrumentedTest {
         onView(withId(R.id.btnLogin))
                 .perform(click());
         // check user text
-        onView(withId(R.id.tvUsername))
+        onView(withId(R.id.etUsername))
                 .check(matches(withText(user)));
     }
 }

@@ -5,10 +5,32 @@
     android:layout_height="match_parent"
     tools:context="com.softengi.mobcomp.softwareengi_mobile.ProfileActivity">
 
-    <TextView
-        android:id="@+id/tvUsername"
+    <EditText
+        android:id="@+id/etProfileUsername"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/etProfileEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/etProfileUsername" />
+
+    <EditText
+        android:id="@+id/etProfileLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/etProfileEmail" />
+
+    <CheckBox
+        android:id="@+id/chkProfileCoach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etProfileLanguage"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/btnLogout"
@@ -19,6 +41,18 @@
         android:layout_marginBottom="15sp"
         android:layout_marginEnd="15sp"
         android:text="@string/profile_btn_logout"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorWhite"/>
+
+    <Button
+        android:id="@+id/btnUpdateProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15sp"
+        android:layout_marginEnd="15sp"
+        android:text="@string/profile_btn_update"
         android:background="@color/colorPrimaryDark"
         android:textColor="@color/colorWhite"/>
 
