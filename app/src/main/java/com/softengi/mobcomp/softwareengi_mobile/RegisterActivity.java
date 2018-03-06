@@ -33,18 +33,10 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                boolean successfulPost = AuthController.postRegister(
+                AuthController.postRegister(
                         getApplicationContext(), etUsername, etEmail,
                         etPassword, etLanguage, chkCoach
                 );
-
-                if(successfulPost) {
-                    // make user login
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getApplicationContext().startActivity(intent);
-                }
-
 
             }
         });
