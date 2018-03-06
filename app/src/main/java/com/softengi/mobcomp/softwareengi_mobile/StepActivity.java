@@ -13,9 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-/**
- * Created by br239 on 2018-03-06.
- */
 
 public class StepActivity extends AppCompatActivity implements SensorEventListener, StepListener {
     private StepDetector simpleStepDetector;
