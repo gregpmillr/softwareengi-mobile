@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(successfulPost){
                     // go to profile
-                    Intent intent = new Intent(context, ProfileActivity.class);
+                    Intent intent = new Intent(context, ListOfPlanActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 } else {
@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
