@@ -19,7 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".StepActivity" />
+        <activity android:name=".ListOfPlanActivity"></activity>
     </application>
 
 </manifest>

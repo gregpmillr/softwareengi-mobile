@@ -11,4 +11,9 @@
     <string name="profile_btn_logout">Logout</string>
     <string name="profile_btn_update">Update</string>
 
+
+    <string name="stepmonitor_btn_start">Start</string>
+    <string name="stepmonitor_btn_stop">Stop</string>
+
+    <string name="listofplan_btn_tostep">To Step</string>
 </resources>
