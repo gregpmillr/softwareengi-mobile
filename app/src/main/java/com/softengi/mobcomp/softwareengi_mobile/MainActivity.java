@@ -31,12 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                  AuthController.postLogin(
                         context, etUsername, etPassword);
-
             }
         });
+
+
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
