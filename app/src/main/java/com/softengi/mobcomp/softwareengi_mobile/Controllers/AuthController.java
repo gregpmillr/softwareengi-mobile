@@ -1,5 +1,6 @@
 package com.softengi.mobcomp.softwareengi_mobile.Controllers;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -12,6 +13,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.softengi.mobcomp.softwareengi_mobile.MainActivity;
+import com.softengi.mobcomp.softwareengi_mobile.ProfileActivity;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
 
@@ -61,9 +64,8 @@ public class AuthController {
      * @param context Current context
      * @param etUsername Username of user to login
      * @param etPassword Password of user to login
-     * @return Whether the user is logged in or not
      */
-    public static boolean postLogin(
+    public static void postLogin(
             final Context context,
             EditText etUsername,
             EditText etPassword
@@ -90,25 +92,28 @@ public class AuthController {
         if(!passedValidation) {
             Toast.makeText(context,"Unable to register!",
                     Toast.LENGTH_SHORT);
-           return false;
-        }
+        } else {
+            getLoginResponse(url, null,
+                    new VolleyCallback() {
+                        @Override
+                        public void onSuccessResponse(String result) {
+                            try {
+                                JSONObject response = new JSONObject(result);
 
-        return getLoginResponse(url, null,
-                new VolleyCallback() {
-                    @Override
-                    public void onSuccessResponse(String result) {
-                        try {
-                            JSONObject response = new JSONObject(result);
+                                SharedPrefManager.getInstance(context).userLogin(
+                                        response.getString("token")
+                                );
 
-                            SharedPrefManager.getInstance(context).userLogin(
-                                    response.getString("token")
-                            );
+                                Intent intent = new Intent(context, ProfileActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                context.startActivity(intent);
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                }, context, username, password);
+                    }, context, username, password);
+        }
 
     }
 
@@ -120,9 +125,8 @@ public class AuthController {
      * @param mCtx Current context
      * @param username Username of user to login
      * @param password Password of user to login
-     * @return whether the request was successful (200) or not (400)
      */
-    static boolean getLoginResponse(String url, JSONObject jsonValue, final VolleyCallback callback, final Context mCtx, final String username, final String password) {
+    static void getLoginResponse(String url, JSONObject jsonValue, final VolleyCallback callback, final Context mCtx, final String username, final String password) {
         RequestQueue queue = Volley.newRequestQueue(mCtx);
 
         StringRequest strreq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -134,7 +138,7 @@ public class AuthController {
             @Override
             public void onErrorResponse(VolleyError e) {
                 e.printStackTrace();
-                Toast.makeText(mCtx, e + "error", Toast.LENGTH_LONG).show();
+                Toast.makeText(mCtx, "Unable to login!", Toast.LENGTH_LONG).show();
             }
         })
         {
@@ -156,7 +160,6 @@ public class AuthController {
 
         queue.add(strreq);
 
-        return true;
     }
 
     /**
@@ -167,9 +170,8 @@ public class AuthController {
      * @param etPassword Password to register
      * @param etLanguage Language to register
      * @param chkCoach Whether the user is a coach or not
-     * @return Whether the POST request is successful or not
      */
-    public static boolean postRegister(
+    public static void postRegister(
             final Context context,
             EditText etUsername,
             EditText etEmail,
@@ -213,25 +215,28 @@ public class AuthController {
         if(!passedValidation) {
             Toast.makeText(context,"Unable to register!",
                     Toast.LENGTH_SHORT);
-            return false;
-        }
+        } else {
+            getRegisterResponse(url, null,
+                    new VolleyCallback() {
+                        @Override
+                        public void onSuccessResponse(String result) {
+                            try {
+                                JSONObject response = new JSONObject(result);
 
-        return getRegisterResponse(url, null,
-                new VolleyCallback() {
-                    @Override
-                    public void onSuccessResponse(String result) {
-                        try {
-                            JSONObject response = new JSONObject(result);
+                                SharedPrefManager.getInstance(context).userLogin(
+                                        response.getString("token"));
 
-                            SharedPrefManager.getInstance(context).userLogin(
-                                    response.getString("token")
-                            );
+                                Intent intent = new Intent(context, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                context.startActivity(intent);
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                }, context, username, email, password, coach, language);
+                    }, context, username, email, password, coach, language);
+        }
 
     }
 
@@ -246,9 +251,8 @@ public class AuthController {
      * @param password Password of user to register
      * @param coach Whether the user is a coach or not
      * @param language Preferred language of the user
-     * @return Whether the POST request was successful or not
      */
-    static boolean getRegisterResponse(String url, JSONObject jsonValue, final VolleyCallback callback, final Context mCtx, final String username, final String email, final String password, final String coach, final String language) {
+    static void getRegisterResponse(String url, JSONObject jsonValue, final VolleyCallback callback, final Context mCtx, final String username, final String email, final String password, final String coach, final String language) {
         RequestQueue queue = Volley.newRequestQueue(mCtx);
 
         StringRequest strreq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -260,7 +264,7 @@ public class AuthController {
             @Override
             public void onErrorResponse(VolleyError e) {
                 e.printStackTrace();
-                Toast.makeText(mCtx, e + "error", Toast.LENGTH_LONG).show();
+                Toast.makeText(mCtx, e + "Unable to register user!", Toast.LENGTH_LONG).show();
             }
         })
         {
@@ -285,7 +289,6 @@ public class AuthController {
 
         queue.add(strreq);
 
-        return true;
     }
 
 }

@@ -32,18 +32,8 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                boolean successfulPost = AuthController.postLogin(
+                 AuthController.postLogin(
                         context, etUsername, etPassword);
-
-                if(successfulPost){
-                    // go to profile
-                    Intent intent = new Intent(context, ProfileActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                } else {
-                    Toast.makeText(getApplicationContext(),"Unable to login!",
-                            Toast.LENGTH_SHORT);
-                }
 
             }
         });
