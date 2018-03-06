@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.softengi.mobcomp.softwareengi_mobile.ListOfPlanActivity;
 import com.softengi.mobcomp.softwareengi_mobile.MainActivity;
 import com.softengi.mobcomp.softwareengi_mobile.ProfileActivity;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
@@ -71,7 +72,7 @@ public class AuthController {
             EditText etPassword
     ) {
 
-        String url = "http://192.168.2.14:8000/auth";
+        String url = "http://142.134.23.52:8000/auth";
         final String username = etUsername.getText().toString();
         final String password = etPassword.getText().toString();
         boolean passedValidation = true;
@@ -104,7 +105,7 @@ public class AuthController {
                                         response.getString("token")
                                 );
 
-                                Intent intent = new Intent(context, ProfileActivity.class);
+                                Intent intent = new Intent(context, ListOfPlanActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 context.startActivity(intent);
 
@@ -185,7 +186,7 @@ public class AuthController {
         final String language = etLanguage.getText().toString();
         final String password = etPassword.getText().toString();
         final String coach    = chkCoach.isChecked() ? "true" : "false";
-        String url = "http://192.168.2.14:8000/users";
+        String url = "http://142.134.23.52:8000/users";
         boolean passedValidation = true;
 
         if(TextUtils.isEmpty(username)) {

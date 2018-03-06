@@ -22,6 +22,15 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".StepActivity" />
         <activity android:name=".ListOfPlanActivity"></activity>
+        <receiver
+            android:name=".DailyNotificationReceiver"
+            android:enabled="true"
+            android:exported="false" >
+        </receiver>
+        <service
+            android:name=".DailyNotificationIntentService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

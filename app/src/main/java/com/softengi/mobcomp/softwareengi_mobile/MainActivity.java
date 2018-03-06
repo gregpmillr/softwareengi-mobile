@@ -1,5 +1,7 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -42,9 +44,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                context.startActivity(intent);
+                startActivity(intent);
             }
         });
+
+        // create alarm
+        // from https://stackoverflow.com/questions/34517520/how-to-give-notifications-on-android-on-specific-time
+        Intent notifyIntent = new Intent(this,DailyNotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast
+                (context, 2, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  System.currentTimeMillis()+5000,
+                AlarmManager.INTERVAL_DAY, pendingIntent);
 
     }
 }
