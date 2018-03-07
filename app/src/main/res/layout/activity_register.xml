@@ -54,7 +54,6 @@
         android:layout_width="wrap_content"
         android:layout_gravity="right"
         android:layout_marginBottom="15sp"
-        android:layout_marginEnd="15sp"
         android:layout_marginTop="50sp"
         android:text="@string/main_btn_register"
         android:background="@color/colorPrimaryDark"
