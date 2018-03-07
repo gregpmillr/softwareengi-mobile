@@ -10,7 +10,7 @@ android:
 script:
    - ./gradlew build #connectedCheck
 
-before_install:
+before_script:
    - chmod +x gradlew
 
    - mkdir "$ANDROID_HOME/licenses" || true
