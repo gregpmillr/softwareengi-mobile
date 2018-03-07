@@ -3,33 +3,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/dawn_gradient_background"
+    android:paddingStart="30sp"
+    android:paddingEnd="30sp"
     tools:context="com.softengi.mobcomp.softwareengi_mobile.MainActivity">
 
-    <EditText
-        android:id="@+id/etUsername"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:hint="@string/main_et_username" />
+        android:id="@+id/llLoginEtWrapper"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/etPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etUsername"
-        android:layout_marginTop="15sp"
-        android:hint="@string/main_et_password" />
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:fontFamily="sans-serif-thin"
+            android:hint="@string/main_et_username"
+            android:backgroundTint="@color/colorWhite" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:fontFamily="sans-serif-thin"
+            android:hint="@string/main_et_password"
+            android:backgroundTint="@color/colorWhite" />
+
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_marginBottom="15sp"
-        android:layout_marginLeft="15sp"
         android:text="@string/main_btn_login"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/transparent_button_background"
+        android:fontFamily="sans-serif-smallcaps"
         android:textColor="@color/colorWhite"/>
 
     <Button
@@ -38,11 +58,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="false"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginBottom="15sp"
-        android:layout_marginRight="15sp"
         android:text="@string/main_btn_register"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/transparent_button_background"
+        android:fontFamily="sans-serif-smallcaps"
         android:textColor="@color/colorWhite"/>
 
 </RelativeLayout>
