@@ -3,57 +3,230 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.softengi.mobcomp.softwareengi_mobile.ProfileActivity">
+    tools:context="com.softengi.mobcomp.softwareengi_mobile.ProfileActivity"
+    android:background="@color/colorGrey">
 
-    <EditText
-        android:id="@+id/etProfileUsername"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/llProfile"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true" />
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/etProfileEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/etProfileUsername" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/custom_ll_profile_background"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/etProfileLanguage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/etProfileEmail" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="@string/lblTotalSteps"
+                android:textAlignment="center"
+                android:textSize="12sp" />
 
-    <CheckBox
-        android:id="@+id/chkProfileCoach"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etProfileLanguage"
-        android:layout_centerHorizontal="true" />
+            <TextView
+                android:id="@+id/tvTotalSteps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/colorTurquoise"
+                android:textStyle="bold"
+                android:text="10"
+                android:textSize="20sp"
+                android:padding="1dp"/>
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/custom_ll_profile_background"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/lblTotalPlans"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                android:padding="3dp"
+                />
+
+            <TextView
+                android:id="@+id/tvTotalPlans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/colorTurquoise"
+                android:textStyle="bold"
+                android:text="11"
+                android:textSize="20sp"
+                android:padding="1dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/custom_ll_profile_background"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/lblTotalTeams"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                android:padding="3dp"
+                />
+
+            <TextView
+                android:id="@+id/tvTotalTeams"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="12"
+                android:textColor="@color/colorTurquoise"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:padding="1dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlProfile"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15sp"
-        android:layout_marginEnd="15sp"
-        android:text="@string/profile_btn_logout"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@color/colorWhite"/>
+        android:layout_below="@id/llProfile"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/lblProfileInformation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/lblProfileInformation"
+            android:textSize="12sp"
+            android:textColor="@color/colorDarkGrey"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_toStartOf="@id/lblProfileInformation"
+            android:background="@color/colorDarkGrey"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:layout_toEndOf="@id/lblProfileInformation"
+            android:background="@color/colorDarkGrey"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/llProfileInformation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rlProfile"
+        android:layout_above="@id/btnUpdateProfile"
+        android:background="@color/colorWhite"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/etProfileUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:fontFamily="sans-serif-thin"
+            android:background="@drawable/custom_edit_text_grey_background"
+            android:layout_margin="10dp"
+            android:padding="10dp"/>
+
+        <EditText
+            android:id="@+id/etProfileEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:fontFamily="sans-serif-thin"
+            android:background="@drawable/custom_edit_text_grey_background"
+            android:layout_margin="10dp"
+            android:padding="10dp"/>
+
+        <EditText
+            android:id="@+id/etProfileLanguage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:fontFamily="sans-serif-thin"
+            android:background="@drawable/custom_edit_text_grey_background"
+            android:layout_margin="10dp"
+            android:padding="10dp"/>
+
+        <CheckBox
+            android:id="@+id/chkProfileCoach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_chk_coach"
+            android:layout_marginTop="20dp"
+            android:textColor="#000000"
+            android:buttonTint="#000000"
+            android:fontFamily="sans-serif-thin"
+            android:layoutDirection="rtl"
+            android:padding="10dp"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnUpdateProfile"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnLogout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/profile_btn_update"
+        android:background="@drawable/blueborder_transparent_background"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textColor="@color/colorTurquoise"/>
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15sp"
-        android:layout_marginEnd="15sp"
-        android:text="@string/profile_btn_update"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@color/colorWhite"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/profile_btn_logout"
+        android:background="@drawable/blueborder_transparent_background"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textColor="@color/colorTurquoise"/>
+
 
 </RelativeLayout>

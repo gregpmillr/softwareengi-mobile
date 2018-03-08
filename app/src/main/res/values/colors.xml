@@ -4,4 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhite">#FFF</color>
+    <color name="colorLightGrey">#1A000000</color>
+    <color name="colorLightestGrey">#f7f7f7</color>
+    <color name="colorTurquoise">#33b3a6</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorGrey">#e5e5e5</color>
+    <color name="colorDarkGrey">#939393</color>
+
 </resources>
