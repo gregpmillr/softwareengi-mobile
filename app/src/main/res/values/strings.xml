@@ -10,10 +10,15 @@
     <string name="profile_title">Login</string>
     <string name="profile_btn_logout">Logout</string>
     <string name="profile_btn_update">Update</string>
-
-
     <string name="stepmonitor_btn_start">Start</string>
     <string name="stepmonitor_btn_stop">Stop</string>
-
     <string name="listofplan_btn_tostep">To Step</string>
+    <string name="lblRegister">REGISTER</string>
+    <string name="lblLogin">LOGIN</string>
+    <string name="lblTotalSteps">Steps</string>
+    <string name="lblTotalPlans">Plans</string>
+    <string name="lblTotalTeams">Teams</string>
+    <string name="lblProfileInformation">Information</string>
+
+
 </resources>
