@@ -146,34 +146,57 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rlProfile"
+        android:layout_above="@id/btnUpdateProfile"
+        android:background="@color/colorWhite"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
         <EditText
             android:id="@+id/etProfileUsername"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true" />
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:fontFamily="sans-serif-thin"
+            android:background="@drawable/custom_edit_text_grey_background"
+            android:layout_margin="10dp"
+            android:padding="10dp"/>
 
         <EditText
             android:id="@+id/etProfileEmail"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/etProfileUsername" />
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:fontFamily="sans-serif-thin"
+            android:background="@drawable/custom_edit_text_grey_background"
+            android:layout_margin="10dp"
+            android:padding="10dp"/>
 
         <EditText
             android:id="@+id/etProfileLanguage"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/etProfileEmail" />
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:fontFamily="sans-serif-thin"
+            android:background="@drawable/custom_edit_text_grey_background"
+            android:layout_margin="10dp"
+            android:padding="10dp"/>
 
         <CheckBox
             android:id="@+id/chkProfileCoach"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etProfileLanguage"
-            android:layout_centerHorizontal="true" />
+            android:text="@string/main_chk_coach"
+            android:layout_marginTop="20dp"
+            android:textColor="#000000"
+            android:buttonTint="#000000"
+            android:fontFamily="sans-serif-thin"
+            android:layoutDirection="rtl"
+            android:padding="10dp"/>
 
     </LinearLayout>
 
@@ -184,7 +207,8 @@
         android:layout_above="@+id/btnLogout"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15sp"
-        android:layout_marginEnd="15sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:text="@string/profile_btn_update"
         android:background="@drawable/blueborder_transparent_background"
         android:fontFamily="sans-serif-smallcaps"
@@ -197,7 +221,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15sp"
-        android:layout_marginEnd="15sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:text="@string/profile_btn_logout"
         android:background="@drawable/blueborder_transparent_background"
         android:fontFamily="sans-serif-smallcaps"
