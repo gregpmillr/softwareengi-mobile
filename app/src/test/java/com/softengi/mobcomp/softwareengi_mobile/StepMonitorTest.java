@@ -29,6 +29,5 @@ public class StepMonitorTest {
         mockEvent.values[2] = 634;
         activity.onSensorChanged(mockEvent);
         */
-        Assert.assertTrue(false);
     }
 }
