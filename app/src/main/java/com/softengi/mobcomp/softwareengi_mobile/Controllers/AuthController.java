@@ -43,6 +43,7 @@ public class AuthController {
             CheckBox chkCoach
     ) {
 
+        String urlExtension = "users";
 
         Map<String, String> map = AuthValidator.validateRegister(
                 etUsername,
@@ -57,7 +58,7 @@ public class AuthController {
             RequestController.createPostRequest(
                     ctx,
                     map,
-                    "users/",
+                    urlExtension,
                     new VolleyCallback() {
                         @Override
                         public void onSuccessResponse(JSONObject response) {
@@ -95,6 +96,8 @@ public class AuthController {
      */
     public static void postLogin(final Context ctx, EditText username, EditText password) {
 
+        String urlExtension = "auth";
+
         // store all inputs into HashMap
         Map<String, String> map = AuthValidator.validateLogin(username, password);
 
@@ -102,8 +105,8 @@ public class AuthController {
             // create the API request and save the returned token into shared preferences
             RequestController.createPostRequest(
                     ctx,
-                    map,
-                    "auth",
+                    map, 
+                    urlExtension,
                     new VolleyCallback() {
                         @Override
                         public void onSuccessResponse(JSONObject response) {
