@@ -16,6 +16,7 @@ import com.android.volley.toolbox.Volley;
 import com.softengi.mobcomp.softwareengi_mobile.ListOfPlanActivity;
 import com.softengi.mobcomp.softwareengi_mobile.MainActivity;
 import com.softengi.mobcomp.softwareengi_mobile.ProfileActivity;
+import com.softengi.mobcomp.softwareengi_mobile.R;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
 
@@ -26,6 +27,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AuthController {
+
+    private static final String mUrlEndPoint = "/auth";
 
     /**
      * Checks if user info is in DB and can login.
@@ -72,7 +75,8 @@ public class AuthController {
             EditText etPassword
     ) {
 
-        String url = "http://142.134.23.52:8000/auth";
+
+        String url = context.getResources().getString(R.string.base_api_url).concat(mUrlEndPoint);
         final String username = etUsername.getText().toString();
         final String password = etPassword.getText().toString();
         boolean passedValidation = true;
@@ -186,7 +190,7 @@ public class AuthController {
         final String language = etLanguage.getText().toString();
         final String password = etPassword.getText().toString();
         final String coach    = chkCoach.isChecked() ? "true" : "false";
-        String url = "http://142.134.23.52:8000/users";
+        String url = context.getResources().getString(R.string.base_api_url).concat(mUrlEndPoint);
         boolean passedValidation = true;
 
         if(TextUtils.isEmpty(username)) {

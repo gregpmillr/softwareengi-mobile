@@ -47,13 +47,16 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
             public void onClick(View view) {
 
                 if(btnStartPause.isSelected()) {
-                    // pause
+                    // resume
                     pausedSteps = numSteps;
                     sensorManager.unregisterListener(StepActivity.this);
+                    btnStartPause.setBackground(getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp,null));
+
                 } else {
-                    // resume
+                    // pause
                     numSteps = pausedSteps;
                     sensorManager.registerListener(StepActivity.this, accel,SensorManager.SENSOR_DELAY_FASTEST);
+                    btnStartPause.setBackground(getResources().getDrawable(R.drawable.ic_pause_black_24dp,null));
                 }
 
                 btnStartPause.setSelected(!btnStartPause.isSelected());
@@ -64,6 +67,11 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                numSteps = 0;
+                pausedSteps = 0;
+                tvStep.setText("0");
+                btnStartPause.setSelected(false);
+                btnStartPause.setBackground(getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp,null));
                 sensorManager.unregisterListener(StepActivity.this);
             }
         });
