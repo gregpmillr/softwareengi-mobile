@@ -48,6 +48,7 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
             public void onClick(View view) {
                 numSteps = 0;
                 sensorManager.registerListener(StepActivity.this, accel,SensorManager.SENSOR_DELAY_FASTEST);
+                btnStart.setSelected(!btnStart.isSelected());
 
             }
         });
