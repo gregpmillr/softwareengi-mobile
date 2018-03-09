@@ -25,7 +25,7 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
     private int numSteps;
 
     private TextView tvStep;
-    private Button btnStart;
+    private Button btnStartPause;
     private Button btnStop;
 
     @Override
@@ -40,15 +40,15 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
         simpleStepDetector.registerListener(this);
 
         tvStep = findViewById(R.id.tvStep);
-        btnStart = findViewById(R.id.btnStart);
+        btnStartPause = findViewById(R.id.btnStartPause);
         btnStop = findViewById(R.id.btnStop);
 
-        btnStart.setOnClickListener(new View.OnClickListener() {
+        btnStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 numSteps = 0;
                 sensorManager.registerListener(StepActivity.this, accel,SensorManager.SENSOR_DELAY_FASTEST);
-                btnStart.setSelected(!btnStart.isSelected());
+                btnStartPause.setSelected(!btnStartPause.isSelected());
 
             }
         });

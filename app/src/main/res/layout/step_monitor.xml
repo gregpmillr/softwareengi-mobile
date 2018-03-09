@@ -4,29 +4,49 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tvStep"
-        android:layout_width="131dp"
-        android:layout_height="45dp"
+        android:id="@+id/tvPlanDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:gravity="center"
-        android:layout_marginBottom="40dp"
-        android:text="TextView" />
+        android:textSize="25sp"
+        android:fontFamily="sans-serif"
+        android:text="@string/stepmonitor_plan_description"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:id="@+id/tvStep"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tvPlanDescription"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
+        android:text="24"
+        android:layout_above="@id/llStep"
+        android:layout_marginTop="30dp" />
 
     <LinearLayout
+        android:id="@+id/llStep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_centerVertical="true">
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="60dp">
 
         <Button
-            android:id="@+id/btnStart"
+            android:id="@+id/btnStartPause"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginEnd="30dp"
             android:background="@drawable/custom_button_play_pause_background"
-            android:backgroundTint="#FF0000000"/>
+            android:backgroundTint="@color/colorTurquoise"/>
 
         <Button
             android:id="@+id/btnStop"
@@ -34,7 +54,7 @@
             android:layout_height="48dp"
             android:layout_marginStart="30dp"
             android:background="@drawable/ic_stop_black_24dp"
-            android:backgroundTint="#FF0000000" />
+            android:backgroundTint="@color/colorTurquoise" />
 
     </LinearLayout>
 

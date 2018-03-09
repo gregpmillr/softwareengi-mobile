@@ -20,5 +20,5 @@
     <string name="lblTotalTeams">Teams</string>
     <string name="lblProfileInformation">Information</string>
     <string name="profile_tv_username">HI, %1$s</string>
-
+    <string name="stepmonitor_plan_description">Plan: %1$s</string>
 </resources>
