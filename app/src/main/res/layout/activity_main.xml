@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dawn_gradient_background"
+    android:background="@drawable/runner_background"
     android:paddingStart="30sp"
     android:paddingEnd="30sp"
     tools:context="com.softengi.mobcomp.softwareengi_mobile.MainActivity">
@@ -12,7 +12,7 @@
         android:id="@+id/rlLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp">
+        android:layout_marginTop="100dp">
 
         <TextView
             android:id="@+id/lblLogin"
@@ -21,6 +21,8 @@
             android:layout_centerInParent="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
             android:text="@string/lblLogin"
             android:textColor="#FFFFFF"/>
 
@@ -85,7 +87,8 @@
         android:layout_marginBottom="15sp"
         android:text="@string/main_btn_login"
         android:background="@drawable/transparent_button_background"
-        android:fontFamily="sans-serif-smallcaps"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
         android:layout_above="@id/btnRegister"
         android:textColor="@color/colorWhite"/>
 
@@ -99,7 +102,8 @@
         android:layout_marginBottom="15sp"
         android:text="@string/main_btn_register"
         android:background="@drawable/transparent_button_background"
-        android:fontFamily="sans-serif-smallcaps"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
         android:textColor="@color/colorWhite"/>
 
 </RelativeLayout>
