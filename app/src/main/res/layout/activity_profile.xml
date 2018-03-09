@@ -198,9 +198,9 @@
                 android:visibility="visible" />
 
             <Button
+                android:id="@+id/btnProfileEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
-                android:id="@id/image"
                 android:text="CHANGE"
                 android:background="@color/colorGrey"
                 android:textColor="@color/colorDarkGrey"
@@ -230,9 +230,9 @@
                 android:visibility="visible" />
 
             <Button
+                android:id="@+id/btnProfileCoach"
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
-                android:id="@id/image"
                 android:text="CHANGE"
                 android:background="@color/colorGrey"
                 android:textColor="@color/colorDarkGrey"
@@ -264,9 +264,9 @@
                 android:visibility="visible" />
 
             <Button
+                android:id="@+id/btnProfileLanguage"
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
-                android:id="@id/image"
                 android:text="CHANGE"
                 android:background="@color/colorGrey"
                 android:textColor="@color/colorDarkGrey"

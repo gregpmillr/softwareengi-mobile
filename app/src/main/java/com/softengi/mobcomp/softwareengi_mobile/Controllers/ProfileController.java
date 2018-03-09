@@ -11,8 +11,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonObject;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.RequestQueueSingleton;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
 
@@ -24,129 +27,168 @@ import java.util.Map;
 
 public class ProfileController {
 
-    /**
-     * POST request to API server to update user information
-     * @param context Current context
-     * @param etUsername Username of user to update
-     * @param etEmail Email of user to update
-     * @param chkCoach Coach of user to update
-     * @return Whether the user has been updated or not
-     */
-    public static boolean postUpdate(
-            final Context context,
-            EditText etUsername,
-            EditText etEmail,
-            EditText etLanguage,
-            CheckBox chkCoach
-    ) {
+    private static final String url = "http://142.134.23.52:8000/users/update/";
 
-        String url = "http://192.168.2.14:8000/users/update";
-        final String username = etUsername.getText().toString();
-        final String email    = etEmail.getText().toString();
-        final String language = etLanguage.getText().toString();
-        final boolean coach   = chkCoach.isChecked();
+    public static void postEmail(final Context ctx, EditText etEmail) {
 
-        boolean passedValidation = true;
-
-        if(TextUtils.isEmpty(username)) {
-            etUsername.setError("Cannot have empty username");
-            etUsername.requestFocus();
-            passedValidation = false;
-        }
+        final String email = etEmail.getText().toString();
 
         if(TextUtils.isEmpty(email)) {
-            etEmail.setError("Cannot have empty email");
-            etEmail.requestFocus();
-            passedValidation = false;
-        }
+            etEmail.setError("Email cannot be empty");
+        } else {
+            JsonObjectRequest request = new JsonObjectRequest(
+                    Request.Method.POST, url.concat("email"), null,
+                    new Response.Listener<JSONObject>()
+                    {
+                        @Override
+                        public void onResponse(JSONObject response) {
 
-        if(TextUtils.isEmpty(language)) {
-            etLanguage.setError("Cannot have empty language");
-            etLanguage.requestFocus();
-            passedValidation = false;
-        }
+                            // successful response
+                            Toast.makeText(ctx, "Success!",
+                                    Toast.LENGTH_SHORT).show();
 
-        if(!passedValidation) {
-            Toast.makeText(context,"Unable to register!",
-                    Toast.LENGTH_SHORT);
-            return false;
-        }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError e) {
 
-        return getUpdateResponse(url, null,
-                new VolleyCallback() {
-                    @Override
-                    public void onSuccessResponse(String result) {
-                        try {
-                            JSONObject response = new JSONObject(result);
-
-                            SharedPrefManager.getInstance(context).userLogin(
-                                    response.getString("token")
-                            );
-
-                        } catch (JSONException e) {
+                            // error response
                             e.printStackTrace();
+
+                            Toast.makeText(ctx,
+                                    "Error retrieving data",
+                                    Toast.LENGTH_SHORT).show();
+
                         }
                     }
-                }, context, username, email, coach, language);
+            )
+            {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("email", email);
+                    return params;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String,String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/x-www-form-urlencoded");
+                    return headers;
+                }
+            };
+
+            RequestQueueSingleton.getInstance(ctx).addToRequestQueue(request);
+
+        }
 
     }
 
-    /**
-     * Get the response from POST request when updating user
-     * @param url URL for API endpoint
-     * @param jsonValue Json value
-     * @param callback Callback when call is successful
-     * @param mCtx Current context
-     * @param username Username of user to update
-     * @param email Email of user to update
-     * @param coach Whether user is coach or not
-     * @param language Email of user to update
-     * @return whether the request was successful (200) or not (400)
-     */
-    static boolean getUpdateResponse(String url, JSONObject jsonValue,
-                                     final VolleyCallback callback,
-                                     final Context mCtx,
-                                     final String username,
-                                     final String email,
-                                     final boolean coach,
-                                     final String language) {
+    public static void postLanguage(final Context ctx, EditText etLanguage) {
+        final String language = etLanguage.getText().toString();
 
-        RequestQueue queue = Volley.newRequestQueue(mCtx);
+        if(TextUtils.isEmpty(language)) {
+            etLanguage.setError("Language cannot be empty");
+        } else {
+            JsonObjectRequest request = new JsonObjectRequest(
+                    Request.Method.POST,  url.concat("language"), null,
+                    new Response.Listener<JSONObject>()
+                    {
+                        @Override
+                        public void onResponse(JSONObject response) {
 
-        StringRequest strreq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                callback.onSuccessResponse(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError e) {
-                e.printStackTrace();
-                Toast.makeText(mCtx, e + "error", Toast.LENGTH_LONG).show();
-            }
-        })
-        {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("username", username);
-                params.put("email", email);
-                params.put("coach", coach ? "true" : "false");
-                params.put("language", language);
+                            // successful response
+                            Toast.makeText(ctx, "Success!",
+                                    Toast.LENGTH_SHORT).show();
 
-                return params;
-            }
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/x-www-form-urlencoded");
-                return headers;
-            }
-        };
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError e) {
 
-        queue.add(strreq);
+                            // error response
+                            e.printStackTrace();
 
-        return true;
+                            Toast.makeText(ctx,
+                                    "Error retrieving data",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+            )
+            {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("language", language);
+                    return params;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String,String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/x-www-form-urlencoded");
+                    return headers;
+                }
+            };
+
+            RequestQueueSingleton.getInstance(ctx).addToRequestQueue(request);
+
+        }
+    }
+
+    public static void postCoach(final Context ctx, EditText etCoach) {
+
+        final String coach = etCoach.getText().toString();
+
+        if(TextUtils.isEmpty(coach)) {
+            etCoach.setError("Coach cannot be empty");
+        } else {
+            JsonObjectRequest request = new JsonObjectRequest(
+                    Request.Method.POST, url.concat("coach"), null,
+                    new Response.Listener<JSONObject>()
+                    {
+                        @Override
+                        public void onResponse(JSONObject response) {
+
+                            // successful response
+                            Toast.makeText(ctx, "Success!",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError e) {
+
+                            // error response
+                            e.printStackTrace();
+
+                            Toast.makeText(ctx,
+                                    "Error retrieving data",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+            )
+            {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("coach", coach);
+                    return params;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String,String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/x-www-form-urlencoded");
+                    return headers;
+                }
+            };
+
+            RequestQueueSingleton.getInstance(ctx).addToRequestQueue(request);
+
+        }
 
     }
 

@@ -15,9 +15,8 @@ import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private EditText etProfileUsername, etProfileEmail, etProfileLanguage;
-    private Button btnLogout, btnUpdateProfile;
-    private CheckBox chkProfileCoach;
+    private EditText etProfileUsername, etProfileEmail, etProfileLanguage, etProfileCoach;
+    private Button btnLogout, btnProfileEmail, btnProfileLanguage, btnProfileCoach;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +26,11 @@ public class ProfileActivity extends AppCompatActivity {
         etProfileUsername    = findViewById(R.id.etProfileUsername);
         etProfileEmail       = findViewById(R.id.etProfileEmail);
         etProfileLanguage    = findViewById(R.id.etProfileLanguage);
-        chkProfileCoach      = findViewById(R.id.chkProfileCoach);
+        etProfileCoach       = findViewById(R.id.etProfileCoach);
         btnLogout            = findViewById(R.id.btnLogout);
-        btnUpdateProfile     = findViewById(R.id.btnUpdateProfile);
+        btnProfileEmail      = findViewById(R.id.btnProfileEmail);
+        btnProfileLanguage   = findViewById(R.id.btnProfileLanguage);
+        btnProfileCoach      = findViewById(R.id.btnProfileCoach);
 
         final SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(getApplicationContext());
 
@@ -44,23 +45,27 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
+        btnProfileEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ProfileController.postEmail(getApplicationContext(), etProfileEmail);
+            }
+        });
 
-                boolean successfulPost = ProfileController.postUpdate(
-                        getApplicationContext(), etProfileUsername, etProfileEmail,
-                        etProfileLanguage, chkProfileCoach);
+        btnProfileLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProfileController.postLanguage(getApplicationContext(), etProfileLanguage);
+            }
+        });
 
-                if(successfulPost) {
-                    Toast.makeText(getApplicationContext(),"Success!",
-                            Toast.LENGTH_SHORT);
-                } else {
-                    Toast.makeText(getApplicationContext(),"Unable to update!",
-                            Toast.LENGTH_SHORT);
-                }
+        btnProfileCoach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProfileController.postCoach(getApplicationContext(), etProfileCoach);
 
             }
         });
+
     }
 }
