@@ -24,11 +24,21 @@ public class StepDetector {
 
     private StepListener listener;
 
+    /**
+     * Create a step listener
+     * @param listener
+     */
     public void registerListener(StepListener listener) {
         this.listener = listener;
     }
 
-
+    /**
+     *
+     * @param timeNs
+     * @param x
+     * @param y
+     * @param z
+     */
     public void updateAccel(long timeNs, float x, float y, float z) {
         float[] currentAccel = new float[3];
         currentAccel[0] = x;
