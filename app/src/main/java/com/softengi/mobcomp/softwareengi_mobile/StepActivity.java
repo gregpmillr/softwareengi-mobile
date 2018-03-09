@@ -19,10 +19,10 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager sensorManager;
     private Sensor accel;
     private static final String TEXT_NUM_STEPS = "Numer of Steps: ";
-    private int numSteps;
+    private int numSteps = 0;
 
     private TextView tvStep;
-    private Button btnStart;
+    private Button btnStartPause;
     private Button btnStop;
 
     @Override
@@ -37,14 +37,25 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
         simpleStepDetector.registerListener(this);
 
         tvStep = findViewById(R.id.tvStep);
-        btnStart = findViewById(R.id.btnStart);
+        btnStartPause = findViewById(R.id.btnStartPause);
         btnStop = findViewById(R.id.btnStop);
 
-        btnStart.setOnClickListener(new View.OnClickListener() {
+        btnStartPause.setSelected(false);
+
+        btnStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                numSteps = 0;
-                sensorManager.registerListener(StepActivity.this, accel,SensorManager.SENSOR_DELAY_FASTEST);
+
+                if(btnStartPause.isSelected()) {
+                    // pause
+                    sensorManager.unregisterListener(StepActivity.this);
+                    numSteps = Integer.valueOf(tvStep.getText().toString());
+                } else {
+                    // resume
+                    sensorManager.registerListener(StepActivity.this, accel,SensorManager.SENSOR_DELAY_FASTEST);
+                }
+
+                btnStartPause.setSelected(!btnStartPause.isSelected());
 
             }
         });
