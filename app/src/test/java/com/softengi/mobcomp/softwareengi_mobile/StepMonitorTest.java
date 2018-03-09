@@ -11,7 +11,7 @@ import static org.mockito.Mockito.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-/*
+
 public class StepMonitorTest {
 
     private StepActivity activity = new StepActivity();
@@ -28,4 +28,3 @@ public class StepMonitorTest {
         activity.onSensorChanged(mockEvent);
     }
 }
-*/
