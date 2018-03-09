@@ -54,7 +54,7 @@ public class AuthController {
 
         if(map != null) {
             // create the API request and save the returned token into shared preferences
-            createRequest(
+            RequestController.createPostRequest(
                     ctx,
                     map,
                     "users/",
@@ -100,7 +100,7 @@ public class AuthController {
 
         if(map != null) {
             // create the API request and save the returned token into shared preferences
-            createRequest(
+            RequestController.createPostRequest(
                     ctx,
                     map,
                     "auth",
@@ -129,62 +129,6 @@ public class AuthController {
         } else {
             Toast.makeText(ctx, "Unable to login", Toast.LENGTH_LONG).show();
         }
-
-    }
-
-    /**
-     * Builds the request and sends it to the API server
-     * @param ctx Context of application
-     * @param params HashMap of user-entered data
-     * @param urlExtension String specifying the API URL
-     * @param callback Function called when the request is successful
-     */
-    private static void createRequest(final Context ctx, final Map<String, String> params, String urlExtension, final VolleyCallback callback) {
-
-        String url = ctx.getResources().getString(R.string.base_api_url).concat(urlExtension);
-
-        StringRequest request = new StringRequest(
-                Request.Method.POST,
-                url,
-                new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            callback.onSuccessResponse(new JSONObject(response));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError e) {
-
-                        // error response
-                        e.printStackTrace();
-
-                        Toast.makeText(ctx,
-                                "Error retrieving data",
-                                Toast.LENGTH_SHORT).show();
-
-                    }
-                }
-        )
-        {
-            @Override
-            protected Map<String, String> getParams() {
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/x-www-form-urlencoded");
-                return headers;
-            }
-        };
-
-        RequestQueueSingleton.getInstance(ctx).addToRequestQueue(request);
 
     }
 
