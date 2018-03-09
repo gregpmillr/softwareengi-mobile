@@ -46,7 +46,7 @@ public class StepMonitorInstrumentedTest {
                 .perform(click());
         intended(hasComponent(StepActivity.class.getName()));
 
-        onView(withId(R.id.btnStart))
+        onView(withId(R.id.btnStartPause))
                 .perform(click());
         onView(withId(R.id.btnStop))
                 .perform(click());
