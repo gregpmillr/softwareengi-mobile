@@ -60,8 +60,8 @@ public class UpdateInstrumentedTest {
         onView(withId(R.id.etProfileLanguage))
                 .perform(typeText(newLanguage), closeSoftKeyboard());
         // press login button
-        onView(withId(R.id.btnUpdateProfile))
-                .perform(click());
+        //onView(withId(R.id.btnUpdateProfile))
+                //.perform(click());
 
     }
 

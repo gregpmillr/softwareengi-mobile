@@ -15,6 +15,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.JsonObject;
+import com.softengi.mobcomp.softwareengi_mobile.R;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.RequestQueueSingleton;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
@@ -27,9 +28,11 @@ import java.util.Map;
 
 public class ProfileController {
 
-    private static final String url = "http://142.134.23.52:8000/users/update/";
+    private static final String mUrlEndPoint = "/users/update/";
 
     public static void postEmail(final Context ctx, EditText etEmail) {
+
+        String url = ctx.getResources().getString(R.string.base_api_url).concat(mUrlEndPoint+"email");
 
         final String email = etEmail.getText().toString();
 
@@ -37,7 +40,7 @@ public class ProfileController {
             etEmail.setError("Email cannot be empty");
         } else {
             JsonObjectRequest request = new JsonObjectRequest(
-                    Request.Method.POST, url.concat("email"), null,
+                    Request.Method.POST, url, null,
                     new Response.Listener<JSONObject>()
                     {
                         @Override
@@ -86,12 +89,13 @@ public class ProfileController {
 
     public static void postLanguage(final Context ctx, EditText etLanguage) {
         final String language = etLanguage.getText().toString();
+        String url = ctx.getResources().getString(R.string.base_api_url).concat(mUrlEndPoint+"language");
 
         if(TextUtils.isEmpty(language)) {
             etLanguage.setError("Language cannot be empty");
         } else {
             JsonObjectRequest request = new JsonObjectRequest(
-                    Request.Method.POST,  url.concat("language"), null,
+                    Request.Method.POST,  url, null,
                     new Response.Listener<JSONObject>()
                     {
                         @Override
@@ -141,11 +145,13 @@ public class ProfileController {
 
         final String coach = etCoach.getText().toString();
 
+        String url = ctx.getResources().getString(R.string.base_api_url).concat(mUrlEndPoint+"coach");
+
         if(TextUtils.isEmpty(coach)) {
             etCoach.setError("Coach cannot be empty");
         } else {
             JsonObjectRequest request = new JsonObjectRequest(
-                    Request.Method.POST, url.concat("coach"), null,
+                    Request.Method.POST, url, null,
                     new Response.Listener<JSONObject>()
                     {
                         @Override
