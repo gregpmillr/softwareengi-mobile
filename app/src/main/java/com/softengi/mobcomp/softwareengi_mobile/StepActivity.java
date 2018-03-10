@@ -1,8 +1,11 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
+import com.softengi.mobcomp.softwareengi_mobile.Controllers.StepController;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.StepDetector;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.StepListener;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -20,8 +23,9 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
     private Sensor accel;
     private int numSteps = 0;
     private int pausedSteps = 0;
-
-    private TextView tvStep;
+    private int planId = 0;
+    private String planDescription = "";
+    private TextView tvStep, tvPlanDescription;
     private Button btnStartPause;
     private Button btnStop;
 
@@ -30,16 +34,25 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.step_monitor);
 
+        tvStep              = findViewById(R.id.tvStep);
+        tvPlanDescription   = findViewById(R.id.tvPlanDescription);
+        btnStartPause       = findViewById(R.id.btnStartPause);
+        btnStop             = findViewById(R.id.btnStop);
+        simpleStepDetector  = new StepDetector();
+        sensorManager       = (SensorManager) getSystemService(SENSOR_SERVICE);
+        accel               = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        simpleStepDetector = new StepDetector();
+        // if the intent of this Activity contains a planId, we'll be using it
+        // to attach to the new step database record. If it does not, we use the "Overall"
+        // plan by using planId = 0.
+        Intent intent = getIntent();
+        if(intent != null) {
+            planId = intent.getIntExtra("planId", 0);
+            intent.getStringExtra("planDescription");
+            tvPlanDescription.setText(planDescription);
+        }
+
         simpleStepDetector.registerListener(this);
-
-        tvStep = findViewById(R.id.tvStep);
-        btnStartPause = findViewById(R.id.btnStartPause);
-        btnStop = findViewById(R.id.btnStop);
-
         btnStartPause.setSelected(false);
 
         btnStartPause.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +64,6 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
                     pausedSteps = numSteps;
                     sensorManager.unregisterListener(StepActivity.this);
                     btnStartPause.setBackground(getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp,null));
-
                 } else {
                     // pause
                     numSteps = pausedSteps;
@@ -67,6 +79,14 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                StepController.postSteps(
+                        getApplicationContext(),
+                        numSteps,
+                        planId
+                );
+
                 numSteps = 0;
                 pausedSteps = 0;
                 tvStep.setText("0");

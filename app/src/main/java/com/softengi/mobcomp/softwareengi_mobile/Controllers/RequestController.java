@@ -53,7 +53,7 @@ public class RequestController {
                 e.printStackTrace();
 
                 Toast.makeText(ctx,
-                        "Error retrieving data",
+                        "Error",
                         Toast.LENGTH_SHORT).show();
 
             }
