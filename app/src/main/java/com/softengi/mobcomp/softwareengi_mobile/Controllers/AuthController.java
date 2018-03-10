@@ -4,15 +4,8 @@ import android.content.Intent;import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
+
 import com.softengi.mobcomp.softwareengi_mobile.ListOfPlanActivity;
-import com.softengi.mobcomp.softwareengi_mobile.R;
-import com.softengi.mobcomp.softwareengi_mobile.Utils.RequestQueueSingleton;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
 import com.softengi.mobcomp.softwareengi_mobile.Validations.AuthValidator;
@@ -20,7 +13,6 @@ import com.softengi.mobcomp.softwareengi_mobile.Validations.AuthValidator;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class AuthController {
@@ -105,7 +97,7 @@ public class AuthController {
             // create the API request and save the returned token into shared preferences
             RequestController.createPostRequest(
                     ctx,
-                    map, 
+                    map,
                     urlExtension,
                     new VolleyCallback() {
                         @Override
