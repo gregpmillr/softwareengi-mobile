@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
 
 
@@ -60,12 +61,12 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
             public void onClick(View view) {
 
                 if(btnStartPause.isSelected()) {
-                    // resume
+                    // pause
                     pausedSteps = numSteps;
                     sensorManager.unregisterListener(StepActivity.this);
                     btnStartPause.setBackground(getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp,null));
                 } else {
-                    // pause
+                    // resume
                     numSteps = pausedSteps;
                     sensorManager.registerListener(StepActivity.this, accel,SensorManager.SENSOR_DELAY_FASTEST);
                     btnStartPause.setBackground(getResources().getDrawable(R.drawable.ic_pause_black_24dp,null));

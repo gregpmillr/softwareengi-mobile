@@ -19,18 +19,22 @@
             </intent-filter>
         </activity>
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".RegisterActivity" android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".RegisterActivity"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".StepActivity" />
         <activity android:name=".ListOfPlanActivity" />
+
         <receiver
             android:name=".DailyNotificationReceiver"
             android:enabled="true"
-            android:exported="false" >
-        </receiver>
+            android:exported="false"></receiver>
+
         <service
             android:name=".DailyNotificationIntentService"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
+
+        <activity android:name=".TimerActivity"></activity>
     </application>
 
 </manifest>
