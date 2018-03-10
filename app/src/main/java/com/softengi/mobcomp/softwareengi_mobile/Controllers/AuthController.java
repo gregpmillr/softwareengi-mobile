@@ -18,6 +18,39 @@ import java.util.Map;
 public class AuthController {
 
     /**
+     * Checks if user info is in DB and can login.
+     * @param user Username.
+     * @param pass Password.
+     * @return Whether data in in DB.
+     */
+    public static boolean checkLogin(String user, String pass){
+        if(!user.equals("bob") || !pass.equals("pass")){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    /**
+     * Checks if all fields are entered when registering
+     * @param username Username of user to register
+     * @param password Password of user to register
+     * @param email Email of user to register
+     * @param language Preferred language of user to register
+     * @return Whether validation passed
+     */
+    public static boolean checkRegister(
+            String username, String password, String email, String language) {
+
+        if(username.isEmpty() || password.isEmpty() || email.isEmpty() || language.isEmpty()) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    /**
     * Get the response from the POST request to register users
     * @param ctx Context of application
     * @param etUsername EditText of username
