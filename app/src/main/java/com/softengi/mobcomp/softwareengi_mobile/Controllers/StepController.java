@@ -23,7 +23,6 @@ public class StepController {
 
     public static void postSteps(final Context ctx, int numSteps, int planId) {
 
-
         Map<String,String> map = new HashMap<String,String>();
         map.put("steps",String.valueOf(numSteps));
         map.put("planId", String.valueOf(planId));

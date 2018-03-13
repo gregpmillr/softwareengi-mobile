@@ -28,13 +28,15 @@
         <receiver
             android:name=".DailyNotificationReceiver"
             android:enabled="true"
-            android:exported="false"></receiver>
+            android:exported="false" />
 
         <service
             android:name=".DailyNotificationIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
 
-        <activity android:name=".TimerActivity"></activity>
+        <activity android:name=".TimerActivity" />
+        <activity android:name=".CreatePlanActivity" />
+        <activity android:name=".PlanDetailActivity"></activity>
     </application>
 
 </manifest>
