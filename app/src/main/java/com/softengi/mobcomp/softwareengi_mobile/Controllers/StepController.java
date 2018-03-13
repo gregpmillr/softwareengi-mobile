@@ -27,6 +27,7 @@ public class StepController {
         Map<String,String> map = new HashMap<String,String>();
         map.put("steps",String.valueOf(numSteps));
         map.put("planId", String.valueOf(planId));
+        map.put("username", String.valueOf(SharedPrefManager.getInstance(ctx).getUsername()));
 
         RequestController.createPostRequest(ctx, map, url, new VolleyCallback() {
             @Override
