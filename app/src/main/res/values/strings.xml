@@ -11,9 +11,13 @@
     <string name="profile_btn_logout">Logout</string>
     <string name="profile_btn_update">Update</string>
 
+    <string name="create_team">Create Team</string>
+    <string name="teams">Teams</string>
+    <string name="delete">Delete</string>
 
     <string name="stepmonitor_btn_start">Start</string>
     <string name="stepmonitor_btn_stop">Stop</string>
 
     <string name="listofplan_btn_tostep">To Step</string>
+    <string name="title_activity_team">ActivityTeam</string>
 </resources>

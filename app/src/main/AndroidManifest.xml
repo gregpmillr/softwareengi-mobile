@@ -21,16 +21,18 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".StepActivity" />
-        <activity android:name=".ListOfPlanActivity"></activity>
+        <activity android:name=".ListOfPlanActivity" />
+
         <receiver
             android:name=".DailyNotificationReceiver"
             android:enabled="true"
-            android:exported="false" >
-        </receiver>
+            android:exported="false" />
+
         <service
             android:name=".DailyNotificationIntentService"
-            android:exported="false" >
-        </service>
+            android:exported="false" />
+
+        <activity android:name=".ListOfTeamsActivity"></activity>
     </application>
 
 </manifest>
