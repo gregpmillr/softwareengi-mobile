@@ -19,7 +19,7 @@ public class StepMonitorTest {
     private StepActivity activity = new StepActivity();
 
 
-
+    //TODO
     @Test
     public void testDetection() throws Exception {
 /*
