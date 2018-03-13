@@ -34,7 +34,6 @@
             android:name=".DailyNotificationIntentService"
             android:exported="false"></service>
 
-        <activity android:name=".TimerActivity"></activity>
     </application>
 
 </manifest>
