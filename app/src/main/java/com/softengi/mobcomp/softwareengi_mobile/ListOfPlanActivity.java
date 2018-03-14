@@ -10,10 +10,17 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.softengi.mobcomp.softwareengi_mobile.Controllers.PlanController;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.ListOfPlanParser;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
+
+import org.json.JSONObject;
+
 public class ListOfPlanActivity extends AppCompatActivity {
 
     ListView lvPlans;
     Button btnCreatePlan;
+    String[] mData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +29,23 @@ public class ListOfPlanActivity extends AppCompatActivity {
 
         lvPlans       = findViewById(R.id.lvPlans);
         btnCreatePlan = findViewById(R.id.btnCreatePlan);
-        String[] data = new String[] {};
+        mData = new String[] {};
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,data);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,mData);
 
         lvPlans.setAdapter(arrayAdapter);
+
+        PlanController.getListOfPlans(
+                getApplication(),
+                SharedPrefManager.getInstance(getApplicationContext()).getUsername(),
+                new ListOfPlanParser() {
+                    @Override
+                    public void onSuccessResponse(JSONObject data) {
+                        // has all of plans from database
+                        mData = new String[] {"1","2"};
+                        arrayAdapter.notifyDataSetChanged();
+                    }
+                });
 
         lvPlans.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

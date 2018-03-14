@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.softengi.mobcomp.softwareengi_mobile.ListOfPlanActivity;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.ListOfPlanParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
 
@@ -81,12 +82,13 @@ public class PlanController {
         });
     }
 
-    public static void getListOfPlans(final Context ctx, String username, String[] data) {
+    public static void getListOfPlans(final Context ctx, String username, final ListOfPlanParser callback) {
 
         RequestController.createGetRequest(ctx, url.concat(username+"/list"), new VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject result) {
                 // set the data parater to the JSONObject result as a string of plans
+                callback.onSuccessResponse(result);
                 Toast.makeText(ctx, "List received successfully", Toast.LENGTH_SHORT).show();
             }
         });
