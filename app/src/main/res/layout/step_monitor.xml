@@ -15,20 +15,30 @@
         android:text="@string/stepmonitor_plan_description"
         android:layout_marginTop="30dp" />
 
+    <Chronometer
+        android:id="@+id/chrStopWatch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPlanDescription"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:fontFamily="sans-serif"
+        android:layout_marginTop="30dp"
+        android:format="HH:MM:SS"/>
+
     <TextView
         android:id="@+id/tvStep"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/tvPlanDescription"
+        android:layout_below="@id/chrStopWatch"
         android:textAlignment="center"
         android:gravity="center"
-        android:textSize="40sp"
+        android:textSize="50sp"
         android:textStyle="bold"
         android:fontFamily="sans-serif"
         android:text="0"
-        android:layout_above="@id/llStep"
-        android:layout_marginTop="30dp" />
+        android:layout_above="@id/llStep" />
 
     <LinearLayout
         android:id="@+id/llStep"

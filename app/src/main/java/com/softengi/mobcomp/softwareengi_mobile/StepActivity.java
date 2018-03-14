@@ -11,6 +11,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -23,12 +24,16 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager sensorManager;
     private Sensor accel;
     private int numSteps = 0;
-    private int pausedSteps = 0;
     private int planId = 0;
     private String planDescription = "";
     private TextView tvStep, tvPlanDescription;
     private Button btnStartPause;
     private Button btnStop;
+
+    private Chronometer mChronometer;
+
+    private long lastPause = 0;
+    private int pausedSteps = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,9 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
             tvPlanDescription.setText(planDescription);
         }
 
+        mChronometer = findViewById(R.id.chrStopWatch);
+        mChronometer.setCountDown(false);
+
         simpleStepDetector.registerListener(this);
         btnStartPause.setSelected(false);
 
@@ -62,11 +70,22 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
 
                 if(btnStartPause.isSelected()) {
                     // pause
+                    lastPause = SystemClock.elapsedRealtime();
+                    mChronometer.setBase(mChronometer.getBase() + SystemClock.elapsedRealtime() - lastPause);
+                    mChronometer.stop();
+
                     pausedSteps = numSteps;
                     sensorManager.unregisterListener(StepActivity.this);
                     btnStartPause.setBackground(getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp,null));
                 } else {
                     // resume
+                    if(lastPause == 0) {
+                        mChronometer.setBase(SystemClock.elapsedRealtime());
+                    } else {
+                        mChronometer.setBase(mChronometer.getBase() + SystemClock.elapsedRealtime() - lastPause);
+                    }
+                    mChronometer.start();
+
                     numSteps = pausedSteps;
                     sensorManager.registerListener(StepActivity.this, accel,SensorManager.SENSOR_DELAY_FASTEST);
                     btnStartPause.setBackground(getResources().getDrawable(R.drawable.ic_pause_black_24dp,null));
@@ -80,7 +99,6 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
                 StepController.postSteps(
                         getApplicationContext(),

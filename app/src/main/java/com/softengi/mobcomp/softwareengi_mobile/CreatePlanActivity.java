@@ -10,6 +10,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.softengi.mobcomp.softwareengi_mobile.Controllers.PlanController;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 
 import java.text.SimpleDateFormat;
@@ -35,8 +36,11 @@ public class CreatePlanActivity extends AppCompatActivity {
         btnSubmitPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), ListOfPlanActivity.class);
-                startActivity(i);
+                PlanController.postPlans(
+                        getApplicationContext(),
+                        etPlanCreateRequiredSteps.getText().toString(),
+                        etPlanCreateTitle.getText().toString()
+                        );
             }
         });
 

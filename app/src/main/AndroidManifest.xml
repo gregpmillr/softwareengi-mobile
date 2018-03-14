@@ -34,9 +34,12 @@
             android:name=".DailyNotificationIntentService"
             android:exported="false" />
 
+<<<<<<< HEAD
         <activity android:name=".TimerActivity" />
         <activity android:name=".CreatePlanActivity" />
         <activity android:name=".PlanDetailActivity"></activity>
+=======
+>>>>>>> 9799aef0de12a36106100881531474845ee3f684
     </application>
 
 </manifest>
