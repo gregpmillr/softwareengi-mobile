@@ -90,7 +90,7 @@ public class PlanController {
                 Toast.makeText(ctx, "List received successfully", Toast.LENGTH_SHORT).show();
             }
         });
-        
+
     }
 
 }
