@@ -83,7 +83,7 @@ public class RequestController {
      * @param urlExtension String specifying the API URL with parameters
      * @param callback Function called when the request is successful
      */
-    private static void createGetRequest(final Context ctx, String urlExtension, final VolleyCallback callback) {
+    public static void createGetRequest(final Context ctx, String urlExtension, final VolleyCallback callback) {
 
         String url = ctx.getResources().getString(R.string.base_api_url).concat(urlExtension);
 

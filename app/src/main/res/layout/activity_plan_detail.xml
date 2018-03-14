@@ -7,11 +7,14 @@
 
     <EditText
         android:id="@+id/etPlanDetailTitle"
+        android:text="@string/etPlanCreateTitle"
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/etPlanDetailRequiredSteps"
+        android:text="@string/etPlanCreateRequiredSteps"
         android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

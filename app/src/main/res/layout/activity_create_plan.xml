@@ -7,11 +7,14 @@
 
     <EditText
         android:id="@+id/etPlanCreateTitle"
+        android:hint="@string/etPlanCreateTitle"
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/etPlanCreateRequiredSteps"
+        android:hint="@string/etPlanCreateRequiredSteps"
         android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,6 +23,12 @@
     <Button
         android:id="@+id/btnCreatePlan"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/colorTurquoise"
+        android:textColor="@color/colorWhite"
+        android:text="@string/create"/>
 
 </RelativeLayout>

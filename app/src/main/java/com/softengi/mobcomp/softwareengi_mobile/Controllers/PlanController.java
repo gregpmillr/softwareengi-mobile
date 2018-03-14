@@ -2,6 +2,7 @@ package com.softengi.mobcomp.softwareengi_mobile.Controllers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.softengi.mobcomp.softwareengi_mobile.ListOfPlanActivity;
@@ -34,10 +35,11 @@ public class PlanController {
         });
     }
 
-    public static void postUpdateSteps(final Context ctx, String requiredSteps) {
+    public static void postUpdateSteps(final Context ctx, String planId, String requiredSteps) {
 
         Map<String,String> map = new HashMap<String,String>();
-        map.put("requiredSteps",String.valueOf(requiredSteps));
+        map.put("planId", planId);
+        map.put("requiredSteps", requiredSteps);
         map.put("username", String.valueOf(SharedPrefManager.getInstance(ctx).getUsername()));
 
         RequestController.createPostRequest(ctx, map, url.concat("/update"), new VolleyCallback() {
@@ -48,6 +50,47 @@ public class PlanController {
                 Toast.makeText(ctx, "Updated plan successfully", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public static void postUpdateTitle(final Context ctx, String planId, String title) {
+
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("planId", planId);
+        map.put("title",title);
+        map.put("username", String.valueOf(SharedPrefManager.getInstance(ctx).getUsername()));
+        RequestController.createPostRequest(ctx, map, url.concat("/update"), new VolleyCallback() {
+            @Override
+            public void onSuccessResponse(JSONObject result) {
+                Intent i = new Intent(ctx, ListOfPlanActivity.class);
+                ctx.startActivity(i);
+                Toast.makeText(ctx, "Updated plan successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public static void postDelete(final Context ctx, String planId) {
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("planId", planId);
+        RequestController.createPostRequest(ctx, map, url.concat("/delete"), new VolleyCallback() {
+            @Override
+            public void onSuccessResponse(JSONObject result) {
+                Intent i = new Intent(ctx, ListOfPlanActivity.class);
+                ctx.startActivity(i);
+                Toast.makeText(ctx, "Updated plan successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public static void getListOfPlans(final Context ctx, String username, String[] data) {
+
+        RequestController.createGetRequest(ctx, url.concat(username+"/list"), new VolleyCallback() {
+            @Override
+            public void onSuccessResponse(JSONObject result) {
+                // set the data parater to the JSONObject result as a string of plans
+                Toast.makeText(ctx, "List received successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
     }
 
 }
