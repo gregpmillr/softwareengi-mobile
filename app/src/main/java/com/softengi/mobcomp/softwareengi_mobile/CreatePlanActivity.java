@@ -36,7 +36,7 @@ public class CreatePlanActivity extends AppCompatActivity {
         btnSubmitPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlanController.postPlans(
+                PlanController.postCreatePlans(
                         getApplicationContext(),
                         etPlanCreateRequiredSteps.getText().toString(),
                         etPlanCreateTitle.getText().toString()
