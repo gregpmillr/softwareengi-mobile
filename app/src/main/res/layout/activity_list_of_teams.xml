@@ -31,6 +31,7 @@
         android:layout_margin="8sp"
         android:text="@string/create_team"
         android:background="@color/colorPrimaryDark"
-        android:textColor="@color/colorWhite"/>
+        android:textColor="@color/colorWhite"
+        android:onClick="createTeam"/>
 
 </RelativeLayout>

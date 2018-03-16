@@ -33,7 +33,8 @@
             android:exported="false" />
 
         <activity android:name=".ListOfTeamsActivity" />
-        <activity android:name=".TeamActivity"></activity>
+        <activity android:name=".TeamViewActivity" />
+        <activity android:name=".TeamCreateActivity"></activity>
     </application>
 
 </manifest>

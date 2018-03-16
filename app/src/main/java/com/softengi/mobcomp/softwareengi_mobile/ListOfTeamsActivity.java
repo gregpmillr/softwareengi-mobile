@@ -1,17 +1,12 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
 import android.content.Intent;
-import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ListOfTeamsActivity extends AppCompatActivity {
 
@@ -44,8 +39,17 @@ public class ListOfTeamsActivity extends AppCompatActivity {
      * @param teamId ID of team.
      */
     private void openTeamActivity(String teamId){
-        Intent intent = new Intent(this, TeamActivity.class);
+        Intent intent = new Intent(this, TeamViewActivity.class);
         intent.putExtra("teamId", teamId);
+        startActivity(intent);
+    }
+
+    /**
+     * Create a new team.
+     * @param view
+     */
+    public void createTeam(View view) {
+        Intent intent = new Intent(this, TeamCreateActivity.class);
         startActivity(intent);
     }
 }
