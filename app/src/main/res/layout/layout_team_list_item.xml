@@ -20,6 +20,7 @@
         android:background="@color/colorPrimary"
         android:textColor="@color/colorWhite"
         android:text="@string/delete"
-        android:layout_margin="5dp"/>
+        android:layout_margin="5dp"
+        android:focusable="false"/>
 
 </RelativeLayout>

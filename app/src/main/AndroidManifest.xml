@@ -32,7 +32,8 @@
             android:name=".DailyNotificationIntentService"
             android:exported="false" />
 
-        <activity android:name=".ListOfTeamsActivity"></activity>
+        <activity android:name=".ListOfTeamsActivity" />
+        <activity android:name=".TeamActivity"></activity>
     </application>
 
 </manifest>

@@ -1,8 +1,12 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
+import android.content.Intent;
+import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -25,8 +29,23 @@ public class ListOfTeamsActivity extends AppCompatActivity {
                 R.layout.layout_team_list_item, R.id.teamName, teamNames);
         teamListView.setAdapter(adapter);
 
-        for(int i = 0; i < teamListView.getChildCount(); i++){
-            teamListView.getChildAt(i).
-        }
+        teamListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            // onItemClick method is called everytime a user clicks an item on the list
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String teamId = parent.getItemAtPosition(position).toString().split("\n")[1];
+                openTeamActivity(teamId);
+            }
+        });
+    }
+
+    /**
+     * Opens the team activity for the specified team.
+     * @param teamId ID of team.
+     */
+    private void openTeamActivity(String teamId){
+        Intent intent = new Intent(this, TeamActivity.class);
+        intent.putExtra("teamId", teamId);
+        startActivity(intent);
     }
 }
