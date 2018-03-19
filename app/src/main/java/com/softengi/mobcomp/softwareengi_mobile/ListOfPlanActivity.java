@@ -9,18 +9,24 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.softengi.mobcomp.softwareengi_mobile.Controllers.PlanController;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.ListOfPlanParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class ListOfPlanActivity extends AppCompatActivity {
 
     ListView lvPlans;
     Button btnCreatePlan;
-    String[] mData;
+    ArrayList<String> mData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +35,7 @@ public class ListOfPlanActivity extends AppCompatActivity {
 
         lvPlans       = findViewById(R.id.lvPlans);
         btnCreatePlan = findViewById(R.id.btnCreatePlan);
-        mData = new String[] {};
+        mData         = new ArrayList<>();
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,mData);
 
@@ -40,9 +46,22 @@ public class ListOfPlanActivity extends AppCompatActivity {
                 SharedPrefManager.getInstance(getApplicationContext()).getUsername(),
                 new ListOfPlanParser() {
                     @Override
-                    public void onSuccessResponse(JSONObject data) {
-                        // has all of plans from database
-                        mData = new String[] {"1","2"};
+                    public void onSuccessResponse(JSONArray data) {
+
+                        try {
+
+                            mData.clear();
+
+                            for(int i = 0; i < data.length(); i++) {
+                                mData.add(data.getJSONObject(i).getString("title"));
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        Toast.makeText(getApplicationContext(),mData.toString(),Toast.LENGTH_LONG).show();
+
                         arrayAdapter.notifyDataSetChanged();
                     }
                 });

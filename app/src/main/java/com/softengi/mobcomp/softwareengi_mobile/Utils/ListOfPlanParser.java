@@ -1,9 +1,9 @@
 package com.softengi.mobcomp.softwareengi_mobile.Utils;
 
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 public interface ListOfPlanParser {
 
-    void onSuccessResponse(JSONObject data);
+    void onSuccessResponse(JSONArray data);
 
 }

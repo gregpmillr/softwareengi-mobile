@@ -104,7 +104,7 @@ public class RequestController {
                         e.printStackTrace();
 
                         Toast.makeText(ctx,
-                                "Error retrieving data",
+                                e.getMessage(),
                                 Toast.LENGTH_SHORT).show();
 
                     }

@@ -10,6 +10,7 @@ import com.softengi.mobcomp.softwareengi_mobile.Utils.ListOfPlanParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -17,7 +18,7 @@ import java.util.Map;
 
 public class PlanController {
 
-    private static final String url = "plans";
+    private static final String url = "plans/";
 
     public static void postCreatePlans(final Context ctx, String requiredSteps, String title) {
 
@@ -88,7 +89,11 @@ public class PlanController {
             @Override
             public void onSuccessResponse(JSONObject result) {
                 // set the data parater to the JSONObject result as a string of plans
-                callback.onSuccessResponse(result);
+                try {
+                    callback.onSuccessResponse(result.getJSONArray("plans"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 Toast.makeText(ctx, "List received successfully", Toast.LENGTH_SHORT).show();
             }
         });
