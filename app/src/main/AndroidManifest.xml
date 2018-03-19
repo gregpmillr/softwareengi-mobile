@@ -36,6 +36,7 @@
 
         <activity android:name=".CreatePlanActivity" />
         <activity android:name=".PlanDetailActivity" />
+        <activity android:name=".AthleteActivity"></activity>
     </application>
 
 </manifest>

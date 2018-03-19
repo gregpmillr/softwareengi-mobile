@@ -1,24 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.softengi.mobcomp.softwareengi_mobile.ListOfPlanActivity">
+    tools:context="com.softengi.mobcomp.softwareengi_mobile.PlansFragment">
 
     <ListView
-        android:id="@+id/lvPlans"
+        android:id="@android:id/list"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_above="@id/btnCreatePlan"/>
+        android:layout_above="@id/btnCreatePlan"
+        android:layout_alignParentTop="true">
+
+    </ListView>
 
     <Button
         android:id="@+id/btnCreatePlan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create"
+        android:text="@string/create"
         android:layout_alignParentEnd="true"
-        android:layout_margin="10dp"
-        android:backgroundTint="@color/colorTurquoise"
-        android:textColor="@color/colorWhite" />
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorTurquoise"
+        android:textColor="@color/colorWhite"
+        android:layout_margin="10dp" />
 
 </RelativeLayout>
