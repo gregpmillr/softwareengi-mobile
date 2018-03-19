@@ -3,13 +3,13 @@ package com.softengi.mobcomp.softwareengi_mobile;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.softengi.mobcomp.softwareengi_mobile.Controllers.PlanController;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.ListOfPlanParser;
@@ -17,7 +17,6 @@ import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -26,7 +25,6 @@ public class ListOfPlanActivity extends AppCompatActivity {
     ListView lvPlans;
     Button btnCreatePlan;
     ArrayList<String> mData;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +58,6 @@ public class ListOfPlanActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        Toast.makeText(getApplicationContext(),mData.toString(),Toast.LENGTH_LONG).show();
-
                         arrayAdapter.notifyDataSetChanged();
                     }
                 });
@@ -75,7 +71,6 @@ public class ListOfPlanActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         btnCreatePlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,4 +80,5 @@ public class ListOfPlanActivity extends AppCompatActivity {
         });
 
     }
+
 }
