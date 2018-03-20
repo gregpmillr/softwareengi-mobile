@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.softengi.mobcomp.softwareengi_mobile.CreatePlanActivity">
+    tools:context="com.softengi.mobcomp.softwareengi_mobile.CreatePlanFragment">
 
     <EditText
         android:id="@+id/etPlanCreateTitle"

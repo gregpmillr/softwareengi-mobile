@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -116,6 +117,13 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
 
     @Override
     public void onSubmitPlan() {
+
+
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
+
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
         PlanController.postCreatePlans(getApplicationContext(),
                 (EditText) findViewById(R.id.etPlanCreateTitle),
                 (EditText) findViewById(R.id.etPlanCreateRequiredSteps),
