@@ -23,7 +23,7 @@ public class PlanController {
     public static void postCreatePlans(final Context ctx, String requiredSteps, String title) {
 
         Map<String,String> map = new HashMap<String,String>();
-        map.put("requiredSteps",String.valueOf(requiredSteps));
+        map.put("required_steps",String.valueOf(requiredSteps));
         map.put("title", String.valueOf(title));
         map.put("username", String.valueOf(SharedPrefManager.getInstance(ctx).getUsername()));
 
