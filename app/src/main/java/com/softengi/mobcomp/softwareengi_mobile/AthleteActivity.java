@@ -117,8 +117,8 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
     @Override
     public void onSubmitPlan() {
         PlanController.postCreatePlans(getApplicationContext(),
-                ((EditText)(findViewById(R.id.etPlanCreateTitle))).getText().toString(),
-                ((EditText)(findViewById(R.id.etPlanCreateRequiredSteps))).getText().toString()
+                ((EditText)(findViewById(R.id.etPlanCreateRequiredSteps))).getText().toString(),
+                ((EditText)(findViewById(R.id.etPlanCreateTitle))).getText().toString()
         );
     }
 }
