@@ -22,4 +22,17 @@
     <string name="profile_tv_username">HI, %1$s</string>
     <string name="stepmonitor_plan_description">Plan: %1$s</string>
     <string name="base_api_url">http://142.134.23.52:8000/</string>
+    <string name="create">CREATE</string>
+    <string name="etPlanCreateRequiredSteps">Required Steps</string>
+    <string name="etPlanCreateTitle">Title</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_profile">Profile</string>
+    <string name="nav_plans">Plans</string>
+    <string name="nav_teams">Teams</string>
+    <string name="submit">Submit</string>
+    <string name="change">CHANGE</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -5,7 +5,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
-import com.softengi.mobcomp.softwareengi_mobile.ListOfPlanActivity;
+import com.softengi.mobcomp.softwareengi_mobile.AthleteActivity;
+import com.softengi.mobcomp.softwareengi_mobile.MainActivity;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
 import com.softengi.mobcomp.softwareengi_mobile.Validations.AuthValidator;
@@ -100,7 +101,7 @@ public class AuthController {
                                 e.printStackTrace();
                             }
 
-                            Intent intent = new Intent(ctx, ListOfPlanActivity.class);
+                            Intent intent = new Intent(ctx, MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             ctx.startActivity(intent);
 
@@ -147,9 +148,8 @@ public class AuthController {
                                     e.printStackTrace();
                                 }
 
-                            Intent intent = new Intent(ctx, ListOfPlanActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                ctx.startActivity(intent);
+                            Intent intent = new Intent(ctx, AthleteActivity.class);
+                            ctx.startActivity(intent);
 
                         }
                     }

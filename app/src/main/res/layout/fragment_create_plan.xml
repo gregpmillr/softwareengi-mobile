@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.softengi.mobcomp.softwareengi_mobile.CreatePlanFragment">
+
+    <EditText
+        android:id="@+id/etPlanCreateTitle"
+        android:hint="@string/etPlanCreateTitle"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etPlanCreateRequiredSteps"
+        android:hint="@string/etPlanCreateRequiredSteps"
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etPlanCreateTitle" />
+
+    <Button
+        android:id="@+id/btnSubmitPlan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorTurquoise"
+        android:textColor="@color/colorWhite"
+        android:layout_margin="10dp" />
+
+</RelativeLayout>

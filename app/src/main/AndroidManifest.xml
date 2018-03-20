@@ -18,22 +18,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProfileActivity" />
         <activity
             android:name=".RegisterActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".StepActivity" />
-        <activity android:name=".ListOfPlanActivity" />
 
         <receiver
             android:name=".DailyNotificationReceiver"
             android:enabled="true"
-            android:exported="false"></receiver>
+            android:exported="false" />
 
         <service
             android:name=".DailyNotificationIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
 
+        <activity android:name=".PlanDetailActivity" />
+        <activity android:name=".AthleteActivity"></activity>
     </application>
 
 </manifest>
