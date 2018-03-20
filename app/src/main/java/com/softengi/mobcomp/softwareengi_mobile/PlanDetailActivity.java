@@ -1,5 +1,7 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.softengi.mobcomp.softwareengi_mobile.Controllers.PlanController;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.SuccessListener;
 
 public class PlanDetailActivity extends AppCompatActivity {
 
@@ -28,8 +31,17 @@ public class PlanDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 PlanController.postUpdateSteps(
                         getApplicationContext(),
-                        "1",
-                        etPlanDetailRequiredSteps.getText().toString()
+                        etPlanDetailTitle,
+                        etPlanDetailRequiredSteps,
+                        new SuccessListener() {
+                            @Override
+                            public void successful() {
+
+                                PlansFragment fragment = new PlansFragment();
+                                setFragment(fragment);
+
+                            }
+                        }
                 );
             }
         });
@@ -39,10 +51,27 @@ public class PlanDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 PlanController.postDelete(
                         getApplicationContext(),
-                        "1"
+                        "1",
+                        new SuccessListener() {
+                            @Override
+                            public void successful() {
+
+                                PlansFragment fragment = new PlansFragment();
+                                setFragment(fragment);
+
+                            }
+                        }
                 );
             }
         });
+
+    }
+
+    private void setFragment(Fragment fragment) {
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.athlete_frame, fragment);
+        fragmentTransaction.commit();
 
     }
 }

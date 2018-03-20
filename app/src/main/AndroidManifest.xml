@@ -23,7 +23,6 @@
             android:name=".RegisterActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".StepActivity" />
-        <activity android:name=".ListOfPlanActivity" />
 
         <receiver
             android:name=".DailyNotificationReceiver"
@@ -34,7 +33,6 @@
             android:name=".DailyNotificationIntentService"
             android:exported="false" />
 
-        <activity android:name=".CreatePlanActivity" />
         <activity android:name=".PlanDetailActivity" />
         <activity android:name=".AthleteActivity"></activity>
     </application>

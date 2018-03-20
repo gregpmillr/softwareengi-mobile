@@ -16,6 +16,7 @@ import com.softengi.mobcomp.softwareengi_mobile.CreatePlanFragment.onCreateFragm
 import com.softengi.mobcomp.softwareengi_mobile.Controllers.PlanController;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.ListOfPlanParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.SuccessListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -100,25 +101,31 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
 
     @Override
     public void onCreatePlan() {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         CreatePlanFragment fragment = new CreatePlanFragment();
-        fragmentTransaction.replace(R.id.athlete_frame, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        setFragment(fragment);
     }
 
     @Override
     public void onPlanDetail(int position, long id) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         PlansFragment fragment = new PlansFragment();
-        fragmentTransaction.replace(R.id.athlete_frame, fragment);
+        setFragment(fragment);
     }
 
     @Override
     public void onSubmitPlan() {
         PlanController.postCreatePlans(getApplicationContext(),
-                ((EditText)(findViewById(R.id.etPlanCreateRequiredSteps))).getText().toString(),
-                ((EditText)(findViewById(R.id.etPlanCreateTitle))).getText().toString()
+                (EditText) findViewById(R.id.etPlanCreateTitle),
+                (EditText) findViewById(R.id.etPlanCreateRequiredSteps),
+                new SuccessListener() {
+                    @Override
+                    public void successful() {
+
+                        PlansFragment fragment = new PlansFragment();
+                        setFragment(fragment);
+
+                    }
+                }
         );
+
     }
 }
