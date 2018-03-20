@@ -76,6 +76,7 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.athlete_frame, fragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
     }
