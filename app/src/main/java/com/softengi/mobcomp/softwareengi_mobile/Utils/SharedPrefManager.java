@@ -10,6 +10,7 @@ public class SharedPrefManager {
     public static final String KEY_USERNAME = "keyusername";
     public static final String KEY_EMAIL = "keyemail";
     public static final String KEY_COACH = "keycoach";
+    public static final String KEY_LANGUAGE = "keylanguage";
 
     private static SharedPrefManager mInstance;
     private static Context mCtx;
@@ -38,6 +39,7 @@ public class SharedPrefManager {
         editor.putString(KEY_USERNAME, jwt.getClaim("username").asString());
         editor.putString(KEY_EMAIL, jwt.getClaim("email").asString());
         editor.putBoolean(KEY_COACH, jwt.getClaim("coach").asBoolean());
+        editor.putString(KEY_LANGUAGE, jwt.getClaim("language").asString());
         editor.apply();
     }
 
@@ -58,6 +60,21 @@ public class SharedPrefManager {
     public String getEmail() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_EMAIL, "No email exists");
+    }
+
+    public String getCoach() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_COACH, "No coach exists");
+    }
+
+    public String getLanguage() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_LANGUAGE, "No language exists");
+    }
+
+    public boolean isUserCoach() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(KEY_COACH, false);
     }
 
     /**

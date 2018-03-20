@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 
+import com.softengi.mobcomp.softwareengi_mobile.ProfileFragment.onUpdateProfile;
 import com.softengi.mobcomp.softwareengi_mobile.PlansFragment.onFragmentLoad;
 import com.softengi.mobcomp.softwareengi_mobile.CreatePlanFragment.onCreateFragmentLoad;
 import com.softengi.mobcomp.softwareengi_mobile.Controllers.PlanController;
@@ -23,20 +24,24 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public class AthleteActivity extends AppCompatActivity implements onFragmentLoad, onCreateFragmentLoad {
+public class AthleteActivity extends AppCompatActivity implements onFragmentLoad, onCreateFragmentLoad, onUpdateProfile {
 
     private BottomNavigationView mAthleteNav;
     private FrameLayout mAthleteFrame;
     private PlansFragment plansFragment;
+    private ProfileFragment profileFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_athlete);
 
-        mAthleteFrame = findViewById(R.id.athlete_frame);
-        mAthleteNav   = findViewById(R.id.athlete_nav);
-        plansFragment = new PlansFragment();
+        mAthleteFrame   = findViewById(R.id.athlete_frame);
+        mAthleteNav     = findViewById(R.id.athlete_nav);
+        plansFragment   = new PlansFragment();
+        profileFragment = new ProfileFragment();
+
+        setFragment(profileFragment);
 
         mAthleteNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -45,16 +50,14 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
                 switch(item.getItemId()) {
 
                     case R.id.nav_plans :
-                        mAthleteNav.setItemBackgroundResource(R.color.colorPrimary);
                         setFragment(plansFragment);
                         return true;
 
                     case R.id.nav_profile :
-                        mAthleteNav.setItemBackgroundResource(R.color.colorAccent);
+                        setFragment(profileFragment);
                         return true;
 
                     case R.id.nav_teams :
-                        mAthleteNav.setItemBackgroundResource(R.color.colorPrimaryDark);
                         return true;
 
                     default:
@@ -126,6 +129,21 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
                     }
                 }
         );
+
+    }
+
+    @Override
+    public void updateEmail() {
+
+    }
+
+    @Override
+    public void updateLanguage() {
+
+    }
+
+    @Override
+    public void updateCoach() {
 
     }
 }

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.softengi.mobcomp.softwareengi_mobile.ProfileActivity"
+    tools:context="com.softengi.mobcomp.softwareengi_mobile.ProfileFragment"
     android:background="@color/colorGrey">
 
     <TextView
@@ -187,7 +187,7 @@
                 android:id="@+id/etProfileEmail"
                 android:inputType="textEmailAddress"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:textColor="@color/colorBlack"
                 android:fontFamily="sans-serif-thin"
                 android:background="@drawable/custom_edit_text_grey_background"
@@ -200,12 +200,12 @@
             <Button
                 android:id="@+id/btnProfileEmail"
                 android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:text="CHANGE"
+                android:layout_height="48dp"
+                android:layout_marginEnd="4dp"
+                android:text="@string/change"
                 android:background="@color/colorGrey"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="5dp"
                 android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
@@ -219,7 +219,7 @@
             <EditText
                 android:id="@+id/etProfileCoach"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:textColor="@color/colorBlack"
                 android:fontFamily="sans-serif-thin"
                 android:background="@drawable/custom_edit_text_grey_background"
@@ -232,12 +232,12 @@
             <Button
                 android:id="@+id/btnProfileCoach"
                 android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:text="CHANGE"
+                android:layout_height="48dp"
+                android:layout_marginEnd="4dp"
+                android:text="@string/change"
                 android:background="@color/colorGrey"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="5dp"
                 android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
@@ -251,7 +251,7 @@
             <EditText
                 android:id="@+id/etProfileLanguage"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:background="@drawable/custom_edit_text_grey_background"
@@ -266,12 +266,12 @@
             <Button
                 android:id="@+id/btnProfileLanguage"
                 android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:text="CHANGE"
+                android:layout_height="48dp"
+                android:layout_marginEnd="4dp"
+                android:text="@string/change"
                 android:background="@color/colorGrey"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="5dp"
                 android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
