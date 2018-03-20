@@ -1,5 +1,6 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -153,5 +154,11 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
     @Override
     public void updateCoach() {
 
+    }
+
+    @Override
+    public void logout() {
+        SharedPrefManager.getInstance(getApplicationContext()).logout();
+        getApplicationContext().startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
 }

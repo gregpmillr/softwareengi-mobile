@@ -7,13 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
-
-import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment {
 
@@ -24,6 +21,7 @@ public class ProfileFragment extends Fragment {
         void updateEmail();
         void updateLanguage();
         void updateCoach();
+        void logout();
     }
 
     onUpdateProfile onUpdateProfile;
@@ -50,6 +48,14 @@ public class ProfileFragment extends Fragment {
         btnProfileEmail      = v.findViewById(R.id.btnProfileEmail);
         btnProfileLanguage   = v.findViewById(R.id.btnProfileLanguage);
         btnProfileCoach      = v.findViewById(R.id.btnProfileCoach);
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onUpdateProfile.logout();
+            }
+        });
+
         return v;
     }
 
