@@ -21,7 +21,8 @@ public class PlanController {
     private static final String url = "plans/";
 
     public static void postCreatePlans(final Context ctx, String requiredSteps, String title) {
-
+        Toast.makeText(ctx,title,Toast.LENGTH_SHORT);
+        Toast.makeText(ctx, requiredSteps, Toast.LENGTH_SHORT);
         Map<String,String> map = new HashMap<String,String>();
         map.put("required_steps",String.valueOf(requiredSteps));
         map.put("title", String.valueOf(title));
