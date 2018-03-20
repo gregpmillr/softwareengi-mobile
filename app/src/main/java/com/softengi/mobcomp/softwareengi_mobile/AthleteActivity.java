@@ -3,18 +3,16 @@ package com.softengi.mobcomp.softwareengi_mobile;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import com.softengi.mobcomp.softwareengi_mobile.PlansFragment.onFragmentLoad;
+import com.softengi.mobcomp.softwareengi_mobile.CreatePlanFragment.onCreateFragmentLoad;
 import com.softengi.mobcomp.softwareengi_mobile.Controllers.PlanController;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.ListOfPlanParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
@@ -24,7 +22,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public class AthleteActivity extends AppCompatActivity implements onFragmentLoad {
+public class AthleteActivity extends AppCompatActivity implements onFragmentLoad, onCreateFragmentLoad {
 
     private BottomNavigationView mAthleteNav;
     private FrameLayout mAthleteFrame;
@@ -78,8 +76,6 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
 
     @Override
     public void loadAdapter(final ArrayAdapter listAdapter, final ArrayList<String> arrList) {
-        arrList.add("test");
-        listAdapter.notifyDataSetChanged();
         PlanController.getListOfPlans(
                 getApplication(),
                 SharedPrefManager.getInstance(getApplicationContext()).getUsername(),
@@ -105,8 +101,10 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
     @Override
     public void onCreatePlan() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        PlansFragment fragment = new PlansFragment();
+        CreatePlanFragment fragment = new CreatePlanFragment();
         fragmentTransaction.replace(R.id.athlete_frame, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -116,4 +114,11 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
         fragmentTransaction.replace(R.id.athlete_frame, fragment);
     }
 
+    @Override
+    public void onSubmitPlan() {
+        PlanController.postCreatePlans(getApplicationContext(),
+                ((EditText)(findViewById(R.id.etPlanCreateTitle))).getText().toString(),
+                ((EditText)(findViewById(R.id.etPlanCreateRequiredSteps))).getText().toString()
+        );
+    }
 }
