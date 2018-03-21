@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.softengi.mobcomp.softwareengi_mobile.Utils.DetailPlanParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.ListOfPlanParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SuccessListener;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallbackArray;
 import com.softengi.mobcomp.softwareengi_mobile.Validations.PlanValidator;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -75,13 +78,13 @@ public class PlanController {
         });
     }
 
-    public static void postDelete(final Context ctx, String planId, final SuccessListener onSuccess) {
+    public static void postDelete(final Context ctx, String planTitle, final SuccessListener onSuccess) {
         Map<String,String> map = new HashMap<String,String>();
-        map.put("planId", planId);
+        map.put("planTitle", planTitle);
         RequestController.createPostRequest(ctx, map, url.concat("/delete"), new VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject result) {
-                Toast.makeText(ctx, "Updated plan successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ctx, "Deleted plan successfully", Toast.LENGTH_SHORT).show();
                 onSuccess.successful();
             }
         });
@@ -89,16 +92,28 @@ public class PlanController {
 
     public static void getListOfPlans(final Context ctx, String username, final ListOfPlanParser callback) {
 
-        RequestController.createGetRequest(ctx, url.concat(username+"/list"), new VolleyCallback() {
+        RequestController.createGetRequestArray(ctx, url.concat(username+"/list"), new VolleyCallbackArray() {
+            @Override
+            public void onSuccessResponse(JSONArray result) {
+                // set the data parameter to the JSONObject result as a string of plans
+                callback.onSuccessResponse(result);
+                Toast.makeText(ctx, "List received successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    public static void getPlan(final Context ctx, String title, final DetailPlanParser callback) {
+
+        RequestController.createGetRequest(ctx, url.concat(title), new VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject result) {
-                // set the data parater to the JSONObject result as a string of plans
                 try {
-                    callback.onSuccessResponse(result.getJSONArray("plans"));
+                    callback.onSuccessResponse(result);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Toast.makeText(ctx, "List received successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ctx, "Plan receieved successfully", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -1,6 +1,5 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -8,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -17,17 +17,20 @@ import android.widget.FrameLayout;
 import com.softengi.mobcomp.softwareengi_mobile.ProfileFragment.onUpdateProfile;
 import com.softengi.mobcomp.softwareengi_mobile.PlansFragment.onFragmentLoad;
 import com.softengi.mobcomp.softwareengi_mobile.CreatePlanFragment.onCreateFragmentLoad;
+import com.softengi.mobcomp.softwareengi_mobile.PlansDetailFragment.onPlansDetail;
 import com.softengi.mobcomp.softwareengi_mobile.Controllers.PlanController;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.DetailPlanParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.ListOfPlanParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SuccessListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class AthleteActivity extends AppCompatActivity implements onFragmentLoad, onCreateFragmentLoad, onUpdateProfile {
+public class AthleteActivity extends AppCompatActivity implements onFragmentLoad, onCreateFragmentLoad, onUpdateProfile, onPlansDetail {
 
     private BottomNavigationView mAthleteNav;
     private FrameLayout mAthleteFrame;
@@ -90,11 +93,12 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
                 new ListOfPlanParser() {
                     @Override
                     public void onSuccessResponse(JSONArray data) {
-
                         try {
+
                             arrList.clear();
                             for(int i = 0; i < data.length(); i++) {
-                                arrList.add(data.getJSONObject(i).getString("title"));
+                                JSONObject jsonObj = data.getJSONObject(i);
+                                arrList.add(jsonObj.getString("title"));
                             }
 
                         } catch (JSONException e) {
@@ -113,9 +117,21 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
     }
 
     @Override
-    public void onPlanDetail(int position, long id) {
-        PlansFragment fragment = new PlansFragment();
-        setFragment(fragment);
+    public void onPlanDetail(final String title) {
+        PlanController.getPlan(getApplicationContext(),
+                title,
+                new DetailPlanParser() {
+                    @Override
+                    public void onSuccessResponse(JSONObject data) throws JSONException {
+                        Bundle args = new Bundle();
+                        args.putString("planTitle", title);
+                        PlansDetailFragment fragment = new PlansDetailFragment();
+                        fragment.setArguments(args);
+                        setFragment(fragment);
+
+                    }
+                });
+
     }
 
     @Override
@@ -166,5 +182,16 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
         // clear the backstack
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
+    }
+
+    @Override
+    public void deletePlan(String title) {
+        PlanController.postDelete(getApplicationContext(), title, new SuccessListener() {
+            @Override
+            public void successful() {
+                PlansFragment fragment = new PlansFragment();
+                setFragment(fragment);
+            }
+        });
     }
 }

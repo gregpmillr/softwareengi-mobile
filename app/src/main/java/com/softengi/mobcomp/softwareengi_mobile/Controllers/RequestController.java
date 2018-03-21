@@ -7,12 +7,15 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.softengi.mobcomp.softwareengi_mobile.R;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.RequestQueueSingleton;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallbackArray;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -93,6 +96,44 @@ public class RequestController {
                 {
                     @Override
                     public void onResponse(JSONObject response) {
+                        callback.onSuccessResponse(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError e) {
+
+                        // error response
+                        e.printStackTrace();
+
+                        Toast.makeText(ctx,
+                                e.getMessage(),
+                                Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+        );
+
+        RequestQueueSingleton.getInstance(ctx).addToRequestQueue(request);
+
+    }
+
+    /**
+     * Builds the GET request and sends it to the API server
+     * @param ctx Context of application
+     * @param urlExtension String specifying the API URL with parameters
+     * @param callback Function called when the request is successful
+     */
+    public static void createGetRequestArray(final Context ctx, String urlExtension, final VolleyCallbackArray callback) {
+
+        String url = ctx.getResources().getString(R.string.base_api_url).concat(urlExtension);
+
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>()
+                {
+                    @Override
+                    public void onResponse(JSONArray response) {
                         callback.onSuccessResponse(response);
                     }
                 },
