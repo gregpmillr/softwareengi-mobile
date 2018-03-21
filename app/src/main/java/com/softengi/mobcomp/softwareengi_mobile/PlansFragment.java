@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ public class PlansFragment extends ListFragment implements AdapterView.OnItemCli
     public interface onFragmentLoad {
         void loadAdapter(ArrayAdapter listAdapter, ArrayList<String> data);
         void onCreatePlan();
-        void onPlanDetail(int position, long id);
+        void onPlanDetail(String title);
     }
 
     onFragmentLoad fragmentLoad;
@@ -80,6 +81,8 @@ public class PlansFragment extends ListFragment implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        fragmentLoad.onPlanDetail(position, id);
+        TextView test = (TextView) view;
+
+        fragmentLoad.onPlanDetail(test.getText().toString());
     }
 }
