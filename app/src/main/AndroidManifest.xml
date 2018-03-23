@@ -32,7 +32,6 @@
             android:name=".DailyNotificationIntentService"
             android:exported="false" />
 
-        <activity android:name=".PlanDetailActivity" />
         <activity android:name=".AthleteActivity"></activity>
     </application>
 

@@ -4,18 +4,56 @@
     android:layout_height="match_parent"
     tools:context="com.softengi.mobcomp.softwareengi_mobile.PlansDetailFragment">
 
-    <EditText
-        android:id="@+id/etPlanDetailTitle"
-        android:text="@string/etPlanCreateTitle"
-        android:layout_marginTop="30dp"
+    <LinearLayout
+        android:id="@+id/llPlanDetail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/btnDetailDelete"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DELETE"
-        />
+        android:layout_below="@id/rlProfile"
+        android:layout_above="@id/btnLogout"
+        android:background="@color/colorWhite"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/etPlanDetailTitle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/colorBlack"
+            android:fontFamily="sans-serif-thin"
+            android:background="@drawable/custom_edit_text_grey_background"
+            android:drawableStart="@drawable/ic_email_black_24dp"
+            android:drawableTint="@color/colorDarkGrey"
+            android:drawablePadding="15dp"
+            android:padding="10dp"
+            android:visibility="visible" />
+
+        <EditText
+            android:id="@+id/etPlanDetailRequiredSteps"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/colorBlack"
+            android:fontFamily="sans-serif-thin"
+            android:background="@drawable/custom_edit_text_grey_background"
+            android:drawableStart="@drawable/ic_email_black_24dp"
+            android:drawableTint="@color/colorDarkGrey"
+            android:drawablePadding="15dp"
+            android:padding="10dp"
+            android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btnDetailUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/update" />
+
+            <Button
+                android:id="@+id/btnDetailDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delete" />
+
+    </LinearLayout>
 
 </FrameLayout>

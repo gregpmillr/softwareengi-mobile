@@ -10,26 +10,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.HashMapAdapter;
 
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class PlansFragment extends ListFragment implements AdapterView.OnItemClickListener {
 
-    public interface onFragmentLoad {
-        void loadAdapter(ArrayAdapter listAdapter, ArrayList<String> data);
+    public interface onPlansFragmentLoad {
+        void loadPlansAdapter(HashMapAdapter hmAdapter, HashMap<Integer,String> data);
         void onCreatePlan();
-        void onPlanDetail(String title);
+        void onPlanDetail(Integer planId);
     }
 
-    onFragmentLoad fragmentLoad;
+    onPlansFragmentLoad mFragmentListener;
     Button btnCreatePlan;
+    HashMap<Integer,String> data;
 
     public PlansFragment() {
         // Required empty public constructor
@@ -40,7 +41,7 @@ public class PlansFragment extends ListFragment implements AdapterView.OnItemCli
         super.onAttach(context);
 
         try {
-            fragmentLoad = (onFragmentLoad) context;
+            mFragmentListener = (onPlansFragmentLoad) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement onSomeEventListener");
         }
@@ -60,20 +61,19 @@ public class PlansFragment extends ListFragment implements AdapterView.OnItemCli
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ArrayList<String> data;
-        ArrayAdapter<String> arrayAdapter;
+        HashMapAdapter hmAdapter;
 
-        data = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,data);
+        data = new HashMap<Integer,String>();
+        hmAdapter = new HashMapAdapter(getActivity().getApplicationContext(), data);
 
-        setListAdapter(arrayAdapter);
+        setListAdapter(hmAdapter);
         getListView().setOnItemClickListener(this);
-        fragmentLoad.loadAdapter(arrayAdapter, data);
+        mFragmentListener.loadPlansAdapter(hmAdapter, data);
 
         btnCreatePlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragmentLoad.onCreatePlan();
+                mFragmentListener.onCreatePlan();
             }
         });
 
@@ -83,6 +83,7 @@ public class PlansFragment extends ListFragment implements AdapterView.OnItemCli
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         TextView test = (TextView) view;
 
-        fragmentLoad.onPlanDetail(test.getText().toString());
+        Integer planId = Integer.valueOf(data.get(test.getText().toString()));
+        mFragmentListener.onPlanDetail(planId);
     }
 }
