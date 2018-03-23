@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.softengi.mobcomp.softwareengi_mobile.ListOfTeamsActivity">
+
+    <TextView
+        android:id="@+id/lblTeams"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="8sp"
+        android:textSize="20dp"
+        android:text="@string/teams"/>
+
+    <ListView
+        android:id="@+id/teamListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lblTeams"
+        android:layout_above="@+id/btnCreateTeam"
+        android:layout_margin="8dp"></ListView>
+
+    <Button
+        android:id="@+id/btnCreateTeam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="8sp"
+        android:text="@string/create_team"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorWhite"
+        android:onClick="createTeam"/>
+
+</RelativeLayout>
