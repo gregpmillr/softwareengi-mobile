@@ -13,16 +13,18 @@ import android.widget.EditText;
 public class PlansDetailFragment extends Fragment {
 
     public interface onPlansDetail {
-        void deletePlan(int planId);
-        void updatePlan(EditText title, EditText requiredSteps, int planId);
+        void deletePlan(String planId);
+        void updatePlan(EditText title, EditText requiredSteps, String planId);
     }
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PLAN_TITLE = "planTitle";
-    private static final String ARG_PLAN_ID = "planId";
+    private static final String ARG_PLAN_TITLE = "plan_title";
+    private static final String ARG_PLAN_REQUIRED_STEPS = "plan_required_steps";
+    private static final String ARG_PLAN_ID = "plan_id";
 
     private String mPlanTitle;
-    private int mPlanId;
+    private String mPlanRequiredSteps;
+    private String mPlanId;
     private EditText etPlanDetailTitle;
     private EditText etPlanDetailRequiredSteps;
     private Button btnPlanDetailDelete;
@@ -38,8 +40,9 @@ public class PlansDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mPlanTitle = getArguments().getString(ARG_PLAN_TITLE);
-            mPlanId    = getArguments().getInt(ARG_PLAN_ID);
+            mPlanTitle         = getArguments().getString(ARG_PLAN_TITLE);
+            mPlanRequiredSteps = getArguments().getString(ARG_PLAN_REQUIRED_STEPS);
+            mPlanId            = getArguments().getString(ARG_PLAN_ID);
         }
     }
 
@@ -49,7 +52,7 @@ public class PlansDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_plans_detail, container, false);
         etPlanDetailTitle = v.findViewById(R.id.etPlanDetailTitle);
-        etPlanDetailRequiredSteps = v.findViewById(R.id.etPlanDetailTitle);
+        etPlanDetailRequiredSteps = v.findViewById(R.id.etPlanDetailRequiredSteps);
         btnPlanDetailDelete = v.findViewById(R.id.btnDetailDelete);
         btnPlanDetailUpdate = v.findViewById(R.id.btnDetailUpdate);
 
@@ -72,6 +75,7 @@ public class PlansDetailFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         etPlanDetailTitle.setText(mPlanTitle);
+        etPlanDetailRequiredSteps.setText(mPlanRequiredSteps);
 
         btnPlanDetailUpdate.setOnClickListener(new View.OnClickListener() {
             @Override

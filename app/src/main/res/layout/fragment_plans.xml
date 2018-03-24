@@ -5,12 +5,12 @@
     tools:context="com.softengi.mobcomp.softwareengi_mobile.PlansFragment">
 
     <ListView
-        android:id="@android:id/list"
+        android:id="@+id/lvPlans"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_above="@id/btnCreatePlan"
-        android:layout_alignParentTop="true">
-
+        android:layout_alignParentTop="true"
+        android:divider="@color/colorWhiteTransparent">
     </ListView>
 
     <Button

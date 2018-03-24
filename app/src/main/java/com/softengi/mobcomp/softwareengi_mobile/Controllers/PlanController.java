@@ -47,10 +47,10 @@ public class PlanController {
 
     }
 
-    public static void postUpdate(final Context ctx, EditText title, EditText requiredSteps, int planId, final SuccessListener onSuccess) {
+    public static void postUpdate(final Context ctx, EditText title, EditText requiredSteps, String planId, final SuccessListener onSuccess) {
 
         Map<String,String> map = new HashMap<String,String>();
-        map.put("plan_id", String.valueOf(planId));
+        map.put("plan_id", planId);
         map.put("new_title", title.getText().toString());
         map.put("new_required_steps", requiredSteps.getText().toString());
 
@@ -62,9 +62,9 @@ public class PlanController {
         });
     }
 
-    public static void postDelete(final Context ctx, int planId, final SuccessListener onSuccess) {
+    public static void postDelete(final Context ctx, String planId, final SuccessListener onSuccess) {
         Map<String,String> map = new HashMap<String,String>();
-        map.put("plan_id", String.valueOf(planId));
+        map.put("plan_id", planId);
 
         RequestController.createPostRequest(ctx, map, url.concat("/delete"), new VolleyCallback() {
             @Override

@@ -15,16 +15,14 @@ import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 public class ProfileFragment extends Fragment {
 
     private EditText etProfileUsername, etProfileEmail, etProfileLanguage, etProfileCoach;
-    private Button btnLogout, btnProfileEmail, btnProfileLanguage, btnProfileCoach;
+    private Button btnLogout, btnProfileUpdate;
 
-    public interface onUpdateProfile {
-        void updateEmail();
-        void updateLanguage();
-        void updateCoach();
+    public interface onProfileListener {
+        void updateProfile(EditText username, EditText email, EditText language, EditText coach);
         void logout();
     }
 
-    onUpdateProfile onUpdateProfile;
+    onProfileListener mProfileListener;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -44,17 +42,8 @@ public class ProfileFragment extends Fragment {
         etProfileEmail       = v.findViewById(R.id.etProfileEmail);
         etProfileLanguage    = v.findViewById(R.id.etProfileLanguage);
         etProfileCoach       = v.findViewById(R.id.etProfileCoach);
+        btnProfileUpdate     = v.findViewById(R.id.btnProfileUpdate);
         btnLogout            = v.findViewById(R.id.btnLogout);
-        btnProfileEmail      = v.findViewById(R.id.btnProfileEmail);
-        btnProfileLanguage   = v.findViewById(R.id.btnProfileLanguage);
-        btnProfileCoach      = v.findViewById(R.id.btnProfileCoach);
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onUpdateProfile.logout();
-            }
-        });
 
         return v;
     }
@@ -68,13 +57,28 @@ public class ProfileFragment extends Fragment {
         etProfileCoach.setText(SharedPrefManager.getInstance(getContext()).getCoach());
         etProfileLanguage.setText(SharedPrefManager.getInstance(getContext()).getLanguage());
 
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mProfileListener.logout();
+            }
+        });
+
+        btnProfileUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mProfileListener.updateProfile(etProfileUsername, etProfileEmail, etProfileCoach, etProfileLanguage);
+            }
+        });
+
+
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            onUpdateProfile = (ProfileFragment.onUpdateProfile) context;
+            mProfileListener = (ProfileFragment.onProfileListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement onSomeEventListener");
         }

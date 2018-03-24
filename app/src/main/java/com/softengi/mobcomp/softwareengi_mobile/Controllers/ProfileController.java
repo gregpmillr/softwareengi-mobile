@@ -18,6 +18,7 @@ import com.google.gson.JsonObject;
 import com.softengi.mobcomp.softwareengi_mobile.R;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.RequestQueueSingleton;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.SuccessListener;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
 
 import org.json.JSONException;
@@ -28,174 +29,21 @@ import java.util.Map;
 
 public class ProfileController {
 
-    private static final String mUrlEndPoint = "/users/update/";
+    private static final String url = "users/update";
 
-    public static void postEmail(final Context ctx, EditText etEmail) {
+    public static void postUpdate(final Context ctx, EditText username, EditText email, EditText language, EditText coach, final SuccessListener onSuccess) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("username", username.getText().toString());
+        map.put("email", email.getText().toString());
+        map.put("language", language.getText().toString());
+        map.put("coach", coach.getText().toString());
 
-        String url = ctx.getResources().getString(R.string.base_api_url).concat(mUrlEndPoint+"email");
-
-        final String email = etEmail.getText().toString();
-
-        if(TextUtils.isEmpty(email)) {
-            etEmail.setError("Email cannot be empty");
-        } else {
-            JsonObjectRequest request = new JsonObjectRequest(
-                    Request.Method.POST, url, null,
-                    new Response.Listener<JSONObject>()
-                    {
-                        @Override
-                        public void onResponse(JSONObject response) {
-
-                            // successful response
-                            Toast.makeText(ctx, "Success!",
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError e) {
-
-                            // error response
-                            e.printStackTrace();
-
-                            Toast.makeText(ctx,
-                                    "Error retrieving data",
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-            )
-            {
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("email", email);
-                    return params;
-                }
-
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String,String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/x-www-form-urlencoded");
-                    return headers;
-                }
-            };
-
-            RequestQueueSingleton.getInstance(ctx).addToRequestQueue(request);
-
-        }
-
-    }
-
-    public static void postLanguage(final Context ctx, EditText etLanguage) {
-        final String language = etLanguage.getText().toString();
-        String url = ctx.getResources().getString(R.string.base_api_url).concat(mUrlEndPoint+"language");
-
-        if(TextUtils.isEmpty(language)) {
-            etLanguage.setError("Language cannot be empty");
-        } else {
-            JsonObjectRequest request = new JsonObjectRequest(
-                    Request.Method.POST,  url, null,
-                    new Response.Listener<JSONObject>()
-                    {
-                        @Override
-                        public void onResponse(JSONObject response) {
-
-                            // successful response
-                            Toast.makeText(ctx, "Success!",
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError e) {
-
-                            // error response
-                            e.printStackTrace();
-
-                            Toast.makeText(ctx,
-                                    "Error retrieving data",
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-            )
-            {
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("language", language);
-                    return params;
-                }
-
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String,String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/x-www-form-urlencoded");
-                    return headers;
-                }
-            };
-
-            RequestQueueSingleton.getInstance(ctx).addToRequestQueue(request);
-
-        }
-    }
-
-    public static void postCoach(final Context ctx, EditText etCoach) {
-
-        final String coach = etCoach.getText().toString();
-
-        String url = ctx.getResources().getString(R.string.base_api_url).concat(mUrlEndPoint+"coach");
-
-        if(TextUtils.isEmpty(coach)) {
-            etCoach.setError("Coach cannot be empty");
-        } else {
-            JsonObjectRequest request = new JsonObjectRequest(
-                    Request.Method.POST, url, null,
-                    new Response.Listener<JSONObject>()
-                    {
-                        @Override
-                        public void onResponse(JSONObject response) {
-
-                            // successful response
-                            Toast.makeText(ctx, "Success!",
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError e) {
-
-                            // error response
-                            e.printStackTrace();
-
-                            Toast.makeText(ctx,
-                                    "Error retrieving data",
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-            )
-            {
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("coach", coach);
-                    return params;
-                }
-
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String,String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/x-www-form-urlencoded");
-                    return headers;
-                }
-            };
-
-            RequestQueueSingleton.getInstance(ctx).addToRequestQueue(request);
-
-        }
-
+        RequestController.createPostRequest(ctx, map, url, new VolleyCallback() {
+            @Override
+            public void onSuccessResponse(JSONObject result) {
+                onSuccess.successful();
+            }
+        });
     }
 
 }
