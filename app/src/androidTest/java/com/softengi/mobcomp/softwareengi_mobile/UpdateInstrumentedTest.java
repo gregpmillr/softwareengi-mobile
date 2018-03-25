@@ -26,8 +26,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 public class UpdateInstrumentedTest {
 
     @Rule
-    public IntentsTestRule<MainActivity> intentsTestRule =
-            new IntentsTestRule<>(MainActivity.class);
+    public IntentsTestRule<LoginActivity> intentsTestRule =
+            new IntentsTestRule<>(LoginActivity.class);
 
     @Test
     public void testUpdateProfile() throws Exception {

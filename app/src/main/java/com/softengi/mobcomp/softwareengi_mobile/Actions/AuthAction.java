@@ -1,12 +1,12 @@
-package com.softengi.mobcomp.softwareengi_mobile.Controllers;
+package com.softengi.mobcomp.softwareengi_mobile.Actions;
 import android.content.Context;
 import android.content.Intent;import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 
-import com.softengi.mobcomp.softwareengi_mobile.AthleteActivity;
 import com.softengi.mobcomp.softwareengi_mobile.MainActivity;
+import com.softengi.mobcomp.softwareengi_mobile.LoginActivity;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
 import com.softengi.mobcomp.softwareengi_mobile.Validations.AuthValidator;
@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
-public class AuthController {
+public class AuthAction {
 
     /**
      * Checks if user info is in DB and can login.
@@ -81,7 +81,7 @@ public class AuthController {
 
         if(map != null) {
             // create the API request and save the returned token into shared preferences
-            RequestController.createPostRequest(
+            RequestAction.createPostRequest(
                     ctx,
                     map,
                     urlExtension,
@@ -101,7 +101,7 @@ public class AuthController {
                                 e.printStackTrace();
                             }
 
-                            Intent intent = new Intent(ctx, MainActivity.class);
+                            Intent intent = new Intent(ctx, LoginActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             ctx.startActivity(intent);
 
@@ -129,7 +129,7 @@ public class AuthController {
 
         if(map != null) {
             // create the API request and save the returned token into shared preferences
-            RequestController.createPostRequest(
+            RequestAction.createPostRequest(
                     ctx,
                     map,
                     urlExtension,
@@ -148,7 +148,7 @@ public class AuthController {
                                     e.printStackTrace();
                                 }
 
-                            Intent intent = new Intent(ctx, AthleteActivity.class);
+                            Intent intent = new Intent(ctx, MainActivity.class);
                             ctx.startActivity(intent);
 
                         }

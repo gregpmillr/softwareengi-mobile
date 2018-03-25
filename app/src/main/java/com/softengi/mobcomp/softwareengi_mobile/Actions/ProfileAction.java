@@ -1,4 +1,4 @@
-package com.softengi.mobcomp.softwareengi_mobile.Controllers;
+package com.softengi.mobcomp.softwareengi_mobile.Actions;
 
 import android.content.Context;
 import android.widget.CheckBox;
@@ -17,7 +17,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProfileController {
+public class ProfileAction {
 
     private static final String url = "users/";
 
@@ -28,7 +28,7 @@ public class ProfileController {
         map.put("language", language.getText().toString());
         map.put("coach", String.valueOf(coach.isChecked()));
 
-        RequestController.createPostRequest(ctx, map, url.concat("update"), new VolleyCallback() {
+        RequestAction.createPostRequest(ctx, map, url.concat("update"), new VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject result) {
                 onSuccess.successful();
@@ -38,7 +38,7 @@ public class ProfileController {
 
     public static void getProfile(final Context ctx, final TextView tvTotalSteps, final TextView tvTotalPlans, final TextView tvTotalTeams, final ProfileParser callback) {
 
-        RequestController.createGetRequest(ctx, url.concat(SharedPrefManager.getInstance(ctx).getUsername()), new VolleyCallback() {
+        RequestAction.createGetRequest(ctx, url.concat(SharedPrefManager.getInstance(ctx).getUsername()), new VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject result) {
                 try {

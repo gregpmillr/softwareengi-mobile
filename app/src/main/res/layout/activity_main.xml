@@ -6,7 +6,7 @@
     android:background="@drawable/runner_background"
     android:paddingStart="30sp"
     android:paddingEnd="30sp"
-    tools:context="com.softengi.mobcomp.softwareengi_mobile.MainActivity">
+    tools:context="com.softengi.mobcomp.softwareengi_mobile.LoginActivity">
 
     <RelativeLayout
         android:id="@+id/rlLogin"

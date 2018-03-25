@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +20,7 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".LoginActivity" />
         <activity android:name=".StepActivity" />
 
         <receiver
@@ -32,7 +32,7 @@
             android:name=".DailyNotificationIntentService"
             android:exported="false" />
 
-        <activity android:name=".AthleteActivity"></activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

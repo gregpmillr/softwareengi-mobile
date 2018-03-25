@@ -1,7 +1,6 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
-import com.softengi.mobcomp.softwareengi_mobile.Controllers.StepController;
-import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
+import com.softengi.mobcomp.softwareengi_mobile.Actions.StepAction;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.StepDetector;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.StepListener;
 
@@ -18,22 +17,27 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import java.util.LinkedList;
+
 
 public class StepActivity extends AppCompatActivity implements SensorEventListener, StepListener {
     private StepDetector simpleStepDetector;
     private SensorManager sensorManager;
     private Sensor accel;
-    private int numSteps = 0;
     private int planId = 0;
     private String planDescription = "";
-    private TextView tvStep, tvPlanDescription;
+    private TextView tvStep, tvPace, tvPlanDescription;
     private Button btnStartPause;
     private Button btnStop;
 
     private Chronometer mChronometer;
 
+    private int numSteps = 0;
     private long lastPause = 0;
     private int pausedSteps = 0;
+
+    private LinkedList<Integer> timestamps;
+    String pace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.step_monitor);
 
         tvStep              = findViewById(R.id.tvStep);
+        tvPace              = findViewById(R.id.tvPace);
         tvPlanDescription   = findViewById(R.id.tvPlanDescription);
         btnStartPause       = findViewById(R.id.btnStartPause);
         btnStop             = findViewById(R.id.btnStop);
@@ -61,6 +66,15 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
         mChronometer = findViewById(R.id.chrStopWatch);
         mChronometer.setCountDown(false);
 
+        mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener()
+        {
+            @Override
+            public void onChronometerTick(Chronometer chronometer)
+            {
+                calculatePace();
+            }
+        });
+
         simpleStepDetector.registerListener(this);
         btnStartPause.setSelected(false);
 
@@ -80,7 +94,10 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
                 } else {
                     // resume
                     if(lastPause == 0) {
+                        timestamps = new LinkedList<>();
                         mChronometer.setBase(SystemClock.elapsedRealtime());
+                        pace = "0 " + R.string.pace;
+                        tvPace.setText(pace);
                     } else {
                         mChronometer.setBase(mChronometer.getBase() + SystemClock.elapsedRealtime() - lastPause);
                     }
@@ -100,7 +117,7 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View view) {
 
-                StepController.postSteps(
+                StepAction.postSteps(
                         getApplicationContext(),
                         numSteps,
                         planId
@@ -134,5 +151,27 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
     public void step(long timeNs) {
         numSteps++;
         tvStep.setText(String.valueOf(numSteps));
+        calculatePace();
+    }
+
+    private void calculatePace() {
+        /*
+        //pace change on every steps made
+        if (timestamps.size() >= 5) {
+            timestamps.removeFirst();
+        }
+        timestamps.addLast(lastPause = SystemClock.elapsedRealtime());
+
+        pace = timestamps.size() / (timestamps.getLast() - timestamps.getFirst()) + " " + R.string.pace;
+        tvPace.setText(pace);
+        */
+
+        //pace change on every seconds passed
+        if (timestamps.size() >= 5) {
+            timestamps.removeFirst();
+        }
+        timestamps.addLast(numSteps);
+        pace = (timestamps.getLast() - timestamps.getFirst()) / timestamps.size() + " " + R.string.pace;
+        tvPace.setText(pace);
     }
 }

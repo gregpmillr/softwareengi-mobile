@@ -1,7 +1,6 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
 import android.support.test.espresso.intent.rule.IntentsTestRule;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Rule;
@@ -29,8 +28,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 public class RegisterInstrumentedTest {
 
     @Rule
-    public IntentsTestRule<MainActivity> intentsTestRule =
-            new IntentsTestRule<>(MainActivity.class);
+    public IntentsTestRule<LoginActivity> intentsTestRule =
+            new IntentsTestRule<>(LoginActivity.class);
 
 
     @Test
@@ -63,7 +62,7 @@ public class RegisterInstrumentedTest {
         onView(withId(R.id.btnSubmit))
                 .perform(click());
 
-        intended(hasComponent(MainActivity.class.getName()));
+        intended(hasComponent(LoginActivity.class.getName()));
     }
 
     @Test
@@ -100,6 +99,6 @@ public class RegisterInstrumentedTest {
         onView(withId(R.id.btnSubmit))
                 .perform(click());
 
-        intended(hasComponent(MainActivity.class.getName()));
+        intended(hasComponent(LoginActivity.class.getName()));
     }
 }

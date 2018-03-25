@@ -1,7 +1,6 @@
-package com.softengi.mobcomp.softwareengi_mobile.Controllers;
+package com.softengi.mobcomp.softwareengi_mobile.Actions;
 
 import android.content.Context;
-import android.content.Intent;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -20,7 +19,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PlanController {
+public class PlanAction {
 
     private static final String url = "plans/";
 
@@ -34,7 +33,7 @@ public class PlanController {
         if(map != null) {
             map.put("username", String.valueOf(SharedPrefManager.getInstance(ctx).getUsername()));
 
-            RequestController.createPostRequest(ctx, map, url, new VolleyCallback() {
+            RequestAction.createPostRequest(ctx, map, url, new VolleyCallback() {
                 @Override
                 public void onSuccessResponse(JSONObject result) {
                     Toast.makeText(ctx, "Saved plan successfully", Toast.LENGTH_SHORT).show();
@@ -54,7 +53,7 @@ public class PlanController {
         map.put("new_title", title.getText().toString());
         map.put("new_required_steps", requiredSteps.getText().toString());
 
-        RequestController.createPostRequest(ctx, map, url.concat("update"), new VolleyCallback() {
+        RequestAction.createPostRequest(ctx, map, url.concat("update"), new VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject result) {
                 onSuccess.successful();
@@ -66,7 +65,7 @@ public class PlanController {
         Map<String,String> map = new HashMap<String,String>();
         map.put("plan_id", planId);
 
-        RequestController.createPostRequest(ctx, map, url.concat("delete"), new VolleyCallback() {
+        RequestAction.createPostRequest(ctx, map, url.concat("delete"), new VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject result) {
                 Toast.makeText(ctx, "Deleted plan successfully", Toast.LENGTH_SHORT).show();
@@ -77,7 +76,7 @@ public class PlanController {
 
     public static void getListOfPlans(final Context ctx, String username, final ListOfPlanParser callback) {
 
-        RequestController.createGetRequestArray(ctx, url.concat(username+"/list"), new VolleyCallbackArray() {
+        RequestAction.createGetRequestArray(ctx, url.concat(username+"/list"), new VolleyCallbackArray() {
             @Override
             public void onSuccessResponse(JSONArray result) {
                 // set the data parameter to the JSONObject result as a string of plans
@@ -90,7 +89,7 @@ public class PlanController {
 
     public static void getPlan(final Context ctx, int planId, final DetailPlanParser callback) {
 
-        RequestController.createGetRequest(ctx, url.concat(String.valueOf(planId)), new VolleyCallback() {
+        RequestAction.createGetRequest(ctx, url.concat(String.valueOf(planId)), new VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject result) {
                 try {

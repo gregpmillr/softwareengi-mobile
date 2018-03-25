@@ -25,7 +25,7 @@ public class DailyNotificationIntentService extends IntentService {
         builder.setContentTitle("Get moving!");
         builder.setContentText("Get on out there and moooove!!!");
         builder.setSmallIcon(R.drawable.ic_launcher_background);
-        Intent notifyIntent = new Intent(this, MainActivity.class);
+        Intent notifyIntent = new Intent(this, LoginActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 2,
                 notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         //to be able to launch your activity from the notification

@@ -27,11 +27,24 @@
         android:format="HH:MM:SS"/>
 
     <TextView
+        android:id="@+id/tvPace"
+        android:layout_width="wrap_content"
+        android:layout_height="125sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/chrStopWatch"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
+        android:text="@string/pace" />
+
+    <TextView
         android:id="@+id/tvStep"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/chrStopWatch"
+        android:layout_below="@id/tvPace"
         android:textAlignment="center"
         android:gravity="center"
         android:textSize="50sp"
