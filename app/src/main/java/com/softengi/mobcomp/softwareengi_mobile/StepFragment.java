@@ -1,31 +1,42 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
-import com.softengi.mobcomp.softwareengi_mobile.Actions.StepAction;
-import com.softengi.mobcomp.softwareengi_mobile.Utils.StepDetector;
-import com.softengi.mobcomp.softwareengi_mobile.Utils.StepListener;
-
-import android.content.Intent;
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import com.softengi.mobcomp.softwareengi_mobile.Actions.StepAction;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.StepDetector;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.StepListener;
+
 import java.util.LinkedList;
 
+/**
+ * Created by br239 on 2018-03-25.
+ */
 
-public class StepActivity extends AppCompatActivity implements SensorEventListener, StepListener {
+public class StepFragment extends Fragment implements SensorEventListener, StepListener {
+
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PLAN_TITLE = "plan_title";
+    private static final String ARG_PLAN_ID = "plan_id";
+
     private StepDetector simpleStepDetector;
     private SensorManager sensorManager;
     private Sensor accel;
     private int planId = 0;
-    private String planDescription = "";
+    private String planTitle = "";
     private TextView tvStep, tvPace, tvPlanDescription;
     private Button btnStartPause;
     private Button btnStop;
@@ -39,31 +50,46 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
     private LinkedList<Integer> timestamps;
     String pace;
 
+    public StepFragment() {
+        // Required empty public constructor
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.step_monitor);
-
-        tvStep              = findViewById(R.id.tvStep);
-        tvPace              = findViewById(R.id.tvPace);
-        tvPlanDescription   = findViewById(R.id.tvPlanDescription);
-        btnStartPause       = findViewById(R.id.btnStartPause);
-        btnStop             = findViewById(R.id.btnStop);
-        simpleStepDetector  = new StepDetector();
-        sensorManager       = (SensorManager) getSystemService(SENSOR_SERVICE);
-        accel               = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
-        // if the intent of this Activity contains a planId, we'll be using it
-        // to attach to the new step database record. If it does not, we use the "Overall"
-        // plan by using planId = 0.
-        Intent intent = getIntent();
-        if(intent != null) {
-            planId = intent.getIntExtra("planId", 0);
-            intent.getStringExtra("planDescription");
-            tvPlanDescription.setText(planDescription);
+        if (getArguments() != null) {
+            planTitle         = getArguments().getString(ARG_PLAN_TITLE);
+            planId            = Integer.valueOf(getArguments().getString(ARG_PLAN_ID));
         }
+    }
 
-        mChronometer = findViewById(R.id.chrStopWatch);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_step, container, false);
+        tvStep              = v.findViewById(R.id.tvStep);
+        tvPace              = v.findViewById(R.id.tvPace);
+        tvPlanDescription   = v.findViewById(R.id.tvPlanDescription);
+        btnStartPause       = v.findViewById(R.id.btnStartPause);
+        btnStop             = v.findViewById(R.id.btnStop);
+        simpleStepDetector  = new StepDetector();
+        sensorManager       = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        accel               = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mChronometer        = v.findViewById(R.id.chrStopWatch);
+
+        return v;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+    }
+
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
         mChronometer.setCountDown(false);
 
         mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener()
@@ -71,6 +97,7 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onChronometerTick(Chronometer chronometer)
             {
+                System.out.println("tick test " + SystemClock.elapsedRealtime());
                 calculatePace();
             }
         });
@@ -89,7 +116,7 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
                     mChronometer.stop();
 
                     pausedSteps = numSteps;
-                    sensorManager.unregisterListener(StepActivity.this);
+                    sensorManager.unregisterListener(StepFragment.this);
                     btnStartPause.setBackground(getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp,null));
                 } else {
                     // resume
@@ -104,7 +131,7 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
                     mChronometer.start();
 
                     numSteps = pausedSteps;
-                    sensorManager.registerListener(StepActivity.this, accel,SensorManager.SENSOR_DELAY_FASTEST);
+                    sensorManager.registerListener(StepFragment.this, accel,SensorManager.SENSOR_DELAY_FASTEST);
                     btnStartPause.setBackground(getResources().getDrawable(R.drawable.ic_pause_black_24dp,null));
                 }
 
@@ -118,7 +145,7 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
             public void onClick(View view) {
 
                 StepAction.postSteps(
-                        getApplicationContext(),
+                        getActivity().getApplicationContext(),
                         numSteps,
                         planId
                 );
@@ -128,12 +155,13 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
                 tvStep.setText("0");
                 btnStartPause.setSelected(false);
                 btnStartPause.setBackground(getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp,null));
-                sensorManager.unregisterListener(StepActivity.this);
+                sensorManager.unregisterListener(StepFragment.this);
             }
         });
     }
 
-    @Override
+
+        @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             simpleStepDetector.updateAccel(
@@ -151,7 +179,6 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
     public void step(long timeNs) {
         numSteps++;
         tvStep.setText(String.valueOf(numSteps));
-        calculatePace();
     }
 
     private void calculatePace() {
@@ -171,7 +198,10 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
             timestamps.removeFirst();
         }
         timestamps.addLast(numSteps);
-        pace = (timestamps.getLast() - timestamps.getFirst()) / timestamps.size() + " " + R.string.pace;
-        tvPace.setText(pace);
+        double firstStep = timestamps.getFirst();
+        double lastStep = timestamps.getLast();
+        double diffStep = lastStep - firstStep;
+        double pace = diffStep / timestamps.size();
+        tvPace.setText(pace + " " + getString(R.string.pace));
     }
 }
