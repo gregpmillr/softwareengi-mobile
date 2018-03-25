@@ -3,6 +3,7 @@ package com.softengi.mobcomp.softwareengi_mobile.Utils;
 import com.auth0.android.jwt.JWT;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 public class SharedPrefManager {
     // constants
@@ -11,6 +12,8 @@ public class SharedPrefManager {
     public static final String KEY_EMAIL = "keyemail";
     public static final String KEY_COACH = "keycoach";
     public static final String KEY_LANGUAGE = "keylanguage";
+    public static final String KEY_PASSWORD= "keypassword";
+    public static final String KEY_REMEMBER_ME = "keyrememberme";
 
     private static SharedPrefManager mInstance;
     private static Context mCtx;
@@ -72,9 +75,33 @@ public class SharedPrefManager {
         return sharedPreferences.getString(KEY_LANGUAGE, "No language exists");
     }
 
+    public String getPassword() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_PASSWORD, "No password exists");
+    }
+
     public boolean isUserCoach() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(KEY_COACH, false);
+    }
+
+    public boolean getRememberMe() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(KEY_REMEMBER_ME, false);
+    }
+
+    public void setRememberMe(boolean flag) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(KEY_REMEMBER_ME, flag);
+        editor.apply();
+    }
+
+    public void setPassword(String password) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_PASSWORD, password);
+        editor.apply();
     }
 
     /**
