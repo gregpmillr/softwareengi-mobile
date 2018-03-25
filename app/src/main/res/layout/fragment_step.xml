@@ -23,8 +23,7 @@
         android:textAlignment="center"
         android:textSize="30sp"
         android:fontFamily="sans-serif"
-        android:layout_marginTop="30dp"
-        android:format="HH:MM:SS"/>
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:id="@+id/tvPace"

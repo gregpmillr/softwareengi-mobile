@@ -124,9 +124,9 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
     @Override
     public void onPlanDetail(final PlanDataModel dataModel) {
         Bundle args = new Bundle();
-        args.putString("plan_title", dataModel.getTitle());
-        args.putString("plan_required_steps", dataModel.getRequiredSteps());
-        args.putString("plan_id", dataModel.getId());
+        args.putString(getString(R.string.plan_title), dataModel.getTitle());
+        args.putString(getString(R.string.plan_required_steps), dataModel.getRequiredSteps());
+        args.putString(getString(R.string.plan_id), dataModel.getId());
         PlansDetailFragment fragment = new PlansDetailFragment();
         fragment.setArguments(args);
         setFragment(fragment);
@@ -206,5 +206,15 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
                 Toast.makeText(getApplicationContext(), R.string.updated, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void toStepFragment(String planId, String title) {
+        Bundle args = new Bundle();
+        args.putString(getString(R.string.plan_title), title);
+        args.putString(getString(R.string.plan_id), planId);
+        StepFragment fragment = new StepFragment();
+        fragment.setArguments(args);
+        setFragment(fragment);
     }
 }

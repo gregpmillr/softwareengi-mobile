@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 
 public class StepMonitorTest {
 
-    private StepActivity activity = new StepActivity();
+    private StepFragment fragment = new StepFragment();
 
 
     //TODO
