@@ -41,6 +41,6 @@
     <string name="delete">DELETE</string>
     <string name="updated">UPDATED</string>
     <string name="hi">Hi</string>
-
+    <string name="login_chk_remember_me">Remember Me</string>
     <string name="pace">steps/sec</string>
 </resources>

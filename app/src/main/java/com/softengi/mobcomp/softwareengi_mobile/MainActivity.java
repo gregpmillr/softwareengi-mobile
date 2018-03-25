@@ -179,7 +179,6 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
 
     @Override
     public void logout() {
-        SharedPrefManager.getInstance(getApplicationContext()).logout();
         MainActivity.this.finish();
         Intent i = new Intent(this,LoginActivity.class);
         // clear the backstack

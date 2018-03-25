@@ -120,9 +120,16 @@ public class AuthAction {
      * @param username Username for user credentials
      * @param password Password for user credentials
      */
-    public static void postLogin(final Context ctx, EditText username, EditText password) {
+    public static void postLogin(final Context ctx, EditText username, EditText password, CheckBox rememberMe) {
 
         String urlExtension = "auth";
+
+        // check if the user wants to save the credentials entered
+        if(rememberMe.isChecked()) {
+            SharedPrefManager.getInstance(ctx).setRememberMe(true);
+        } else {
+            SharedPrefManager.getInstance(ctx).setRememberMe(false);
+        }
 
         // store all inputs into HashMap
         Map<String, String> map = AuthValidator.validateLogin(username, password);

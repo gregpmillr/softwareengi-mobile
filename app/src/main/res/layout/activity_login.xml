@@ -78,6 +78,20 @@
 
     </LinearLayout>
 
+    <CheckBox
+        android:id="@+id/chkRememberMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_chk_remember_me"
+        android:textColor="#FFFFFF"
+        android:buttonTint="#FFFFFF"
+        android:fontFamily="sans-serif-thin"
+        android:layoutDirection="rtl"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/llLoginEtWrapper"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"/>
+
 
     <Button
         android:id="@+id/btnLogin"
