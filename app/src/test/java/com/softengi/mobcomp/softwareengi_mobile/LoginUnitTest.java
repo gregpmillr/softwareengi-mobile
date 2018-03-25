@@ -1,12 +1,10 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
-import com.softengi.mobcomp.softwareengi_mobile.Controllers.AuthController;
+import com.softengi.mobcomp.softwareengi_mobile.Actions.AuthAction;
 
 import junit.framework.Assert;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Testing for the login.
@@ -21,8 +19,8 @@ public class LoginUnitTest {
      */
     @Test
     public void testLoginInfo() throws Exception {
-        Assert.assertFalse(AuthController.checkLogin("not bob", "wrong"));
-        Assert.assertFalse(AuthController.checkLogin("bob", "wrong"));
-        Assert.assertTrue(AuthController.checkLogin("bob", "pass"));
+        Assert.assertFalse(AuthAction.checkLogin("not bob", "wrong"));
+        Assert.assertFalse(AuthAction.checkLogin("bob", "wrong"));
+        Assert.assertTrue(AuthAction.checkLogin("bob", "pass"));
     }
 }

@@ -1,4 +1,4 @@
-package com.softengi.mobcomp.softwareengi_mobile.Controllers;
+package com.softengi.mobcomp.softwareengi_mobile.Actions;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -22,7 +22,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RequestController {
+public class RequestAction {
 
     /**
      * Builds the POST request and sends it to the API server

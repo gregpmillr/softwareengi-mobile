@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.softengi.mobcomp.softwareengi_mobile.Controllers.AuthController;
+import com.softengi.mobcomp.softwareengi_mobile.Actions.AuthAction;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -31,7 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                AuthController.postRegister(
+                AuthAction.postRegister(
                         getApplicationContext(), etUsername, etEmail,
                         etPassword, etLanguage, chkCoach
                 );

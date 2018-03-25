@@ -1,7 +1,6 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
-import com.softengi.mobcomp.softwareengi_mobile.Controllers.StepController;
-import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
+import com.softengi.mobcomp.softwareengi_mobile.Actions.StepAction;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.StepDetector;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.StepListener;
 
@@ -118,7 +117,7 @@ public class StepActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View view) {
 
-                StepController.postSteps(
+                StepAction.postSteps(
                         getApplicationContext(),
                         numSteps,
                         planId

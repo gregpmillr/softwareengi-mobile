@@ -25,8 +25,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 public class LogoutInstrumentedTest {
 
     @Rule
-    public IntentsTestRule<MainActivity> intentsTestRule =
-            new IntentsTestRule<>(MainActivity.class);
+    public IntentsTestRule<LoginActivity> intentsTestRule =
+            new IntentsTestRule<>(LoginActivity.class);
 
 
     @Test
@@ -46,6 +46,6 @@ public class LogoutInstrumentedTest {
         // check user text
         onView(withId(R.id.btnLogout))
                 .perform(click());
-        intended(hasComponent(MainActivity.class.getName()));
+        intended(hasComponent(LoginActivity.class.getName()));
     }
 }
