@@ -12,7 +12,7 @@ public class SharedPrefManager {
     public static final String KEY_EMAIL = "keyemail";
     public static final String KEY_COACH = "keycoach";
     public static final String KEY_LANGUAGE = "keylanguage";
-    public static final String KEY_PASSWORD_DIGEST = "keypassworddigest";
+    public static final String KEY_PASSWORD= "keypassword";
     public static final String KEY_REMEMBER_ME = "keyrememberme";
 
     private static SharedPrefManager mInstance;
@@ -43,7 +43,6 @@ public class SharedPrefManager {
         editor.putString(KEY_EMAIL, jwt.getClaim("email").asString());
         editor.putBoolean(KEY_COACH, jwt.getClaim("coach").asBoolean());
         editor.putString(KEY_LANGUAGE, jwt.getClaim("language").asString());
-        editor.putString(KEY_PASSWORD_DIGEST, jwt.getClaim("password_digest").asString());
         editor.apply();
     }
 
@@ -78,7 +77,7 @@ public class SharedPrefManager {
 
     public String getPassword() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(KEY_PASSWORD_DIGEST, "No password exists");
+        return sharedPreferences.getString(KEY_PASSWORD, "No password exists");
     }
 
     public boolean isUserCoach() {
@@ -95,6 +94,13 @@ public class SharedPrefManager {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(KEY_REMEMBER_ME, flag);
+        editor.apply();
+    }
+
+    public void setPassword(String password) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_PASSWORD, password);
         editor.apply();
     }
 

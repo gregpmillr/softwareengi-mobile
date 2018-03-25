@@ -127,6 +127,7 @@ public class AuthAction {
         // check if the user wants to save the credentials entered
         if(rememberMe.isChecked()) {
             SharedPrefManager.getInstance(ctx).setRememberMe(true);
+            SharedPrefManager.getInstance(ctx).setPassword(password.getText().toString());
         } else {
             SharedPrefManager.getInstance(ctx).setRememberMe(false);
         }
