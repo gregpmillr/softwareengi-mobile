@@ -4,18 +4,69 @@
     android:layout_height="match_parent"
     tools:context="com.softengi.mobcomp.softwareengi_mobile.PlansDetailFragment">
 
-    <EditText
-        android:id="@+id/etPlanDetailTitle"
-        android:text="@string/etPlanCreateTitle"
-        android:layout_marginTop="30dp"
+    <RelativeLayout
+        android:id="@+id/llPlanDetail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/btnDetailDelete"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DELETE"
-        />
+        android:background="@color/colorWhite"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/etPlanDetailTitle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/colorBlack"
+            android:fontFamily="sans-serif-thin"
+            android:background="@drawable/custom_edit_text_grey_background"
+            android:drawableStart="@drawable/ic_edit_black_24dp"
+            android:drawableTint="@color/colorDarkGrey"
+            android:drawablePadding="15dp"
+            android:padding="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:visibility="visible" />
+
+        <EditText
+            android:id="@+id/etPlanDetailRequiredSteps"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/colorBlack"
+            android:fontFamily="sans-serif-thin"
+            android:background="@drawable/custom_edit_text_grey_background"
+            android:drawableStart="@drawable/ic_edit_black_24dp"
+            android:drawableTint="@color/colorDarkGrey"
+            android:drawablePadding="15dp"
+            android:layout_below="@id/etPlanDetailTitle"
+            android:padding="10dp"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/btnDetailUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_above="@id/btnDetailDelete"
+            android:background="@drawable/blueborder_transparent_background"
+            android:text="@string/update" />
+
+        <Button
+            android:id="@+id/btnDetailDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/blueborder_transparent_background"
+            android:text="@string/delete" />
+
+    </RelativeLayout>
 
 </FrameLayout>

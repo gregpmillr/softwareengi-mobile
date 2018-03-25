@@ -1,7 +1,6 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,15 +13,23 @@ import android.widget.EditText;
 public class PlansDetailFragment extends Fragment {
 
     public interface onPlansDetail {
-        void deletePlan(String title);
+        void deletePlan(String planId);
+        void updatePlan(EditText title, EditText requiredSteps, String planId);
     }
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PLAN_TITLE = "planTitle";
+    private static final String ARG_PLAN_TITLE = "plan_title";
+    private static final String ARG_PLAN_REQUIRED_STEPS = "plan_required_steps";
+    private static final String ARG_PLAN_ID = "plan_id";
 
     private String mPlanTitle;
-    private EditText etPlanTitle;
-    private Button btnDetailDelete;
+    private String mPlanRequiredSteps;
+    private String mPlanId;
+    private EditText etPlanDetailTitle;
+    private EditText etPlanDetailRequiredSteps;
+    private Button btnPlanDetailDelete;
+    private Button btnPlanDetailUpdate;
+
     onPlansDetail plansDetail;
 
     public PlansDetailFragment() {
@@ -33,7 +40,9 @@ public class PlansDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mPlanTitle = getArguments().getString(ARG_PLAN_TITLE);
+            mPlanTitle         = getArguments().getString(ARG_PLAN_TITLE);
+            mPlanRequiredSteps = getArguments().getString(ARG_PLAN_REQUIRED_STEPS);
+            mPlanId            = getArguments().getString(ARG_PLAN_ID);
         }
     }
 
@@ -42,8 +51,10 @@ public class PlansDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_plans_detail, container, false);
-        etPlanTitle = v.findViewById(R.id.etPlanDetailTitle);
-        btnDetailDelete = v.findViewById(R.id.btnDetailDelete);
+        etPlanDetailTitle = v.findViewById(R.id.etPlanDetailTitle);
+        etPlanDetailRequiredSteps = v.findViewById(R.id.etPlanDetailRequiredSteps);
+        btnPlanDetailDelete = v.findViewById(R.id.btnDetailDelete);
+        btnPlanDetailUpdate = v.findViewById(R.id.btnDetailUpdate);
 
         return v;
     }
@@ -63,28 +74,22 @@ public class PlansDetailFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        etPlanTitle.setText(mPlanTitle);
+        etPlanDetailTitle.setText(mPlanTitle);
+        etPlanDetailRequiredSteps.setText(mPlanRequiredSteps);
 
-        btnDetailDelete.setOnClickListener(new View.OnClickListener() {
+        btnPlanDetailUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                plansDetail.deletePlan(etPlanTitle.getText().toString());
+                plansDetail.updatePlan(etPlanDetailTitle, etPlanDetailRequiredSteps, mPlanId);
+            }
+        });
+
+        btnPlanDetailDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                plansDetail.deletePlan(mPlanId);
             }
         });
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

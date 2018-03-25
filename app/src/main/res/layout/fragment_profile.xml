@@ -6,24 +6,12 @@
     tools:context="com.softengi.mobcomp.softwareengi_mobile.ProfileFragment"
     android:background="@color/colorGrey">
 
-    <TextView
-        android:id="@+id/tvProfileUsername"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:text="@string/profile_tv_username"
-        android:textColor="@color/colorBlack"
-        android:fontFamily="sans-serif-thin"
-        />
-
     <LinearLayout
         android:id="@+id/llProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:baselineAligned="false"
-        android:orientation="horizontal"
-        android:layout_below="@+id/tvProfileUsername">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -158,23 +146,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rlProfile"
-        android:layout_above="@id/btnLogout"
+        android:layout_above="@id/btnProfileUpdate"
         android:background="@color/colorWhite"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/etProfileUsername"
+        <TextView
+            android:id="@+id/tvProfileUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorBlack"
             android:fontFamily="sans-serif-thin"
-            android:background="@drawable/custom_edit_text_grey_background"
             android:layout_margin="10dp"
+            android:textAlignment="center"
             android:padding="10dp"/>
-
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
@@ -197,50 +184,21 @@
                 android:padding="10dp"
                 android:visibility="visible" />
 
-            <Button
-                android:id="@+id/btnProfileEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginEnd="4dp"
-                android:text="@string/change"
-                android:background="@color/colorGrey"
-                android:textColor="@color/colorDarkGrey"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true" />
-
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+
+        <CheckBox
+            android:id="@+id/chkProfileCoach"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="10dp">
-
-            <EditText
-                android:id="@+id/etProfileCoach"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:textColor="@color/colorBlack"
-                android:fontFamily="sans-serif-thin"
-                android:background="@drawable/custom_edit_text_grey_background"
-                android:drawableStart="@drawable/ic_security_black_24dp"
-                android:drawableTint="@color/colorDarkGrey"
-                android:drawablePadding="15dp"
-                android:padding="10dp"
-                android:visibility="visible" />
-
-            <Button
-                android:id="@+id/btnProfileCoach"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginEnd="4dp"
-                android:text="@string/change"
-                android:background="@color/colorGrey"
-                android:textColor="@color/colorDarkGrey"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true" />
-
-        </RelativeLayout>
+            android:text="@string/main_chk_coach"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorBlack"
+            android:buttonTint="@color/colorBlack"
+            android:fontFamily="sans-serif-thin"
+            android:layoutDirection="rtl"
+            android:layout_gravity="center"
+            android:padding="10dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -263,20 +221,23 @@
                 android:textColor="@color/colorBlack"
                 android:visibility="visible" />
 
-            <Button
-                android:id="@+id/btnProfileLanguage"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginEnd="4dp"
-                android:text="@string/change"
-                android:background="@color/colorGrey"
-                android:textColor="@color/colorDarkGrey"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true" />
-
         </RelativeLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnProfileUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btnLogout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/update"
+        android:background="@drawable/blueborder_transparent_background"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textColor="@color/colorTurquoise"/>
 
     <Button
         android:id="@+id/btnLogout"
