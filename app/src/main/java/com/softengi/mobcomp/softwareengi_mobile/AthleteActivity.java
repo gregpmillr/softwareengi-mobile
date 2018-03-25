@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.softengi.mobcomp.softwareengi_mobile.Controllers.ProfileController;
@@ -22,6 +24,7 @@ import com.softengi.mobcomp.softwareengi_mobile.PlansDetailFragment.onPlansDetai
 import com.softengi.mobcomp.softwareengi_mobile.Controllers.PlanController;
 import com.softengi.mobcomp.softwareengi_mobile.Adapters.ArrayListPlanAdapter;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.ListOfPlanParser;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.ProfileParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SuccessListener;
 
@@ -154,11 +157,22 @@ public class AthleteActivity extends AppCompatActivity implements onPlansFragmen
     }
 
     @Override
-    public void updateProfile(EditText username, EditText email, EditText language, EditText coach) {
+    public void updateProfile(TextView username, EditText email, EditText language, CheckBox coach) {
         ProfileController.postUpdate(getApplicationContext(), username, email, language, coach, new SuccessListener() {
             @Override
             public void successful() {
                 Toast.makeText(getApplicationContext(), R.string.updated, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void loadProfile(TextView tvTotalSteps, TextView tvTotalPlans, TextView tvTotalTeams) {
+        ProfileController.getProfile(getApplicationContext(), tvTotalSteps, tvTotalPlans, tvTotalTeams, new ProfileParser() {
+            @Override
+            public void onSuccessResponse(JSONObject response) {
+                // stub
+                Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT);
             }
         });
     }

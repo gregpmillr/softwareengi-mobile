@@ -8,17 +8,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 
 public class ProfileFragment extends Fragment {
 
-    private EditText etProfileUsername, etProfileEmail, etProfileLanguage, etProfileCoach;
+    private EditText etProfileEmail, etProfileLanguage;
+    private TextView tvProfileUsername, tvTotalSteps, tvTotalPlans, tvTotalTeams;
     private Button btnLogout, btnProfileUpdate;
+    private CheckBox chkProfileCoach;
 
     public interface onProfileListener {
-        void updateProfile(EditText username, EditText email, EditText language, EditText coach);
+        void updateProfile(TextView username, EditText email, EditText language, CheckBox coach);
+        void loadProfile(TextView tvTotalSteps, TextView tvTotalPlans, TextView tvTotalTeams);
         void logout();
     }
 
@@ -38,12 +43,15 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
-        etProfileUsername    = v.findViewById(R.id.etProfileUsername);
+        tvProfileUsername    = v.findViewById(R.id.tvProfileUsername);
         etProfileEmail       = v.findViewById(R.id.etProfileEmail);
         etProfileLanguage    = v.findViewById(R.id.etProfileLanguage);
-        etProfileCoach       = v.findViewById(R.id.etProfileCoach);
+        chkProfileCoach      = v.findViewById(R.id.chkProfileCoach);
         btnProfileUpdate     = v.findViewById(R.id.btnProfileUpdate);
         btnLogout            = v.findViewById(R.id.btnLogout);
+        tvTotalSteps         = v.findViewById(R.id.tvTotalSteps);
+        tvTotalPlans         = v.findViewById(R.id.tvTotalPlans);
+        tvTotalTeams         = v.findViewById(R.id.tvTotalTeams);
 
         return v;
     }
@@ -52,11 +60,11 @@ public class ProfileFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        etProfileUsername.setText(SharedPrefManager.getInstance(getContext()).getUsername());
+        tvProfileUsername.setText(SharedPrefManager.getInstance(getContext()).getUsername());
         etProfileEmail.setText(SharedPrefManager.getInstance(getContext()).getEmail());
-        etProfileCoach.setText(SharedPrefManager.getInstance(getContext()).getCoach());
+        chkProfileCoach.setChecked(Boolean.valueOf(SharedPrefManager.getInstance(getContext()).getCoach()));
         etProfileLanguage.setText(SharedPrefManager.getInstance(getContext()).getLanguage());
-
+        mProfileListener.loadProfile(tvTotalSteps, tvTotalPlans, tvTotalTeams);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,7 +75,7 @@ public class ProfileFragment extends Fragment {
         btnProfileUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProfileListener.updateProfile(etProfileUsername, etProfileEmail, etProfileCoach, etProfileLanguage);
+                mProfileListener.updateProfile(tvProfileUsername, etProfileEmail, etProfileLanguage, chkProfileCoach);
             }
         });
 

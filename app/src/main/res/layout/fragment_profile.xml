@@ -153,16 +153,15 @@
         android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/etProfileUsername"
+        <TextView
+            android:id="@+id/tvProfileUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorBlack"
             android:fontFamily="sans-serif-thin"
-            android:background="@drawable/custom_edit_text_grey_background"
             android:layout_margin="10dp"
+            android:textAlignment="center"
             android:padding="10dp"/>
-
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
@@ -187,26 +186,19 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+
+        <CheckBox
+            android:id="@+id/chkProfileCoach"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="10dp">
-
-            <EditText
-                android:id="@+id/etProfileCoach"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:textColor="@color/colorBlack"
-                android:fontFamily="sans-serif-thin"
-                android:background="@drawable/custom_edit_text_grey_background"
-                android:drawableStart="@drawable/ic_security_black_24dp"
-                android:drawableTint="@color/colorDarkGrey"
-                android:drawablePadding="15dp"
-                android:padding="10dp"
-                android:visibility="visible" />
-
-        </RelativeLayout>
+            android:text="@string/main_chk_coach"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorBlack"
+            android:buttonTint="@color/colorBlack"
+            android:fontFamily="sans-serif-thin"
+            android:layoutDirection="rtl"
+            android:layout_gravity="center"
+            android:padding="10dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -54,7 +54,7 @@ public class PlanController {
         map.put("new_title", title.getText().toString());
         map.put("new_required_steps", requiredSteps.getText().toString());
 
-        RequestController.createPostRequest(ctx, map, url.concat("/update"), new VolleyCallback() {
+        RequestController.createPostRequest(ctx, map, url.concat("update"), new VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject result) {
                 onSuccess.successful();
@@ -66,7 +66,7 @@ public class PlanController {
         Map<String,String> map = new HashMap<String,String>();
         map.put("plan_id", planId);
 
-        RequestController.createPostRequest(ctx, map, url.concat("/delete"), new VolleyCallback() {
+        RequestController.createPostRequest(ctx, map, url.concat("delete"), new VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject result) {
                 Toast.makeText(ctx, "Deleted plan successfully", Toast.LENGTH_SHORT).show();
