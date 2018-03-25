@@ -15,6 +15,7 @@ public class PlansDetailFragment extends Fragment {
     public interface onPlansDetail {
         void deletePlan(String planId);
         void updatePlan(EditText title, EditText requiredSteps, String planId);
+        void toStepFragment(String planId, String title);
     }
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,6 +30,7 @@ public class PlansDetailFragment extends Fragment {
     private EditText etPlanDetailRequiredSteps;
     private Button btnPlanDetailDelete;
     private Button btnPlanDetailUpdate;
+    private Button btnToStep;
 
     onPlansDetail plansDetail;
 
@@ -55,6 +57,7 @@ public class PlansDetailFragment extends Fragment {
         etPlanDetailRequiredSteps = v.findViewById(R.id.etPlanDetailRequiredSteps);
         btnPlanDetailDelete = v.findViewById(R.id.btnDetailDelete);
         btnPlanDetailUpdate = v.findViewById(R.id.btnDetailUpdate);
+        btnToStep = v.findViewById(R.id.btnToStep);
 
         return v;
     }
@@ -90,6 +93,14 @@ public class PlansDetailFragment extends Fragment {
                 plansDetail.deletePlan(mPlanId);
             }
         });
+
+        btnToStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                plansDetail.toStepFragment(mPlanId, mPlanTitle);
+            }
+        });
     }
+
 
 }

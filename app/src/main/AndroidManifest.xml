@@ -21,7 +21,6 @@
         <activity
             android:name=".RegisterActivity"
             android:parentActivityName=".LoginActivity" />
-        <activity android:name=".StepActivity" />
 
         <receiver
             android:name=".DailyNotificationReceiver"

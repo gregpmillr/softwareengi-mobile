@@ -41,6 +41,13 @@
     <string name="delete">DELETE</string>
     <string name="updated">UPDATED</string>
     <string name="hi">Hi</string>
+    <string name="to_step">DO IT</string>
 
     <string name="pace">steps/sec</string>
+
+
+    <!-- fragment initialization parameters -->
+    <string name="plan_title">plan_title</string>
+    <string name="plan_required_steps">plan_required_steps</string>
+    <string name="plan_id">plan_id</string>
 </resources>
