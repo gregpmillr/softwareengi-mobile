@@ -97,7 +97,7 @@ public class AuthValidator {
             map.put("email",email.getText().toString());
             map.put("password",password.getText().toString());
             map.put("language",language.getText().toString());
-            map.put("coach",String.valueOf(coach.isSelected()));
+            map.put("coach",String.valueOf(coach.isChecked()));
             return map;
         }
 

@@ -5,31 +5,35 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.softengi.mobcomp.softwareengi_mobile.Adapters.ArrayListPlanAdapter;
+import com.softengi.mobcomp.softwareengi_mobile.DataModels.PlanDataModel;
 
 import java.util.ArrayList;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PlansFragment extends ListFragment implements AdapterView.OnItemClickListener {
+public class PlansFragment extends Fragment {
 
-    public interface onFragmentLoad {
-        void loadAdapter(ArrayAdapter listAdapter, ArrayList<String> data);
+    public interface onPlansFragmentLoad {
+        void loadPlansAdapter(ArrayListPlanAdapter hmAdapter, ArrayList<PlanDataModel> data);
         void onCreatePlan();
-        void onPlanDetail(String title);
+        void onPlanDetail(PlanDataModel dataModel);
     }
 
-    onFragmentLoad fragmentLoad;
+    onPlansFragmentLoad mFragmentListener;
     Button btnCreatePlan;
+    ArrayList<PlanDataModel> dataModels;
+    ListView lvPlans;
+    private ArrayListPlanAdapter adapter;
 
     public PlansFragment() {
         // Required empty public constructor
@@ -40,7 +44,7 @@ public class PlansFragment extends ListFragment implements AdapterView.OnItemCli
         super.onAttach(context);
 
         try {
-            fragmentLoad = (onFragmentLoad) context;
+            mFragmentListener = (onPlansFragmentLoad) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement onSomeEventListener");
         }
@@ -52,7 +56,7 @@ public class PlansFragment extends ListFragment implements AdapterView.OnItemCli
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_plans, container, false);
         btnCreatePlan = v.findViewById(R.id.btnCreatePlan);
-
+        lvPlans       = v.findViewById(R.id.lvPlans);
         return v;
     }
 
@@ -60,29 +64,28 @@ public class PlansFragment extends ListFragment implements AdapterView.OnItemCli
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ArrayList<String> data;
-        ArrayAdapter<String> arrayAdapter;
+        dataModels = new ArrayList<>();
+        // fill data here
+        adapter = new ArrayListPlanAdapter(dataModels, getActivity().getApplicationContext());
 
-        data = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,data);
-
-        setListAdapter(arrayAdapter);
-        getListView().setOnItemClickListener(this);
-        fragmentLoad.loadAdapter(arrayAdapter, data);
+        lvPlans.setAdapter(adapter);
+        mFragmentListener.loadPlansAdapter(adapter, dataModels);
 
         btnCreatePlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragmentLoad.onCreatePlan();
+                mFragmentListener.onCreatePlan();
+            }
+        });
+
+        lvPlans.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                PlanDataModel dataModel = dataModels.get(position);
+                mFragmentListener.onPlanDetail(dataModel);
             }
         });
 
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        TextView test = (TextView) view;
-
-        fragmentLoad.onPlanDetail(test.getText().toString());
-    }
 }

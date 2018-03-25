@@ -31,8 +31,12 @@
     <string name="nav_teams">Teams</string>
     <string name="submit">Submit</string>
     <string name="change">CHANGE</string>
-
-
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="plan_update_required_steps">Update required steps</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="update">UPDATE</string>
+    <string name="delete">DELETE</string>
+    <string name="updated">UPDATED</string>
+    <string name="hi">Hi</string>
 </resources>

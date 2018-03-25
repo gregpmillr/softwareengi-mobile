@@ -47,41 +47,26 @@ public class PlanController {
 
     }
 
-    public static void postUpdateSteps(final Context ctx, EditText planId, EditText requiredSteps, final SuccessListener onSuccess) {
+    public static void postUpdate(final Context ctx, EditText title, EditText requiredSteps, String planId, final SuccessListener onSuccess) {
 
         Map<String,String> map = new HashMap<String,String>();
-        map.put("planId", planId.getText().toString());
-        map.put("requiredSteps", requiredSteps.getText().toString());
-        map.put("username", String.valueOf(SharedPrefManager.getInstance(ctx).getUsername()));
+        map.put("plan_id", planId);
+        map.put("new_title", title.getText().toString());
+        map.put("new_required_steps", requiredSteps.getText().toString());
 
-        RequestController.createPostRequest(ctx, map, url.concat("/update"), new VolleyCallback() {
+        RequestController.createPostRequest(ctx, map, url.concat("update"), new VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject result) {
-                Toast.makeText(ctx, "Updated plan successfully", Toast.LENGTH_SHORT).show();
                 onSuccess.successful();
             }
         });
     }
 
-    public static void postUpdateTitle(final Context ctx, EditText planId, EditText title, final SuccessListener onSuccess) {
-
+    public static void postDelete(final Context ctx, String planId, final SuccessListener onSuccess) {
         Map<String,String> map = new HashMap<String,String>();
-        map.put("planId", planId.getText().toString());
-        map.put("title",title.getText().toString());
-        map.put("username", String.valueOf(SharedPrefManager.getInstance(ctx).getUsername()));
-        RequestController.createPostRequest(ctx, map, url.concat("/update"), new VolleyCallback() {
-            @Override
-            public void onSuccessResponse(JSONObject result) {
-                Toast.makeText(ctx, "Updated plan successfully", Toast.LENGTH_SHORT).show();
-                onSuccess.successful();
-            }
-        });
-    }
+        map.put("plan_id", planId);
 
-    public static void postDelete(final Context ctx, String planTitle, final SuccessListener onSuccess) {
-        Map<String,String> map = new HashMap<String,String>();
-        map.put("planTitle", planTitle);
-        RequestController.createPostRequest(ctx, map, url.concat("/delete"), new VolleyCallback() {
+        RequestController.createPostRequest(ctx, map, url.concat("delete"), new VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject result) {
                 Toast.makeText(ctx, "Deleted plan successfully", Toast.LENGTH_SHORT).show();
@@ -103,9 +88,9 @@ public class PlanController {
 
     }
 
-    public static void getPlan(final Context ctx, String title, final DetailPlanParser callback) {
+    public static void getPlan(final Context ctx, int planId, final DetailPlanParser callback) {
 
-        RequestController.createGetRequest(ctx, url.concat(title), new VolleyCallback() {
+        RequestController.createGetRequest(ctx, url.concat(String.valueOf(planId)), new VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject result) {
                 try {

@@ -7,20 +7,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.softengi.mobcomp.softwareengi_mobile.ProfileFragment.onUpdateProfile;
-import com.softengi.mobcomp.softwareengi_mobile.PlansFragment.onFragmentLoad;
+import com.softengi.mobcomp.softwareengi_mobile.Controllers.ProfileController;
+import com.softengi.mobcomp.softwareengi_mobile.DataModels.PlanDataModel;
+import com.softengi.mobcomp.softwareengi_mobile.ProfileFragment.onProfileListener;
+import com.softengi.mobcomp.softwareengi_mobile.PlansFragment.onPlansFragmentLoad;
 import com.softengi.mobcomp.softwareengi_mobile.CreatePlanFragment.onCreateFragmentLoad;
 import com.softengi.mobcomp.softwareengi_mobile.PlansDetailFragment.onPlansDetail;
 import com.softengi.mobcomp.softwareengi_mobile.Controllers.PlanController;
-import com.softengi.mobcomp.softwareengi_mobile.Utils.DetailPlanParser;
+import com.softengi.mobcomp.softwareengi_mobile.Adapters.ArrayListPlanAdapter;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.ListOfPlanParser;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.ProfileParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SuccessListener;
 
@@ -30,12 +34,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class AthleteActivity extends AppCompatActivity implements onFragmentLoad, onCreateFragmentLoad, onUpdateProfile, onPlansDetail {
+public class AthleteActivity extends AppCompatActivity implements onPlansFragmentLoad,
+        onCreateFragmentLoad, onProfileListener, onPlansDetail {
 
     private BottomNavigationView mAthleteNav;
     private FrameLayout mAthleteFrame;
-    private PlansFragment plansFragment;
-    private ProfileFragment profileFragment;
+    private PlansFragment mPlansFragment;
+    private ProfileFragment mProfileFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +49,10 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
 
         mAthleteFrame   = findViewById(R.id.athlete_frame);
         mAthleteNav     = findViewById(R.id.athlete_nav);
-        plansFragment   = new PlansFragment();
-        profileFragment = new ProfileFragment();
+        mPlansFragment   = new PlansFragment();
+        mProfileFragment = new ProfileFragment();
 
-        setFragment(profileFragment);
+        setFragment(mProfileFragment);
 
         mAthleteNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -56,11 +61,11 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
                 switch(item.getItemId()) {
 
                     case R.id.nav_plans :
-                        setFragment(plansFragment);
+                        setFragment(mPlansFragment);
                         return true;
 
                     case R.id.nav_profile :
-                        setFragment(profileFragment);
+                        setFragment(mProfileFragment);
                         return true;
 
                     case R.id.nav_teams :
@@ -86,7 +91,7 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
     }
 
     @Override
-    public void loadAdapter(final ArrayAdapter listAdapter, final ArrayList<String> arrList) {
+    public void loadPlansAdapter(final ArrayListPlanAdapter hmAdapter, final ArrayList<PlanDataModel> listData) {
         PlanController.getListOfPlans(
                 getApplication(),
                 SharedPrefManager.getInstance(getApplicationContext()).getUsername(),
@@ -94,18 +99,18 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
                     @Override
                     public void onSuccessResponse(JSONArray data) {
                         try {
+                            listData.clear();
 
-                            arrList.clear();
                             for(int i = 0; i < data.length(); i++) {
                                 JSONObject jsonObj = data.getJSONObject(i);
-                                arrList.add(jsonObj.getString("title"));
+                                listData.add(new PlanDataModel(jsonObj.getString("title"),jsonObj.getString("required_steps"),jsonObj.getString("id")));
                             }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                        listAdapter.notifyDataSetChanged();
+                        hmAdapter.notifyDataSetChanged();
                     }
                 });
     }
@@ -117,26 +122,18 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
     }
 
     @Override
-    public void onPlanDetail(final String title) {
-        PlanController.getPlan(getApplicationContext(),
-                title,
-                new DetailPlanParser() {
-                    @Override
-                    public void onSuccessResponse(JSONObject data) throws JSONException {
-                        Bundle args = new Bundle();
-                        args.putString("planTitle", title);
-                        PlansDetailFragment fragment = new PlansDetailFragment();
-                        fragment.setArguments(args);
-                        setFragment(fragment);
-
-                    }
-                });
-
+    public void onPlanDetail(final PlanDataModel dataModel) {
+        Bundle args = new Bundle();
+        args.putString("plan_title", dataModel.getTitle());
+        args.putString("plan_required_steps", dataModel.getRequiredSteps());
+        args.putString("plan_id", dataModel.getId());
+        PlansDetailFragment fragment = new PlansDetailFragment();
+        fragment.setArguments(args);
+        setFragment(fragment);
     }
 
     @Override
     public void onSubmitPlan() {
-
 
         InputMethodManager inputManager = (InputMethodManager)
                 getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
@@ -160,18 +157,24 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
     }
 
     @Override
-    public void updateEmail() {
-
+    public void updateProfile(TextView username, EditText email, EditText language, CheckBox coach) {
+        ProfileController.postUpdate(getApplicationContext(), username, email, language, coach, new SuccessListener() {
+            @Override
+            public void successful() {
+                Toast.makeText(getApplicationContext(), R.string.updated, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
-    public void updateLanguage() {
-
-    }
-
-    @Override
-    public void updateCoach() {
-
+    public void loadProfile(TextView tvTotalSteps, TextView tvTotalPlans, TextView tvTotalTeams) {
+        ProfileController.getProfile(getApplicationContext(), tvTotalSteps, tvTotalPlans, tvTotalTeams, new ProfileParser() {
+            @Override
+            public void onSuccessResponse(JSONObject response) {
+                // stub
+                Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT);
+            }
+        });
     }
 
     @Override
@@ -185,12 +188,22 @@ public class AthleteActivity extends AppCompatActivity implements onFragmentLoad
     }
 
     @Override
-    public void deletePlan(String title) {
-        PlanController.postDelete(getApplicationContext(), title, new SuccessListener() {
+    public void deletePlan(String planId) {
+        PlanController.postDelete(getApplicationContext(), planId, new SuccessListener() {
             @Override
             public void successful() {
                 PlansFragment fragment = new PlansFragment();
                 setFragment(fragment);
+            }
+        });
+    }
+
+    @Override
+    public void updatePlan(EditText title, EditText requiredSteps, String planId) {
+        PlanController.postUpdate(getApplicationContext(), title, requiredSteps, planId, new SuccessListener() {
+            @Override
+            public void successful() {
+                Toast.makeText(getApplicationContext(), R.string.updated, Toast.LENGTH_SHORT).show();
             }
         });
     }
