@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_athlete);
+        setContentView(R.layout.activity_main);
 
         mAthleteFrame   = findViewById(R.id.athlete_frame);
         mAthleteNav     = findViewById(R.id.athlete_nav);
