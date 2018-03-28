@@ -85,8 +85,8 @@ public class AuthValidator {
             valid = false;
         }
         if(TextUtils.isEmpty(language.getText().toString())) {
-            email.setError("Please enter your language");
-            email.requestFocus();
+            language.setError("Please enter your language");
+            language.requestFocus();
             valid = false;
         }
 
