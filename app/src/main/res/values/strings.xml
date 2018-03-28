@@ -31,8 +31,6 @@
     <string name="nav_teams">Teams</string>
     <string name="submit">Submit</string>
     <string name="change">CHANGE</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="plan_update_required_steps">Update required steps</string>
     <string name="ok">OK</string>
     <string name="cancel">CANCEL</string>
@@ -41,12 +39,9 @@
     <string name="delete">DELETE</string>
     <string name="updated">UPDATED</string>
     <string name="hi">Hi</string>
+    <string name="login_chk_remember_me">Remember Me</string>
     <string name="to_step">DO IT</string>
-
     <string name="pace">steps/sec</string>
-
-
-    <!-- fragment initialization parameters -->
     <string name="plan_title">plan_title</string>
     <string name="plan_required_steps">plan_required_steps</string>
     <string name="plan_id">plan_id</string>

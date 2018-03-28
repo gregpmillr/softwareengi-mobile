@@ -1,109 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/runner_background"
-    android:paddingStart="30sp"
-    android:paddingEnd="30sp"
-    tools:context="com.softengi.mobcomp.softwareengi_mobile.LoginActivity">
+    tools:context="com.softengi.mobcomp.softwareengi_mobile.MainActivity">
 
-    <RelativeLayout
-        android:id="@+id/rlLogin"
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/athlete_nav"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp">
-
-        <TextView
-            android:id="@+id/lblLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:fontFamily="sans-serif"
-            android:textStyle="bold"
-            android:text="@string/lblLogin"
-            android:textColor="#FFFFFF"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="16dp"
-            android:layout_toStartOf="@id/lblLogin"
-            android:background="#80FFFFFF"
-            />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="16dp"
-            android:layout_toEndOf="@id/lblLogin"
-            android:background="#80FFFFFF"
-            />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:id="@+id/llLoginEtWrapper"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/etUsername"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
-            android:fontFamily="sans-serif-thin"
-            android:hint="@string/main_et_username"
-            android:background="@drawable/custom_edit_text_background"
-            android:padding="10dp"/>
-
-        <EditText
-            android:id="@+id/etPassword"
-            android:inputType="textPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15sp"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
-            android:fontFamily="sans-serif-thin"
-            android:hint="@string/main_et_password"
-            android:background="@drawable/custom_edit_text_background"
-            android:padding="10dp" />
-
-    </LinearLayout>
-
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="15sp"
-        android:text="@string/main_btn_login"
-        android:background="@drawable/transparent_button_background"
-        android:fontFamily="sans-serif"
-        android:textStyle="bold"
-        android:layout_above="@id/btnRegister"
-        android:textColor="@color/colorWhite"/>
-
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="false"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="15sp"
-        android:text="@string/main_btn_register"
-        android:background="@drawable/transparent_button_background"
-        android:fontFamily="sans-serif"
-        android:textStyle="bold"
-        android:textColor="@color/colorWhite"/>
+        android:layout_alignParentStart="true"
+        app:itemBackground="@color/colorPrimary"
+        app:itemIconTint="@color/nav_item_colors"
+        app:itemTextColor="@color/nav_item_colors"
+        app:menu="@menu/nav_items" />
+
+    <FrameLayout
+        android:id="@+id/athlete_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/athlete_nav"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+    </FrameLayout>
 
 </RelativeLayout>
