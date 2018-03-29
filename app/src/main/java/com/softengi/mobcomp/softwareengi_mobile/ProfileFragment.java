@@ -17,13 +17,14 @@ import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 public class ProfileFragment extends Fragment {
 
     private EditText etProfileEmail, etProfileLanguage;
-    private TextView tvProfileUsername, tvTotalSteps, tvTotalPlans, tvTotalTeams;
+    private TextView tvProfileUsername, tvTotalSteps, tvTotalPlans, tvTotalTeams, tvRecentSteps, tvRecentPlans;
     private Button btnLogout, btnProfileUpdate;
     private CheckBox chkProfileCoach;
 
     public interface onProfileListener {
         void updateProfile(TextView username, EditText email, EditText language, CheckBox coach);
-        void loadProfile(TextView tvTotalSteps, TextView tvTotalPlans, TextView tvTotalTeams);
+        void loadProfile(TextView tvTotalSteps, TextView tvTotalPlans, TextView tvTotalTeams,
+                         TextView tvRecentSteps, TextView tvRecentPlans);
         void logout();
     }
 
@@ -52,6 +53,8 @@ public class ProfileFragment extends Fragment {
         tvTotalSteps         = v.findViewById(R.id.tvTotalSteps);
         tvTotalPlans         = v.findViewById(R.id.tvTotalPlans);
         tvTotalTeams         = v.findViewById(R.id.tvTotalTeams);
+        tvRecentPlans        = v.findViewById(R.id.tvRecentPlans);
+        tvRecentSteps        = v.findViewById(R.id.tvRecentSteps);
 
         return v;
     }
@@ -64,7 +67,7 @@ public class ProfileFragment extends Fragment {
         etProfileEmail.setText(SharedPrefManager.getInstance(getContext()).getEmail());
         chkProfileCoach.setChecked(Boolean.valueOf(SharedPrefManager.getInstance(getContext()).getCoach()));
         etProfileLanguage.setText(SharedPrefManager.getInstance(getContext()).getLanguage());
-        mProfileListener.loadProfile(tvTotalSteps, tvTotalPlans, tvTotalTeams);
+        mProfileListener.loadProfile(tvTotalSteps, tvTotalPlans, tvTotalTeams, tvRecentSteps, tvRecentPlans);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
