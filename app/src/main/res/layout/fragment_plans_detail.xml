@@ -42,7 +42,15 @@
             android:drawablePadding="15dp"
             android:layout_below="@id/etPlanDetailTitle"
             android:padding="10dp"
+            android:layout_marginBottom="15dp"
             android:visibility="visible" />
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/gvGraph"
+            android:layout_width="match_parent"
+            android:layout_height="165sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/etPlanDetailRequiredSteps" />
 
         <Button
             android:id="@+id/btnToStep"

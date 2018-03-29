@@ -16,6 +16,9 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 import com.softengi.mobcomp.softwareengi_mobile.Actions.StepAction;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.StepDetector;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.StepListener;
@@ -36,12 +39,16 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
     private SensorManager sensorManager;
     private Sensor accel;
     private int planId = 0;
-    private String planTitle = "";
+    private String planTitle = "placeholder";
     private TextView tvStep, tvPace, tvPlanDescription;
     private Button btnStartPause;
     private Button btnStop;
 
     private Chronometer mChronometer;
+
+    private GraphView gvPace;
+    private LineGraphSeries<DataPoint> paceEntries;
+    private int xGraph;
 
     private int numSteps = 0;
     private long lastPause = 0;
@@ -77,6 +84,7 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
         sensorManager       = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         accel               = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mChronometer        = v.findViewById(R.id.chrStopWatch);
+        gvPace              = v.findViewById(R.id.gvPace);
 
         return v;
     }
@@ -90,6 +98,8 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        tvPlanDescription.setText(planTitle);
+
         mChronometer.setCountDown(false);
 
         mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener()
@@ -101,6 +111,10 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
                 calculatePace();
             }
         });
+
+        paceEntries = new LineGraphSeries<>(new DataPoint[]{});
+        gvPace.addSeries(paceEntries);
+        xGraph = -1;
 
         simpleStepDetector.registerListener(this);
         btnStartPause.setSelected(false);
@@ -149,6 +163,12 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
                         numSteps,
                         planId
                 );
+
+                xGraph = -1;
+                paceEntries.resetData(new DataPoint[]{});
+
+                mChronometer.stop();
+                lastPause = 0;
 
                 numSteps = 0;
                 pausedSteps = 0;
@@ -202,6 +222,9 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
         double lastStep = timestamps.getLast();
         double diffStep = lastStep - firstStep;
         double pace = diffStep / timestamps.size();
+
+        xGraph++;
+        paceEntries.appendData(new DataPoint(xGraph, pace), false, 10);
         tvPace.setText(pace + " " + getString(R.string.pace));
     }
 }
