@@ -1,5 +1,6 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+import com.softengi.mobcomp.softwareengi_mobile.Actions.StepAction;
 
 public class PlansDetailFragment extends Fragment {
 
@@ -31,6 +38,9 @@ public class PlansDetailFragment extends Fragment {
     private Button btnPlanDetailDelete;
     private Button btnPlanDetailUpdate;
     private Button btnToStep;
+
+    private GraphView gvStep;
+    private LineGraphSeries<DataPoint> stepEntries;
 
     onPlansDetail plansDetail;
 
@@ -58,6 +68,7 @@ public class PlansDetailFragment extends Fragment {
         btnPlanDetailDelete = v.findViewById(R.id.btnDetailDelete);
         btnPlanDetailUpdate = v.findViewById(R.id.btnDetailUpdate);
         btnToStep = v.findViewById(R.id.btnToStep);
+        gvStep = v.findViewById(R.id.gvGraph);
 
         return v;
     }
@@ -100,7 +111,15 @@ public class PlansDetailFragment extends Fragment {
                 plansDetail.toStepFragment(mPlanId, mPlanTitle);
             }
         });
-    }
 
+        stepEntries = new LineGraphSeries<>(new DataPoint[]{});
+        gvStep.addSeries(stepEntries);
+        gvStep.getViewport().setXAxisBoundsManual(true);
+        gvStep.getViewport().setMinX(3);
+        gvStep.getViewport().setMaxX(8);
+        gvStep.getViewport().setScrollable(true);
+
+        StepAction.getStepsByPlan(getActivity(), mPlanId, stepEntries);
+    }
 
 }

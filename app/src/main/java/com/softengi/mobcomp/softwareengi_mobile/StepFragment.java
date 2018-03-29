@@ -46,7 +46,7 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
 
     private Chronometer mChronometer;
 
-    private GraphView graph;
+    private GraphView gvPace;
     private LineGraphSeries<DataPoint> paceEntries;
     private int xGraph;
 
@@ -84,6 +84,7 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
         sensorManager       = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         accel               = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mChronometer        = v.findViewById(R.id.chrStopWatch);
+        gvPace              = v.findViewById(R.id.gvPace);
 
         return v;
     }
@@ -112,7 +113,7 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
         });
 
         paceEntries = new LineGraphSeries<>(new DataPoint[]{});
-        graph.addSeries(paceEntries);
+        gvPace.addSeries(paceEntries);
         xGraph = -1;
 
         simpleStepDetector.registerListener(this);
@@ -164,6 +165,11 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
                 );
 
                 xGraph = -1;
+                paceEntries.resetData(new DataPoint[]{});
+
+                mChronometer.stop();
+                lastPause = 0;
+
                 numSteps = 0;
                 pausedSteps = 0;
                 tvStep.setText("0");
@@ -218,7 +224,7 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
         double pace = diffStep / timestamps.size();
 
         xGraph++;
-        paceEntries.appendData(new DataPoint(xGraph, pace), true, 10);
+        paceEntries.appendData(new DataPoint(xGraph, pace), false, 10);
         tvPace.setText(pace + " " + getString(R.string.pace));
     }
 }
