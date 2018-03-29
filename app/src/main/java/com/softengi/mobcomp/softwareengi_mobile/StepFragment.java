@@ -31,14 +31,13 @@ import java.util.LinkedList;
 
 public class StepFragment extends Fragment implements SensorEventListener, StepListener {
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PLAN_TITLE = "plan_title";
-    private static final String ARG_PLAN_ID = "plan_id";
-
     private StepDetector simpleStepDetector;
     private SensorManager sensorManager;
     private Sensor accel;
+
     private int planId = 0;
+    private int requiredSteps = 100;
+    private int totalSteps = 0;
     private String planTitle = "placeholder";
     private TextView tvStep, tvPace, tvPlanDescription;
     private Button btnStartPause;
@@ -46,8 +45,8 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
 
     private Chronometer mChronometer;
 
-    private GraphView gvPace;
-    private LineGraphSeries<DataPoint> paceEntries;
+    private GraphView gvPace, gvStep;
+    private LineGraphSeries<DataPoint> paceEntries, stepEntries;
     private int xGraph;
 
     private int numSteps = 0;
@@ -65,8 +64,10 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            planTitle         = getArguments().getString(ARG_PLAN_TITLE);
-            planId            = Integer.valueOf(getArguments().getString(ARG_PLAN_ID));
+            planId            = Integer.valueOf(getArguments().getString(getString(R.string.plan_id)));
+            planTitle         = getArguments().getString(getString(R.string.plan_title));
+            requiredSteps   = Integer.valueOf(getArguments().getString(getString(R.string.plan_required_steps)));
+            totalSteps      = Integer.valueOf(getArguments().getString(getString(R.string.plan_total_steps)));
         }
     }
 
@@ -85,6 +86,7 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
         accel               = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mChronometer        = v.findViewById(R.id.chrStopWatch);
         gvPace              = v.findViewById(R.id.gvPace);
+        gvStep              = v.findViewById(R.id.gvStep);
 
         return v;
     }
@@ -115,6 +117,20 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
         paceEntries = new LineGraphSeries<>(new DataPoint[]{});
         gvPace.addSeries(paceEntries);
         xGraph = -1;
+
+        stepEntries = new LineGraphSeries<>(new DataPoint[]{});
+        gvStep.getViewport().setYAxisBoundsManual(true);
+        gvStep.getViewport().setMinY(0);
+        gvStep.getViewport().setMaxY(requiredSteps);
+
+        gvStep.getViewport().setXAxisBoundsManual(true);
+        gvStep.getViewport().setMinX(0);
+        gvStep.getViewport().setMaxX(requiredSteps);
+
+        gvStep.addSeries(stepEntries);
+        for (int i=0; i<=totalSteps; i++) {
+            stepEntries.appendData(new DataPoint(i,i), false, requiredSteps);
+        }
 
         simpleStepDetector.registerListener(this);
         btnStartPause.setSelected(false);
@@ -199,6 +215,9 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
     public void step(long timeNs) {
         numSteps++;
         tvStep.setText(String.valueOf(numSteps));
+
+        totalSteps++;
+        stepEntries.appendData(new DataPoint(totalSteps, totalSteps), false, requiredSteps);
     }
 
     private void calculatePace() {

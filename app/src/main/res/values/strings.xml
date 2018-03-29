@@ -45,6 +45,7 @@
     <string name="plan_title">plan_title</string>
     <string name="plan_required_steps">plan_required_steps</string>
     <string name="plan_id">plan_id</string>
+    <string name="plan_total_steps">plan_total_steps</string>
     <string name="lblRecentSteps">Recent Steps</string>
     <string name="lblRecentPlans">Recent Plans</string>
 </resources>

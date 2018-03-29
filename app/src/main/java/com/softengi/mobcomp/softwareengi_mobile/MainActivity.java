@@ -211,10 +211,13 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
     }
 
     @Override
-    public void toStepFragment(String planId, String title) {
+    public void toStepFragment(String planId, String title, String requiredSteps, String totalSteps) {
         Bundle args = new Bundle();
-        args.putString(getString(R.string.plan_title), title);
         args.putString(getString(R.string.plan_id), planId);
+        args.putString(getString(R.string.plan_title), title);
+        args.putString(getString(R.string.plan_required_steps), requiredSteps);
+        args.putString(getString(R.string.plan_total_steps), totalSteps);
+
         StepFragment fragment = new StepFragment();
         fragment.setArguments(args);
         setFragment(fragment);
