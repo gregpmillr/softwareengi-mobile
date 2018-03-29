@@ -36,16 +36,23 @@ public class ProfileAction {
         });
     }
 
-    public static void getProfile(final Context ctx, final TextView tvTotalSteps, final TextView tvTotalPlans, final TextView tvTotalTeams, final ProfileParser callback) {
+    public static void getProfile(final Context ctx, final TextView tvTotalSteps,
+                                  final TextView tvTotalPlans,
+                                  final TextView tvTotalTeams,
+                                  final TextView tvRecentPlans,
+                                  final TextView tvRecentSteps,
+                                  final ProfileParser callback) {
 
         RequestAction.createGetRequest(ctx, url.concat(SharedPrefManager.getInstance(ctx).getUsername()), new VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject result) {
                 try {
                     // tvTotalSteps.setText();
-                    tvTotalPlans.setText(result.getString("plan_length"));
-                    tvTotalTeams.setText(result.getString("team_length"));
-
+                    tvTotalSteps.setText(result.getString("total_steps"));
+                    tvTotalPlans.setText(result.getString("total_plans"));
+                    tvTotalTeams.setText(result.getString("total_teams"));
+                    tvRecentPlans.setText(result.getString("recent_plans"));
+                    tvRecentSteps.setText(result.getString("recent_steps"));
 
                     callback.onSuccessResponse(result);
                 } catch (JSONException e) {

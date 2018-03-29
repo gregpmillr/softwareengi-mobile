@@ -167,8 +167,11 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
     }
 
     @Override
-    public void loadProfile(TextView tvTotalSteps, TextView tvTotalPlans, TextView tvTotalTeams) {
-        ProfileAction.getProfile(getApplicationContext(), tvTotalSteps, tvTotalPlans, tvTotalTeams, new ProfileParser() {
+    public void loadProfile(TextView tvTotalSteps, TextView tvTotalPlans, TextView tvTotalTeams,
+                            TextView tvRecentSteps, TextView tvRecentPlans) {
+        ProfileAction.getProfile(getApplicationContext(), tvTotalSteps, tvTotalPlans, tvTotalTeams,
+                tvRecentPlans,
+                tvRecentSteps, new ProfileParser() {
             @Override
             public void onSuccessResponse(JSONObject response) {
                 // stub
