@@ -53,6 +53,8 @@ public class ProfileFragment extends Fragment {
         tvTotalSteps         = v.findViewById(R.id.tvTotalSteps);
         tvTotalPlans         = v.findViewById(R.id.tvTotalPlans);
         tvTotalTeams         = v.findViewById(R.id.tvTotalTeams);
+        tvRecentPlans        = v.findViewById(R.id.tvRecentPlans);
+        tvRecentSteps        = v.findViewById(R.id.tvRecentSteps);
 
         return v;
     }
