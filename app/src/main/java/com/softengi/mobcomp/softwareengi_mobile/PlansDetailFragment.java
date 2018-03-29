@@ -10,25 +10,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.softengi.mobcomp.softwareengi_mobile.Actions.StepAction;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.ProfileParser;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.StepParser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class PlansDetailFragment extends Fragment {
 
     public interface onPlansDetail {
         void deletePlan(String planId);
         void updatePlan(EditText title, EditText requiredSteps, String planId);
-        void toStepFragment(String planId, String title);
+        void toStepFragment(String planId, String title, String requiredSteps, String totalSteps);
     }
-
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PLAN_TITLE = "plan_title";
-    private static final String ARG_PLAN_REQUIRED_STEPS = "plan_required_steps";
-    private static final String ARG_PLAN_ID = "plan_id";
 
     private String mPlanTitle;
     private String mPlanRequiredSteps;
@@ -42,6 +44,8 @@ public class PlansDetailFragment extends Fragment {
     private GraphView gvStep;
     private LineGraphSeries<DataPoint> stepEntries;
 
+    private int totalSteps = 0;
+
     onPlansDetail plansDetail;
 
     public PlansDetailFragment() {
@@ -52,9 +56,9 @@ public class PlansDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mPlanTitle         = getArguments().getString(ARG_PLAN_TITLE);
-            mPlanRequiredSteps = getArguments().getString(ARG_PLAN_REQUIRED_STEPS);
-            mPlanId            = getArguments().getString(ARG_PLAN_ID);
+            mPlanId            = getArguments().getString(getString(R.string.plan_id));
+            mPlanTitle         = getArguments().getString(getString(R.string.plan_title));
+            mPlanRequiredSteps = getArguments().getString(getString(R.string.plan_required_steps));
         }
     }
 
@@ -108,7 +112,7 @@ public class PlansDetailFragment extends Fragment {
         btnToStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                plansDetail.toStepFragment(mPlanId, mPlanTitle);
+                plansDetail.toStepFragment(mPlanId, mPlanTitle, mPlanRequiredSteps, ""+totalSteps);
             }
         });
 
@@ -119,7 +123,35 @@ public class PlansDetailFragment extends Fragment {
         gvStep.getViewport().setMaxX(8);
         gvStep.getViewport().setScrollable(true);
 
-        StepAction.getStepsByPlan(getActivity(), mPlanId, stepEntries);
+        StepAction.getStepsByPlan(getActivity(), mPlanId, stepEntries, new StepParser() {
+            @Override
+            public void onSuccessResponse(JSONArray response) {
+                try {
+                    int steps;
+                    /*
+                    TimeZone tz = TimeZone.getTimeZone("UTC");
+                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                    df.setTimeZone(tz);
+                    Date d;
+                    */
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject jsonObj = response.getJSONObject(i);
+                        steps = jsonObj.getInt("steps");
+                        //try {
+                        //d = df.parse(jsonObj.getString("updated_at"));
+                        //stepEntries.appendData(new DataPoint(d, jsonObj.getInt("steps")), false, 99999);
+                        stepEntries.appendData(new DataPoint(i, steps), true, 99999);
+                        //} catch(ParseException e) {
+                        //    e.printStackTrace();
+                        //}
+
+                        totalSteps += steps;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 }

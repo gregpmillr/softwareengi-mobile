@@ -8,6 +8,7 @@ import com.google.gson.JsonParseException;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.StepParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallbackArray;
 
@@ -43,33 +44,13 @@ public class StepAction {
         });
     }
 
-    public static void getStepsByPlan(final Context ctx, String planId, final LineGraphSeries<DataPoint> stepEntries) {
+    public static void getStepsByPlan(final Context ctx, String planId, final LineGraphSeries<DataPoint> stepEntries, final StepParser callback) {
         String username = SharedPrefManager.getInstance(ctx).getUsername();
 
         RequestAction.createGetRequestArray(ctx, url.concat(username + "/" + planId + "/list"), new VolleyCallbackArray() {
             @Override
             public void onSuccessResponse(JSONArray result) {
-                try {
-                    /*
-                    TimeZone tz = TimeZone.getTimeZone("UTC");
-                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-                    df.setTimeZone(tz);
-                    Date d;
-                    */
-                    for(int i = 0; i < result.length(); i++) {
-                        JSONObject jsonObj = result.getJSONObject(i);
-                        //try {
-                            //d = df.parse(jsonObj.getString("updated_at"));
-                            //stepEntries.appendData(new DataPoint(d, jsonObj.getInt("steps")), false, 99999);
-                            stepEntries.appendData(new DataPoint(i, jsonObj.getInt("steps")), true, 99999);
-                        //} catch(ParseException e) {
-                        //    e.printStackTrace();
-                        //}
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+                callback.onSuccessResponse(result);
                 Toast.makeText(ctx, "Steps receieved successfully", Toast.LENGTH_SHORT).show();
             }
         });
