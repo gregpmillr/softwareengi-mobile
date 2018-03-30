@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,7 +24,7 @@ import com.softengi.mobcomp.softwareengi_mobile.CreatePlanFragment.onCreateFragm
 import com.softengi.mobcomp.softwareengi_mobile.PlansDetailFragment.onPlansDetail;
 import com.softengi.mobcomp.softwareengi_mobile.Actions.PlanAction;
 import com.softengi.mobcomp.softwareengi_mobile.Adapters.ArrayListPlanAdapter;
-import com.softengi.mobcomp.softwareengi_mobile.Utils.ListOfPlanParser;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.ListParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.ProfileParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SuccessListener;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
     private FrameLayout mAthleteFrame;
     private PlansFragment mPlansFragment;
     private ProfileFragment mProfileFragment;
+    private int previousItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,18 +59,21 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
         mAthleteNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 switch(item.getItemId()) {
 
                     case R.id.nav_plans :
+                        previousItem = item.getItemId();
                         setFragment(mPlansFragment);
                         return true;
 
                     case R.id.nav_profile :
+                        previousItem = item.getItemId();
                         setFragment(mProfileFragment);
                         return true;
 
                     case R.id.nav_teams :
+                        Intent i = new Intent(getApplicationContext(), TeamsActivity.class);
+                        startActivity(i);
                         return true;
 
                     default:
@@ -78,6 +83,28 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
 
             }
         });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(getApplicationContext(), "onResume", Toast.LENGTH_SHORT).show();
+
+        switch(previousItem) {
+
+            case R.id.nav_plans :
+                setFragment(mPlansFragment);
+                mAthleteNav.setSelectedItemId(previousItem);
+
+            case R.id.nav_profile :
+                setFragment(mProfileFragment);
+                mAthleteNav.setSelectedItemId(previousItem);
+
+            default:
+                return;
+
+        }
 
     }
 
@@ -95,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
         PlanAction.getListOfPlans(
                 getApplication(),
                 SharedPrefManager.getInstance(getApplicationContext()).getUsername(),
-                new ListOfPlanParser() {
+                new ListParser() {
                     @Override
                     public void onSuccessResponse(JSONArray data) {
                         try {

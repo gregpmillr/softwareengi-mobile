@@ -31,7 +31,11 @@
             android:name=".DailyNotificationIntentService"
             android:exported="false" />
 
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".TeamsActivity"
+            android:label="@string/title_activity_teams"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

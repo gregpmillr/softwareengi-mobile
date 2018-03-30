@@ -4,8 +4,8 @@ import android.content.Context;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.softengi.mobcomp.softwareengi_mobile.Utils.DetailPlanParser;
-import com.softengi.mobcomp.softwareengi_mobile.Utils.ListOfPlanParser;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.DetailParser;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.ListParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SuccessListener;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
@@ -74,7 +74,7 @@ public class PlanAction {
         });
     }
 
-    public static void getListOfPlans(final Context ctx, String username, final ListOfPlanParser callback) {
+    public static void getListOfPlans(final Context ctx, String username, final ListParser callback) {
 
         RequestAction.createGetRequestArray(ctx, url.concat(username+"/list"), new VolleyCallbackArray() {
             @Override
@@ -87,7 +87,7 @@ public class PlanAction {
 
     }
 
-    public static void getPlan(final Context ctx, int planId, final DetailPlanParser callback) {
+    public static void getPlan(final Context ctx, int planId, final DetailParser callback) {
 
         RequestAction.createGetRequest(ctx, url.concat(String.valueOf(planId)), new VolleyCallback() {
             @Override
