@@ -1,5 +1,6 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +20,8 @@ import android.widget.TextView;
 
 import com.softengi.mobcomp.softwareengi_mobile.Adapters.ArrayListTeamAdapter;
 import com.softengi.mobcomp.softwareengi_mobile.DataModels.TeamDataModel;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.TeamsLoader;
 
 import java.util.ArrayList;
 
@@ -26,22 +29,23 @@ public class AllTeamsFragment extends Fragment {
 
     public interface onAllTeamsFragmentLoad {
         void loadAllTeamsAdapter(ArrayListTeamAdapter adapter, ArrayList<TeamDataModel> data);
-        void onCreateTeam(String name, ArrayList<String> selectedUsers);
-        void onTeamDetail(TeamDataModel dataModel);
+        void onCreateTeam(String name, ArrayList<String> selectedUsers, TeamsLoader teamLoader);
+        void onTeamDetail(TeamDataModel dataModel, String TAG);
         void getUsers(ListView lvUsers);
     }
 
     onAllTeamsFragmentLoad mFragmentListener;
-    ArrayList<TeamDataModel> dataModels;
+    ArrayList<TeamDataModel> dataModels = new ArrayList<>();;
     ArrayList<String> selectedUsers = new ArrayList<String>();
     ListView lvTeams, lvUsers;
     Button btnCreateTeam;
     AlertDialog alertDialog;
-    private static final String TAG = "AllTeamsFragment";
+    public static final String TAG = "AllTeamsFragment";
     private ArrayListTeamAdapter adapter;
     private EditText etTeamCreateName;
     private String name;
     AlertDialog listUsersAlertDialog;
+    private boolean isLoaded = false;
 
     public AllTeamsFragment() {
         // Required empty public constructor
@@ -65,6 +69,10 @@ public class AllTeamsFragment extends Fragment {
         btnCreateTeam = view.findViewById(R.id.btnCreateTeam);
         lvTeams       = view.findViewById(R.id.lvAllTeams);
 
+        if(SharedPrefManager.getInstance(getContext()).getCoach() != "true") {
+            btnCreateTeam.setVisibility(View.GONE);
+        }
+
         return view;
     }
 
@@ -72,12 +80,11 @@ public class AllTeamsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        dataModels = new ArrayList<>();
         // fill data here
         adapter = new ArrayListTeamAdapter(dataModels, getActivity().getApplicationContext());
+        mFragmentListener.loadAllTeamsAdapter(adapter, dataModels);
 
         lvTeams.setAdapter(adapter);
-        mFragmentListener.loadAllTeamsAdapter(adapter, dataModels);
 
         btnCreateTeam.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +101,6 @@ public class AllTeamsFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         listUsersAlertDialog = new AlertDialog.Builder(getContext()).create();
                         name = etTeamCreateName.getText().toString();
-                        System.out.println("AD NAME: " + name);
                         View listAd = getActivity().getLayoutInflater().inflate(R.layout.alertdialog_select_users, null);
                         listUsersAlertDialog.setTitle("Choose Users");
                         listUsersAlertDialog.setCancelable(false);
@@ -118,10 +124,15 @@ public class AllTeamsFragment extends Fragment {
                             }
                         });
 
-                        listUsersAlertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "CONTINUE", new DialogInterface.OnClickListener() {
+                        listUsersAlertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "SUBMIT", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                mFragmentListener.onCreateTeam(name, selectedUsers);
+                                mFragmentListener.onCreateTeam(name, selectedUsers, new TeamsLoader() {
+                                    @Override
+                                    public void loadTeams() {
+                                        mFragmentListener.loadAllTeamsAdapter(adapter, dataModels);
+                                    }
+                                });
                             }
                         });
 
@@ -133,7 +144,9 @@ public class AllTeamsFragment extends Fragment {
                         });
 
                         listUsersAlertDialog.setView(listAd);
-                        listUsersAlertDialog.show();
+                        if(!((Activity) getContext()).isFinishing()) {
+                            listUsersAlertDialog.show();
+                        }
                     }
                 });
 
@@ -145,7 +158,9 @@ public class AllTeamsFragment extends Fragment {
                 });
 
                 alertDialog.setView(ad);
-                alertDialog.show();
+                if(!((Activity) getContext()).isFinishing()) {
+                    alertDialog.show();
+                }
             }
         });
 
@@ -153,9 +168,20 @@ public class AllTeamsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 TeamDataModel dataModel = dataModels.get(position);
-                mFragmentListener.onTeamDetail(dataModel);
+                mFragmentListener.onTeamDetail(dataModel, TAG);
             }
         });
 
+        isLoaded = true;
+
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser && isLoaded) {
+            mFragmentListener.loadAllTeamsAdapter(adapter, dataModels);
+        }
+    }
+
 }

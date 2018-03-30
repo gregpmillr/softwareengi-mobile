@@ -15,13 +15,15 @@
 
     <Button
         android:id="@+id/btnCreateTeam"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/create"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorTurquoise"
-        android:textColor="@color/colorWhite"
+        android:background="@drawable/blueborder_transparent_background"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:textColor="@color/colorBlack"
         android:layout_margin="10dp" />
 
 </RelativeLayout>

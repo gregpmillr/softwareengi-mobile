@@ -20,14 +20,15 @@ public class YourTeamsFragment extends Fragment {
 
     public interface onYourTeamsFragmentLoad {
         void loadYourTeamsAdapter(ArrayListTeamAdapter adapter, ArrayList<TeamDataModel> data);
-        void onTeamDetail(TeamDataModel dataModel);
+        void onTeamDetail(TeamDataModel dataModel, String TAG);
     }
 
-    private static final String TAG = "YourTeamsFragment";
+    public static final String TAG = "YourTeamsFragment";
     YourTeamsFragment.onYourTeamsFragmentLoad mFragmentListener;
-    ArrayList<TeamDataModel> dataModels;
+    ArrayList<TeamDataModel> dataModels = new ArrayList<>();;
     ListView lvTeams;
     private ArrayListTeamAdapter adapter;
+    private boolean isLoaded = false;
 
     public YourTeamsFragment() {
         // Required empty public constructor
@@ -57,7 +58,6 @@ public class YourTeamsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        dataModels = new ArrayList<>();
         // fill data here
         adapter = new ArrayListTeamAdapter(dataModels, getActivity().getApplicationContext());
 
@@ -68,9 +68,19 @@ public class YourTeamsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 TeamDataModel dataModel = dataModels.get(position);
-                mFragmentListener.onTeamDetail(dataModel);
+                mFragmentListener.onTeamDetail(dataModel, TAG);
             }
         });
 
+        isLoaded = true;
+
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser && isLoaded) {
+            mFragmentListener.loadYourTeamsAdapter(adapter, dataModels);
+        }
     }
 }
