@@ -41,6 +41,7 @@ public class AllTeamsFragment extends Fragment {
     private ArrayListTeamAdapter adapter;
     private EditText etTeamCreateName;
     private String name;
+    AlertDialog listUsersAlertDialog;
 
     public AllTeamsFragment() {
         // Required empty public constructor
@@ -63,7 +64,6 @@ public class AllTeamsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_teams_all, container, false);
         btnCreateTeam = view.findViewById(R.id.btnCreateTeam);
         lvTeams       = view.findViewById(R.id.lvAllTeams);
-        alertDialog   = new AlertDialog.Builder(getContext()).create();
 
         return view;
     }
@@ -82,6 +82,7 @@ public class AllTeamsFragment extends Fragment {
         btnCreateTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                alertDialog   = new AlertDialog.Builder(getContext()).create();
 
                 View ad = getActivity().getLayoutInflater().inflate(R.layout.alertdialog_create_team, null);
                 alertDialog.setTitle("Create a team");
@@ -91,8 +92,9 @@ public class AllTeamsFragment extends Fragment {
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "NEXT", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        listUsersAlertDialog = new AlertDialog.Builder(getContext()).create();
                         name = etTeamCreateName.getText().toString();
-                        final AlertDialog listUsersAlertDialog = new AlertDialog.Builder(getContext()).create();
+                        System.out.println("AD NAME: " + name);
                         View listAd = getActivity().getLayoutInflater().inflate(R.layout.alertdialog_select_users, null);
                         listUsersAlertDialog.setTitle("Choose Users");
                         listUsersAlertDialog.setCancelable(false);
@@ -141,7 +143,6 @@ public class AllTeamsFragment extends Fragment {
                         alertDialog.dismiss();
                     }
                 });
-
 
                 alertDialog.setView(ad);
                 alertDialog.show();

@@ -91,9 +91,7 @@ public class TeamsActivity extends AppCompatActivity  implements AllTeamsFragmen
 
     @Override
     public void onCreateTeam(String name, ArrayList<String> selectedUsers) {
-        System.out.println("Name: " + name);
-        System.out.println("Members: " + selectedUsers.toString());
-        Toast.makeText(getApplicationContext(), "Gonna make a team now!", Toast.LENGTH_SHORT).show();
+        TeamAction.postCreateTeams(getApplicationContext(),name,selectedUsers);
     }
 
     @Override
