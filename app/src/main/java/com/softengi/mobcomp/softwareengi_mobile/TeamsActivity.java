@@ -5,9 +5,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.softengi.mobcomp.softwareengi_mobile.Actions.TeamAction;
+import com.softengi.mobcomp.softwareengi_mobile.Actions.UserAction;
 import com.softengi.mobcomp.softwareengi_mobile.Adapters.ArrayListTeamAdapter;
 import com.softengi.mobcomp.softwareengi_mobile.Adapters.SectionsPageAdapter;
 import com.softengi.mobcomp.softwareengi_mobile.DataModels.TeamDataModel;
@@ -37,7 +41,6 @@ public class TeamsActivity extends AppCompatActivity  implements AllTeamsFragmen
         setupViewPager(mViewPager);
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-        Toast.makeText(getApplicationContext(), "TEST CREATE TEAMS ACTIVITY", Toast.LENGTH_SHORT).show();
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -55,7 +58,6 @@ public class TeamsActivity extends AppCompatActivity  implements AllTeamsFragmen
                     @Override
                     public void onSuccessResponse(JSONArray data) {
                         try {
-                            Toast.makeText(getApplicationContext(), "API REQUEST SUCCESSFUL", Toast.LENGTH_SHORT).show();
                             listData.clear();
 
                             for(int i = 0; i < data.length(); i++) {
@@ -88,8 +90,10 @@ public class TeamsActivity extends AppCompatActivity  implements AllTeamsFragmen
     }
 
     @Override
-    public void onCreateTeam() {
-
+    public void onCreateTeam(String name, ArrayList<String> selectedUsers) {
+        System.out.println("Name: " + name);
+        System.out.println("Members: " + selectedUsers.toString());
+        Toast.makeText(getApplicationContext(), "Gonna make a team now!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -135,5 +139,28 @@ public class TeamsActivity extends AppCompatActivity  implements AllTeamsFragmen
     @Override
     public void onTeamDetail(TeamDataModel dataModel) {
 
+    }
+
+    @Override
+    public void getUsers(final ListView lvUsers) {
+        UserAction.getListOfUsers(getApplicationContext(), new ListParser() {
+            @Override
+            public void onSuccessResponse(JSONArray data) {
+                String[] users = new String[data.length()];
+
+                for(int i=0;i<data.length();i++) {
+                    JSONObject jsonObj = null;
+                    try {
+                        jsonObj = data.getJSONObject(i);
+                        users[i] = jsonObj.getString("username");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, users);
+                lvUsers.setAdapter(adapter);
+            }
+        });
     }
 }
