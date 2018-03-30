@@ -192,7 +192,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/main_chk_coach"
-            android:layout_marginTop="10dp"
             android:textColor="@color/colorBlack"
             android:buttonTint="@color/colorBlack"
             android:fontFamily="sans-serif-thin"
@@ -230,7 +229,7 @@
             android:baselineAligned="false"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
             <LinearLayout
