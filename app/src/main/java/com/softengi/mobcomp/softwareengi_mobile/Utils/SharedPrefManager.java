@@ -13,6 +13,7 @@ public class SharedPrefManager {
     public static final String KEY_COACH = "keycoach";
     public static final String KEY_LANGUAGE = "keylanguage";
     public static final String KEY_PASSWORD= "keypassword";
+    public static final String KEY_ID = "keyid";
     public static final String KEY_REMEMBER_ME = "keyrememberme";
 
     private static SharedPrefManager mInstance;
@@ -43,6 +44,7 @@ public class SharedPrefManager {
         editor.putString(KEY_EMAIL, jwt.getClaim("email").asString());
         editor.putBoolean(KEY_COACH, jwt.getClaim("coach").asBoolean());
         editor.putString(KEY_LANGUAGE, jwt.getClaim("language").asString());
+        editor.putInt(KEY_ID, jwt.getClaim("id").asInt());
         editor.apply();
     }
 
@@ -102,6 +104,11 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_PASSWORD, password);
         editor.apply();
+    }
+
+    public int getId() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(KEY_ID, 0);
     }
 
     /**

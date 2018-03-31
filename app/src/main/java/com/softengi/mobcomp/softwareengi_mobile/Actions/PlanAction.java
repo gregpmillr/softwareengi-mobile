@@ -33,6 +33,11 @@ public class PlanAction {
         if(map != null) {
             map.put("username", String.valueOf(SharedPrefManager.getInstance(ctx).getUsername()));
 
+            // if logged in user is a coach, then assign a coachId to this plan.
+            if(SharedPrefManager.getInstance(ctx).getCoach().equals("true")) {
+                map.put("coachId", String.valueOf(SharedPrefManager.getInstance(ctx).getId()));
+            }
+
             RequestAction.createPostRequest(ctx, map, url, new VolleyCallback() {
                 @Override
                 public void onSuccessResponse(JSONObject result) {
