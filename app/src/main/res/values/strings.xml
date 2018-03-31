@@ -21,7 +21,7 @@
     <string name="lblProfileInformation">Information</string>
     <string name="profile_tv_username">HI, %1$s</string>
     <string name="stepmonitor_plan_description">Plan: %1$s</string>
-    <!-- <string name="base_api_url">http://142.134.23.52:8000/</string> -->
+    <!--<string name="base_api_url">http://142.134.23.52:8000/</string>-->
     <string name="base_api_url">http://192.168.2.10:8000/</string>
     <string name="create">CREATE</string>
     <string name="etPlanCreateRequiredSteps">Required Steps</string>

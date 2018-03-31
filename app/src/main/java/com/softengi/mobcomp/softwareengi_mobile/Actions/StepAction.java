@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParseException;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
@@ -44,7 +45,7 @@ public class StepAction {
         });
     }
 
-    public static void getStepsByPlan(final Context ctx, String planId, final LineGraphSeries<DataPoint> stepEntries, final StepParser callback) {
+    public static void getStepsByPlan(final Context ctx, String planId, final StepParser callback) {
         String username = SharedPrefManager.getInstance(ctx).getUsername();
 
         RequestAction.createGetRequestArray(ctx, url.concat(username + "/" + planId + "/list"), new VolleyCallbackArray() {

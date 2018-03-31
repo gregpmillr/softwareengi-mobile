@@ -50,6 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="165sp"
             android:layout_centerHorizontal="true"
+            android:layout_above="@id/llPlanSecondaryActions"
             android:layout_below="@id/etPlanDetailRequiredSteps" />
 
         <LinearLayout
