@@ -118,6 +118,8 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
         gvPace.addSeries(paceEntries);
         xGraph = -1;
 
+        gvPace.getGridLabelRenderer().setPadding(50);
+
         stepEntries = new LineGraphSeries<>(new DataPoint[]{});
         gvStep.getViewport().setYAxisBoundsManual(true);
         gvStep.getViewport().setMinY(0);
