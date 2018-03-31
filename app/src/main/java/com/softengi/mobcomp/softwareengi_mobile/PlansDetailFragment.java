@@ -1,6 +1,5 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,14 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.softengi.mobcomp.softwareengi_mobile.Actions.StepAction;
-import com.softengi.mobcomp.softwareengi_mobile.Utils.ProfileParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.StepParser;
 
 import org.json.JSONArray;
@@ -30,6 +26,7 @@ public class PlansDetailFragment extends Fragment {
         void deletePlan(String planId);
         void updatePlan(EditText title, EditText requiredSteps, String planId);
         void toStepFragment(String planId, String title, String requiredSteps, String totalSteps);
+        void toUserPlanProgress(String planId);
     }
 
     private String mPlanTitle;
@@ -37,9 +34,7 @@ public class PlansDetailFragment extends Fragment {
     private String mPlanId;
     private EditText etPlanDetailTitle;
     private EditText etPlanDetailRequiredSteps;
-    private Button btnPlanDetailDelete;
-    private Button btnPlanDetailUpdate;
-    private Button btnToStep;
+    private Button btnPlanDetailDelete, btnPlanDetailUpdate, btnToStep, btnToUserPlanProgress;
 
     private GraphView gvStep;
     private LineGraphSeries<DataPoint> stepEntries;
@@ -73,6 +68,7 @@ public class PlansDetailFragment extends Fragment {
         btnPlanDetailUpdate = v.findViewById(R.id.btnDetailUpdate);
         btnToStep = v.findViewById(R.id.btnToStep);
         gvStep = v.findViewById(R.id.gvGraph);
+        btnToUserPlanProgress = v.findViewById(R.id.btnToUserPlanProgress);
 
         return v;
     }
@@ -113,6 +109,13 @@ public class PlansDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 plansDetail.toStepFragment(mPlanId, mPlanTitle, mPlanRequiredSteps, ""+totalSteps);
+            }
+        });
+
+        btnToUserPlanProgress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                plansDetail.toUserPlanProgress(mPlanId);
             }
         });
 

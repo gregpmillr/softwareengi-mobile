@@ -286,4 +286,14 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
         fragment.setArguments(args);
         setFragment(fragment);
     }
+
+    @Override
+    public void toUserPlanProgress(String planId) {
+        Bundle args = new Bundle();
+        args.putString("plan_id", planId);
+
+        UserPlanProgressFragment fragment = new UserPlanProgressFragment();
+        fragment.setArguments(args);
+        setFragment(fragment);
+    }
 }

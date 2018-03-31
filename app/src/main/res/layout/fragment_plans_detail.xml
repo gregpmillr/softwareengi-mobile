@@ -52,40 +52,68 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/etPlanDetailRequiredSteps" />
 
-        <Button
-            android:id="@+id/btnToStep"
+        <LinearLayout
+            android:id="@+id/llPlanSecondaryActions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15sp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_above="@id/btnDetailUpdate"
-            android:background="@drawable/blueborder_transparent_background"
-            android:text="@string/to_step" />
+            android:weightSum="2"
+            android:layout_above="@id/llPlanActions"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnDetailUpdate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_above="@id/btnDetailDelete"
-            android:background="@drawable/blueborder_transparent_background"
-            android:text="@string/update" />
+            <Button
+                android:id="@+id/btnToStep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/blueborder_transparent_background"
+                android:text="@string/to_step" />
 
-        <Button
-            android:id="@+id/btnDetailDelete"
+            <Button
+                android:id="@+id/btnToUserPlanProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/blueborder_transparent_background"
+                android:text="@string/to_user_plan_progress" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llPlanActions"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15sp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/blueborder_transparent_background"
-            android:text="@string/delete" />
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnDetailUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/blueborder_transparent_background"
+                android:layout_weight="1"
+                android:text="@string/update" />
+
+            <Button
+                android:id="@+id/btnDetailDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/blueborder_transparent_background"
+                android:text="@string/delete" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
