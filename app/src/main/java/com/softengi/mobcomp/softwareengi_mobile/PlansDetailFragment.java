@@ -120,7 +120,8 @@ public class PlansDetailFragment extends Fragment {
             }
         });
 
-        stepEntries = new LineGraphSeries<>(new DataPoint[]{});
+        stepEntries = new LineGraphSeries<>(new DataPoint[]{new DataPoint(0,0)});
+
         gvStep.addSeries(stepEntries);
         gvStep.getViewport().setXAxisBoundsManual(true);
         gvStep.getViewport().setYAxisBoundsManual(true);
@@ -177,11 +178,11 @@ public class PlansDetailFragment extends Fragment {
             for (i = 0; i < response.length(); i++) {
                 JSONObject jsonObj = response.getJSONObject(i);
                 steps = jsonObj.getInt("steps");
-                stepEntries.appendData(new DataPoint(i, steps), true, 99999);
+                stepEntries.appendData(new DataPoint(i+1, steps), true, 99999);
                 totalSteps += steps;
             }
             gvStep.getViewport().setMinX(0);
-            gvStep.getViewport().setMaxX(i-1);
+            gvStep.getViewport().setMaxX(i);
         } catch (JSONException e) {
             e.printStackTrace();
         }
