@@ -41,7 +41,7 @@
     <string name="updated">UPDATED</string>
     <string name="hi">Hi</string>
     <string name="login_chk_remember_me">Remember Me</string>
-    <string name="to_step">DO IT</string>
+    <string name="to_step">Record Steps</string>
     <string name="pace">steps/sec</string>
     <string name="plan_title">plan_title</string>
     <string name="plan_required_steps">plan_required_steps</string>
@@ -52,6 +52,7 @@
     <string name="title_activity_teams">TeamsActivity</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="to_user_plan_progress">User Progress</string>
+    <string name="to_user_plan_progress">Plan Progress</string>
     <string name="contributed_steps">Contributed Steps:</string>
+    <string name="steps">Steps:</string>
 </resources>

@@ -23,7 +23,7 @@
         android:background="@drawable/blueborder_transparent_background"
         android:fontFamily="sans-serif"
         android:textStyle="bold"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/colorTurquoise"
         android:layout_margin="10dp" />
 
 </RelativeLayout>

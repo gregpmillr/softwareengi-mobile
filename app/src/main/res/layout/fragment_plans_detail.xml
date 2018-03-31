@@ -51,6 +51,7 @@
             android:layout_height="165sp"
             android:layout_centerHorizontal="true"
             android:layout_above="@id/llPlanSecondaryActions"
+            android:layout_margin="15dp"
             android:layout_below="@id/etPlanDetailRequiredSteps" />
 
         <LinearLayout
@@ -70,6 +71,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/blueborder_transparent_background"
+                android:textColor="@color/colorTurquoise"
+                android:fontFamily="sans-serif-smallcaps"
                 android:text="@string/to_step" />
 
             <Button
@@ -81,6 +84,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/blueborder_transparent_background"
+                android:textColor="@color/colorTurquoise"
+                android:fontFamily="sans-serif-smallcaps"
                 android:text="@string/to_user_plan_progress" />
 
         </LinearLayout>
@@ -101,7 +106,9 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/blueborder_transparent_background"
                 android:layout_weight="1"
-                android:text="@string/update" />
+                android:text="@string/update"
+                android:textColor="@color/colorTurquoise"
+                android:fontFamily="sans-serif-smallcaps"/>
 
             <Button
                 android:id="@+id/btnDetailDelete"
@@ -112,7 +119,9 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/blueborder_transparent_background"
-                android:text="@string/delete" />
+                android:text="@string/delete"
+                android:textColor="@color/colorTurquoise"
+                android:fontFamily="sans-serif-smallcaps"/>
 
         </LinearLayout>
 
