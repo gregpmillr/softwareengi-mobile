@@ -16,7 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.softengi.mobcomp.softwareengi_mobile.Actions.ProfileAction;
+import com.softengi.mobcomp.softwareengi_mobile.Actions.TeamAction;
+import com.softengi.mobcomp.softwareengi_mobile.Adapters.ArrayListTeamAdapter;
 import com.softengi.mobcomp.softwareengi_mobile.DataModels.PlanDataModel;
+import com.softengi.mobcomp.softwareengi_mobile.DataModels.TeamDataModel;
 import com.softengi.mobcomp.softwareengi_mobile.ProfileFragment.onProfileListener;
 import com.softengi.mobcomp.softwareengi_mobile.PlansFragment.onPlansFragmentLoad;
 import com.softengi.mobcomp.softwareengi_mobile.CreatePlanFragment.onCreateFragmentLoad;
@@ -156,6 +159,41 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
         PlansDetailFragment fragment = new PlansDetailFragment();
         fragment.setArguments(args);
         setFragment(fragment);
+    }
+
+    @Override
+    public void loadAllTeamsAdapter(final ArrayListTeamAdapter adapter, final ArrayList<TeamDataModel> teamDataModels) {
+        TeamAction.getListOfAllTeams(
+                getApplication(),
+                new ListParser() {
+                    @Override
+                    public void onSuccessResponse(JSONArray data) {
+                        try {
+                            teamDataModels.clear();
+
+                            for(int i = 0; i < data.length(); i++) {
+                                JSONObject jsonObj = data.getJSONObject(i);
+
+                                teamDataModels.add(
+                                        new TeamDataModel(
+                                                jsonObj.getString("name"),
+                                                jsonObj.getString("id")
+                                        )
+                                );
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+    }
+
+    @Override
+    public void massAssignTeam(PlanDataModel planDataModel, TeamDataModel teamDataModel) {
+        TeamAction.massAssignTeam(getApplicationContext(), planDataModel.getId(), teamDataModel.getId());
     }
 
     @Override

@@ -101,4 +101,17 @@ public class TeamAction {
 
     }
 
+    public static void massAssignTeam(final Context ctx, final String planId, final String teamId) {
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("planId", planId);
+        map.put("teamId", teamId);
+
+        RequestAction.createPostRequest(ctx, map, url.concat("massAssign"), new VolleyCallback() {
+            @Override
+            public void onSuccessResponse(JSONObject result) {
+                Toast.makeText(ctx, "Successfully assigned team to plan", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }
