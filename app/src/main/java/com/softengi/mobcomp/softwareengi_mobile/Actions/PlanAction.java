@@ -107,4 +107,14 @@ public class PlanAction {
         });
 
     }
+
+    public static void getUserProgressForPlans(final Context ctx, String planId, final ListParser callback) {
+        RequestAction.createGetRequestArray(ctx, url.concat(planId + "/userProgress"), new VolleyCallbackArray() {
+            @Override
+            public void onSuccessResponse(JSONArray result) {
+                callback.onSuccessResponse(result);
+                Toast.makeText(ctx, "List received successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

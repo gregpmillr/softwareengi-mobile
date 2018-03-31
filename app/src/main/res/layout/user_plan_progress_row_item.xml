@@ -25,6 +25,6 @@
         android:paddingEnd="10dp"
         android:textSize="20sp"
         android:layout_margin="10dp"
-        android:text="test2" />
+        android:text="@string/contributed_steps" />
 
 </RelativeLayout>

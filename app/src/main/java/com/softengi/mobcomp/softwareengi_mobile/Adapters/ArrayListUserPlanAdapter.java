@@ -68,7 +68,8 @@ public class ArrayListUserPlanAdapter extends ArrayAdapter<UserPlanProgressDataM
         lastPosition = position;
 
         viewHolder.txtUsername.setText(dataModel.getUsername());
-        viewHolder.txtContributedSteps.setText(dataModel.getStepsContributed());
+
+        viewHolder.txtContributedSteps.setText(getContext().getResources().getString(R.string.contributed_steps).concat(dataModel.getStepsContributed()));
 
         // return completed view to be rendered on screen
         return convertView;
