@@ -2,6 +2,7 @@ package com.softengi.mobcomp.softwareengi_mobile;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.softengi.mobcomp.softwareengi_mobile.Actions.StepAction;
@@ -23,6 +26,12 @@ import com.softengi.mobcomp.softwareengi_mobile.Utils.StepParser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class PlansDetailFragment extends Fragment {
 
@@ -119,39 +128,68 @@ public class PlansDetailFragment extends Fragment {
         stepEntries = new LineGraphSeries<>(new DataPoint[]{});
         gvStep.addSeries(stepEntries);
         gvStep.getViewport().setXAxisBoundsManual(true);
-        gvStep.getViewport().setMinX(3);
+        gvStep.getViewport().setYAxisBoundsManual(true);
+        gvStep.getViewport().setMinX(0);
         gvStep.getViewport().setMaxX(8);
+        gvStep.getViewport().setMinY(0);
+        gvStep.getViewport().setMaxY(100);
         gvStep.getViewport().setScrollable(true);
+        gvStep.getViewport().setScalableY(true);
 
-        StepAction.getStepsByPlan(getActivity(), mPlanId, stepEntries, new StepParser() {
+        stepEntries.setDrawDataPoints(true);
+        stepEntries.setDataPointsRadius(10);
+        stepEntries.setThickness(8);
+
+        StepAction.getStepsByPlan(getActivity(), mPlanId, new StepParser() {
             @Override
             public void onSuccessResponse(JSONArray response) {
-                try {
-                    int steps;
-                    /*
-                    TimeZone tz = TimeZone.getTimeZone("UTC");
-                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-                    df.setTimeZone(tz);
-                    Date d;
-                    */
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject jsonObj = response.getJSONObject(i);
-                        steps = jsonObj.getInt("steps");
-                        //try {
-                        //d = df.parse(jsonObj.getString("updated_at"));
-                        //stepEntries.appendData(new DataPoint(d, jsonObj.getInt("steps")), false, 99999);
-                        stepEntries.appendData(new DataPoint(i, steps), true, 99999);
-                        //} catch(ParseException e) {
-                        //    e.printStackTrace();
-                        //}
-
-                        totalSteps += steps;
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                updateGraph(response);
             }
         });
+    }
+
+    private void updateGraph(JSONArray response) {
+        try {
+            int steps;
+
+            /*
+            //for dates
+            TimeZone tz = TimeZone.getTimeZone("UTC");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            df.setTimeZone(tz);
+            Date d;
+            try {
+                for (int i = 0; i < response.length(); i++) {
+                    JSONObject jsonObj = response.getJSONObject(i);
+                    steps = jsonObj.getInt("steps");
+                    d = df.parse(jsonObj.getString("updated_at"));
+                    totalSteps += steps;
+                    stepEntries.appendData(new DataPoint(d, steps), true, 99999);
+                }
+                gvStep.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
+                //gvStep.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of the space
+                gvStep.getGridLabelRenderer().setHumanRounding(false);
+
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            */
+
+
+            //for non-dates
+            int i;
+            for (i = 0; i < response.length(); i++) {
+                JSONObject jsonObj = response.getJSONObject(i);
+                steps = jsonObj.getInt("steps");
+                stepEntries.appendData(new DataPoint(i, steps), true, 99999);
+                totalSteps += steps;
+            }
+            gvStep.getViewport().setMinX(0);
+            gvStep.getViewport().setMaxX(i-1);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 }

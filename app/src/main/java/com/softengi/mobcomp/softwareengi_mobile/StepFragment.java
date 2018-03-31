@@ -174,11 +174,13 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
             @Override
             public void onClick(View view) {
 
-                StepAction.postSteps(
-                        getActivity().getApplicationContext(),
-                        numSteps,
-                        planId
-                );
+                if (numSteps > 0) {
+                    StepAction.postSteps(
+                            getActivity().getApplicationContext(),
+                            numSteps,
+                            planId
+                    );
+                }
 
                 xGraph = -1;
                 paceEntries.resetData(new DataPoint[]{});
