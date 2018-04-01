@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.DetailParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.ListParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.SuccessListener;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.TeamsLoader;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallbackArray;
@@ -75,7 +76,6 @@ public class TeamAction {
     }
 
     public static void postJoinTeam(final Context ctx, String username, String teamId) {
-        Toast.makeText(ctx, "Making request", Toast.LENGTH_SHORT).show();
         Map<String, String> map = new HashMap<String,String>();
         map.put("username", username);
         map.put("teamId", teamId);
@@ -84,6 +84,19 @@ public class TeamAction {
             @Override
             public void onSuccessResponse(JSONObject result) {
                 Toast.makeText(ctx, "Joined team", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public static void postDeleteTeam(final Context ctx, String teamId, final SuccessListener callback) {
+        Map<String, String> map = new HashMap<String,String>();
+        map.put("teamId", teamId);
+
+        RequestAction.createPostRequest(ctx, map, url.concat("delete"), new VolleyCallback() {
+            @Override
+            public void onSuccessResponse(JSONObject result) {
+                callback.successful();
+                Toast.makeText(ctx, "Deleted team", Toast.LENGTH_SHORT).show();
             }
         });
     }

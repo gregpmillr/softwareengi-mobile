@@ -18,10 +18,11 @@
     <com.jjoe64.graphview.GraphView
         android:id="@+id/gvPace"
         android:layout_width="match_parent"
-        android:layout_height="100sp"
+        android:layout_height="150sp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/tvPlanDescription"
-        android:layout_marginTop="10sp"/>
+        android:layout_margin="15sp"
+        android:layout_marginBottom="5dp" />
 
     <LinearLayout
         android:id="@+id/llTimer"
@@ -42,7 +43,7 @@
                 android:textAlignment="center"
                 android:textSize="25sp"
                 android:fontFamily="sans-serif"
-                android:layout_marginTop="10sp" />
+                android:layout_marginTop="0dp" />
         </LinearLayout>
         <LinearLayout
             android:layout_height="wrap_content"
@@ -58,30 +59,30 @@
                 android:textStyle="bold"
                 android:fontFamily="sans-serif"
                 android:text="@string/pace"
-                android:layout_marginTop="10sp" />
+                android:layout_marginTop="0dp" />
         </LinearLayout>
     </LinearLayout>
 
     <com.jjoe64.graphview.GraphView
         android:id="@+id/gvStep"
         android:layout_width="match_parent"
-        android:layout_height="150sp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/llTimer"
-        android:layout_marginTop="10sp"/>
+        android:layout_height="130sp"
+        android:layout_alignStart="@+id/gvPace"
+        android:layout_below="@+id/llTimer"
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:id="@+id/tvStep"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/gvStep"
         android:textAlignment="center"
         android:gravity="center"
-        android:textSize="50sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         android:fontFamily="sans-serif"
-        android:text="0"
+        android:text="@string/steps"
         android:layout_above="@id/llStep" />
 
     <LinearLayout
@@ -92,7 +93,7 @@
         android:gravity="center"
         android:layout_alignParentBottom="true"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="20sp">
+        android:layout_marginBottom="5dp">
 
         <Button
             android:id="@+id/btnStartPause"

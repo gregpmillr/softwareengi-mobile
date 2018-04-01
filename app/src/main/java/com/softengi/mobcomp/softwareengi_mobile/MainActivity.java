@@ -18,11 +18,14 @@ import android.widget.Toast;
 import com.softengi.mobcomp.softwareengi_mobile.Actions.ProfileAction;
 import com.softengi.mobcomp.softwareengi_mobile.Actions.TeamAction;
 import com.softengi.mobcomp.softwareengi_mobile.Adapters.ArrayListTeamAdapter;
+import com.softengi.mobcomp.softwareengi_mobile.Adapters.ArrayListUserPlanAdapter;
 import com.softengi.mobcomp.softwareengi_mobile.DataModels.PlanDataModel;
 import com.softengi.mobcomp.softwareengi_mobile.DataModels.TeamDataModel;
+import com.softengi.mobcomp.softwareengi_mobile.DataModels.UserPlanProgressDataModel;
 import com.softengi.mobcomp.softwareengi_mobile.ProfileFragment.onProfileListener;
 import com.softengi.mobcomp.softwareengi_mobile.PlansFragment.onPlansFragmentLoad;
 import com.softengi.mobcomp.softwareengi_mobile.CreatePlanFragment.onCreateFragmentLoad;
+import com.softengi.mobcomp.softwareengi_mobile.UserPlanProgressFragment.onUserPlanProgressFragmentLoad;
 import com.softengi.mobcomp.softwareengi_mobile.PlansDetailFragment.onPlansDetail;
 import com.softengi.mobcomp.softwareengi_mobile.Actions.PlanAction;
 import com.softengi.mobcomp.softwareengi_mobile.Adapters.ArrayListPlanAdapter;
@@ -38,7 +41,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements onPlansFragmentLoad,
-        onCreateFragmentLoad, onProfileListener, onPlansDetail {
+        onCreateFragmentLoad, onProfileListener, onPlansDetail, onUserPlanProgressFragmentLoad {
 
     private BottomNavigationView mAthleteNav;
     private FrameLayout mAthleteFrame;
@@ -285,5 +288,44 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
         StepFragment fragment = new StepFragment();
         fragment.setArguments(args);
         setFragment(fragment);
+    }
+
+    @Override
+    public void toUserPlanProgress(String planId) {
+        Bundle args = new Bundle();
+        args.putString("plan_id", planId);
+
+        UserPlanProgressFragment fragment = new UserPlanProgressFragment();
+        fragment.setArguments(args);
+        setFragment(fragment);
+    }
+
+    @Override
+    public void loadUserPlanProgressAdapter(final ArrayListUserPlanAdapter adapter, final ArrayList<UserPlanProgressDataModel> userPlanProgressDataModels, String planId) {
+        System.out.println("PLAN ID:" + planId);
+        PlanAction.getUserProgressForPlans(getApplicationContext(), planId, new ListParser() {
+            @Override
+            public void onSuccessResponse(JSONArray data) {
+                try {
+                    userPlanProgressDataModels.clear();
+
+                    for(int i = 0; i < data.length(); i++) {
+                        JSONObject jsonObj = data.getJSONObject(i);
+
+                        userPlanProgressDataModels.add(
+                                new UserPlanProgressDataModel(
+                                        jsonObj.getString("username"),
+                                        jsonObj.getString("stepsContributed")
+                                )
+                        );
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }

@@ -24,11 +24,6 @@ import com.softengi.mobcomp.softwareengi_mobile.Utils.StepDetector;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.StepListener;
 
 import java.util.LinkedList;
-
-/**
- * Created by br239 on 2018-03-25.
- */
-
 public class StepFragment extends Fragment implements SensorEventListener, StepListener {
 
     private StepDetector simpleStepDetector;
@@ -109,7 +104,6 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
             @Override
             public void onChronometerTick(Chronometer chronometer)
             {
-                System.out.println("tick test " + SystemClock.elapsedRealtime());
                 calculatePace();
             }
         });
@@ -192,7 +186,7 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
 
                 numSteps = 0;
                 pausedSteps = 0;
-                tvStep.setText("0");
+                tvStep.setText(getResources().getString(R.string.steps));
                 btnStartPause.setSelected(false);
                 btnStartPause.setBackground(getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp,null));
                 sensorManager.unregisterListener(StepFragment.this);
@@ -218,24 +212,13 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
     @Override
     public void step(long timeNs) {
         numSteps++;
-        tvStep.setText(String.valueOf(numSteps));
+        tvStep.setText("Steps: ".concat(String.valueOf(numSteps)));
 
         totalSteps++;
         stepEntries.appendData(new DataPoint(totalSteps, totalSteps), false, requiredSteps);
     }
 
     private void calculatePace() {
-        /*
-        //pace change on every steps made
-        if (timestamps.size() >= 5) {
-            timestamps.removeFirst();
-        }
-        timestamps.addLast(lastPause = SystemClock.elapsedRealtime());
-
-        pace = timestamps.size() / (timestamps.getLast() - timestamps.getFirst()) + " " + R.string.pace;
-        tvPace.setText(pace);
-        */
-
         //pace change on every seconds passed
         if (timestamps.size() >= 5) {
             timestamps.removeFirst();

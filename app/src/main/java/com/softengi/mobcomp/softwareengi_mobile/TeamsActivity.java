@@ -21,6 +21,7 @@ import com.softengi.mobcomp.softwareengi_mobile.Adapters.SectionsPageAdapter;
 import com.softengi.mobcomp.softwareengi_mobile.DataModels.TeamDataModel;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.ListParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.SuccessListener;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.TeamsLoader;
 
 import org.json.JSONArray;
@@ -198,6 +199,16 @@ public class TeamsActivity extends AppCompatActivity  implements AllTeamsFragmen
     }
 
     @Override
+    public void onYourTeamDelete(String teamId, final ArrayListTeamAdapter adapter, final ArrayList<TeamDataModel> data) {
+        TeamAction.postDeleteTeam(getApplicationContext(),teamId, new SuccessListener() {
+            @Override
+            public void successful() {
+                loadYourTeamsAdapter(adapter, data);
+            }
+        });
+    }
+
+    @Override
     public void getUsers(final ListView lvUsers) {
         UserAction.getListOfUsers(getApplicationContext(), new ListParser() {
             @Override
@@ -216,6 +227,16 @@ public class TeamsActivity extends AppCompatActivity  implements AllTeamsFragmen
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, users);
                 lvUsers.setAdapter(adapter);
+            }
+        });
+    }
+
+    @Override
+    public void onAllTeamDelete(String teamId, final ArrayListTeamAdapter adapter, final ArrayList<TeamDataModel> data) {
+        TeamAction.postDeleteTeam(getApplicationContext(),teamId, new SuccessListener() {
+            @Override
+            public void successful() {
+                loadAllTeamsAdapter(adapter, data);
             }
         });
     }

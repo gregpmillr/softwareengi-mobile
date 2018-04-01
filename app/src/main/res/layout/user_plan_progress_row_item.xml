@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLightestGrey">
+
+    <TextView
+        android:id="@+id/lvUserPlanProgressUsername"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical|start"
+        android:textSize="20sp"
+        android:paddingStart="10dp"
+        android:paddingEnd="0dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/row_item_shadow"
+        android:text="test" />
+
+    <TextView
+        android:id="@+id/lvUserPlanProgressContributedSteps"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical|end"
+        android:paddingStart="0dp"
+        android:paddingEnd="10dp"
+        android:textSize="20sp"
+        android:layout_margin="10dp"
+        android:text="@string/contributed_steps" />
+
+</RelativeLayout>
