@@ -7,16 +7,29 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Adapter for tabs which displays teams.
+ */
 public class SectionsPageAdapter extends FragmentPagerAdapter {
 
+    // member variables (fragments in tabs)
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
 
+    /**
+     * Add a fragment to the list of tabs
+     * @param fragment Fragment to add
+     * @param title Title of fragment
+     */
     public void addFragment(Fragment fragment, String title) {
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
     }
 
+    /**
+     * Constructor for this adapter
+     * @param fm FragmentManager
+     */
     public SectionsPageAdapter(FragmentManager fm) {
         super(fm);
     }
