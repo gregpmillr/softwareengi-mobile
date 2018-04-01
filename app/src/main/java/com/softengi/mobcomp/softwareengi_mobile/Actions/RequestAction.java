@@ -22,7 +22,13 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RequestAction {
+/**
+ * Handles the GET/POST requests made by each action. All URLs are final
+ * in this class and ready to be sent to the server. All requests
+ * contain the parameters or body values for the request, dependent
+ * upon if GET or POST request.
+ */
+class RequestAction {
 
     /**
      * Builds the POST request and sends it to the API server
@@ -31,10 +37,11 @@ public class RequestAction {
      * @param urlExtension String specifying the API URL
      * @param callback Function called when the request is successful
      */
-    public static void createPostRequest(final Context ctx, final Map<String, String> params, String urlExtension, final VolleyCallback callback) {
+    static void createPostRequest(final Context ctx, final Map<String, String> params, String urlExtension, final VolleyCallback callback) {
 
         String url = ctx.getResources().getString(R.string.base_api_url).concat(urlExtension);
 
+        // create the POST request
         StringRequest request = new StringRequest(
                 Request.Method.POST,
                 url,
@@ -51,14 +58,11 @@ public class RequestAction {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError e) {
-
                 // error response
                 e.printStackTrace();
-
                 Toast.makeText(ctx,
                         "Error",
                         Toast.LENGTH_SHORT).show();
-
             }
         }
         )
@@ -70,14 +74,12 @@ public class RequestAction {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<String, String>();
+                Map<String,String> headers = new HashMap<>();
                 headers.put("Content-Type", "application/x-www-form-urlencoded");
                 return headers;
             }
         };
-
         RequestQueueSingleton.getInstance(ctx).addToRequestQueue(request);
-
     }
 
     /**
@@ -86,10 +88,11 @@ public class RequestAction {
      * @param urlExtension String specifying the API URL with parameters
      * @param callback Function called when the request is successful
      */
-    public static void createGetRequest(final Context ctx, String urlExtension, final VolleyCallback callback) {
+    static void createGetRequest(final Context ctx, String urlExtension, final VolleyCallback callback) {
 
         String url = ctx.getResources().getString(R.string.base_api_url).concat(urlExtension);
 
+        // creates the GET request
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>()
@@ -102,20 +105,15 @@ public class RequestAction {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError e) {
-
                         // error response
                         e.printStackTrace();
-
                         Toast.makeText(ctx,
                                 e.getMessage(),
                                 Toast.LENGTH_SHORT).show();
-
                     }
                 }
         );
-
         RequestQueueSingleton.getInstance(ctx).addToRequestQueue(request);
-
     }
 
     /**
@@ -124,10 +122,11 @@ public class RequestAction {
      * @param urlExtension String specifying the API URL with parameters
      * @param callback Function called when the request is successful
      */
-    public static void createGetRequestArray(final Context ctx, String urlExtension, final VolleyCallbackArray callback) {
+    static void createGetRequestArray(final Context ctx, String urlExtension, final VolleyCallbackArray callback) {
 
         String url = ctx.getResources().getString(R.string.base_api_url).concat(urlExtension);
 
+        // creaes the GET request
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>()
@@ -140,19 +139,14 @@ public class RequestAction {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError e) {
-
                         // error response
                         e.printStackTrace();
-
                         Toast.makeText(ctx,
                                 e.getMessage(),
                                 Toast.LENGTH_SHORT).show();
-
                     }
                 }
         );
-
         RequestQueueSingleton.getInstance(ctx).addToRequestQueue(request);
-
     }
 }
