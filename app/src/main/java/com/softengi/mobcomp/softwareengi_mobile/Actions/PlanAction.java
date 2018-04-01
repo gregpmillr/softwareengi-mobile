@@ -38,7 +38,6 @@ public class PlanAction {
     public static void postCreatePlans(final Context ctx, EditText title, EditText requiredSteps, final SuccessListener onSuccess) {
 
         // validate the plan
-        PlanValidator.validatePlan(title, requiredSteps);
         Map<String, String> map = PlanValidator.validatePlan(
                 title,
                 requiredSteps);
@@ -76,19 +75,19 @@ public class PlanAction {
      */
     public static void postUpdate(final Context ctx, EditText title, EditText requiredSteps, String planId, final SuccessListener onSuccess) {
 
-        // add request body
-        Map<String,String> map = new HashMap<>();
-        map.put("plan_id", planId);
-        map.put("new_title", title.getText().toString());
-        map.put("new_required_steps", requiredSteps.getText().toString());
+        Map<String, String> map = PlanValidator.validateUpdatePlan(title, requiredSteps, planId);
 
-        // create the request
-        RequestAction.createPostRequest(ctx, map, url.concat("update"), new VolleyCallback() {
-            @Override
-            public void onSuccessResponse(JSONObject result) {
-                onSuccess.successful();
-            }
-        });
+        if(map != null) {
+            // create the request
+            RequestAction.createPostRequest(ctx, map, url.concat("update"), new VolleyCallback() {
+                @Override
+                public void onSuccessResponse(JSONObject result) {
+                    onSuccess.successful();
+                }
+            });
+        } else {
+            Toast.makeText(ctx, "Unable to create new plan", Toast.LENGTH_LONG).show();
+        }
     }
 
     /**

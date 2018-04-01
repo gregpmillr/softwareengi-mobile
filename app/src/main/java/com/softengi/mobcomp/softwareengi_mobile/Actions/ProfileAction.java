@@ -10,6 +10,7 @@ import com.softengi.mobcomp.softwareengi_mobile.Utils.DetailParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SuccessListener;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
+import com.softengi.mobcomp.softwareengi_mobile.Validations.GeneralValidations;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,20 +37,25 @@ public class ProfileAction {
      */
     public static void postUpdate(final Context ctx, TextView username, EditText email, EditText language, CheckBox coach, final SuccessListener onSuccess) {
 
-        // add the request body
-        Map<String, String> map = new HashMap<>();
-        map.put("username", username.getText().toString());
-        map.put("email", email.getText().toString());
-        map.put("language", language.getText().toString());
-        map.put("coach", String.valueOf(coach.isChecked()));
+        Map<String, String> map = GeneralValidations.validateUpdateProfile (
+                username,
+                email,
+                language,
+                coach
+        );
 
-        // create the request
-        RequestAction.createPostRequest(ctx, map, url.concat("update"), new VolleyCallback() {
-            @Override
-            public void onSuccessResponse(JSONObject result) {
-                onSuccess.successful();
-            }
-        });
+        if(map != null) {
+            // create the request
+            RequestAction.createPostRequest(ctx, map, url.concat("update"), new VolleyCallback() {
+                @Override
+                public void onSuccessResponse(JSONObject result) {
+                    onSuccess.successful();
+                }
+            });
+        } else {
+            Toast.makeText(ctx, "Unable to update profile", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     /**

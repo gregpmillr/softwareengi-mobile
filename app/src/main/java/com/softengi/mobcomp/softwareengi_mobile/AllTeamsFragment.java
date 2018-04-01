@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.softengi.mobcomp.softwareengi_mobile.Adapters.ArrayListTeamAdapter;
 import com.softengi.mobcomp.softwareengi_mobile.DataModels.TeamDataModel;
@@ -130,57 +132,63 @@ public class AllTeamsFragment extends Fragment {
                 alertDialog.setTitle("Create a team");
                 alertDialog.setCancelable(false);
                 etTeamCreateName = ad.findViewById(R.id.etTeamCreateName);
+
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "NEXT", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        listUsersAlertDialog = new AlertDialog.Builder(getContext()).create();
-                        name = etTeamCreateName.getText().toString();
-                        View listAd = getActivity().getLayoutInflater().inflate(R.layout.alertdialog_select_users, null);
-                        listUsersAlertDialog.setTitle("Choose Users");
-                        listUsersAlertDialog.setCancelable(false);
-                        lvUsers = listAd.findViewById(R.id.lvUsers);
-                        mFragmentListener.getUsers(lvUsers);
+                        if(!TextUtils.isEmpty(etTeamCreateName.getText().toString())) {
+                            listUsersAlertDialog = new AlertDialog.Builder(getContext()).create();
+                            name = etTeamCreateName.getText().toString();
+                            View listAd = getActivity().getLayoutInflater().inflate(R.layout.alertdialog_select_users, null);
+                            listUsersAlertDialog.setTitle("Choose Users");
+                            listUsersAlertDialog.setCancelable(false);
+                            lvUsers = listAd.findViewById(R.id.lvUsers);
+                            mFragmentListener.getUsers(lvUsers);
 
-                        lvUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                String itemText = ((TextView)view).getText().toString();
-                                if(selectedUsers.contains(itemText)) {
-                                    // already contained, user must be de-selecting!
-                                    lvUsers.getChildAt(position).setBackgroundColor(Color.WHITE);
-                                    selectedUsers.remove(itemText);
-                                } else {
-                                    // selecting new user
-                                    selectedUsers.add(itemText);
-                                    lvUsers.getChildAt(position).setBackgroundColor(Color.GREEN);
-                                }
-
-                            }
-                        });
-
-                        listUsersAlertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "SUBMIT", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mFragmentListener.onCreateTeam(name, selectedUsers, new TeamsLoader() {
-                                    @Override
-                                    public void loadTeams() {
-                                        mFragmentListener.loadAllTeamsAdapter(adapter, dataModels);
+                            lvUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    String itemText = ((TextView)view).getText().toString();
+                                    if(selectedUsers.contains(itemText)) {
+                                        // already contained, user must be de-selecting!
+                                        lvUsers.getChildAt(position).setBackgroundColor(Color.WHITE);
+                                        selectedUsers.remove(itemText);
+                                    } else {
+                                        // selecting new user
+                                        selectedUsers.add(itemText);
+                                        lvUsers.getChildAt(position).setBackgroundColor(Color.GREEN);
                                     }
-                                });
-                            }
-                        });
 
-                        listUsersAlertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                listUsersAlertDialog.dismiss();
-                            }
-                        });
+                                }
+                            });
 
-                        listUsersAlertDialog.setView(listAd);
-                        if(!((Activity) getContext()).isFinishing()) {
-                            listUsersAlertDialog.show();
+                            listUsersAlertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "SUBMIT", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    mFragmentListener.onCreateTeam(name, selectedUsers, new TeamsLoader() {
+                                        @Override
+                                        public void loadTeams() {
+                                            mFragmentListener.loadAllTeamsAdapter(adapter, dataModels);
+                                        }
+                                    });
+                                }
+                            });
+
+                            listUsersAlertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    listUsersAlertDialog.dismiss();
+                                }
+                            });
+
+                            listUsersAlertDialog.setView(listAd);
+                            if(!((Activity) getContext()).isFinishing()) {
+                                listUsersAlertDialog.show();
+                            }
+                        } else {
+                            Toast.makeText(getContext(), "Missing team name!", Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 });
 
@@ -206,37 +214,41 @@ public class AllTeamsFragment extends Fragment {
             }
         });
 
-        lvTeams.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final TeamDataModel dataModel = dataModels.get(position);
+        // restrict deleting teams to coaches only
+        if(SharedPrefManager.getInstance(getContext()).getCoach().equals("true")) {
+            lvTeams.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    final TeamDataModel dataModel = dataModels.get(position);
 
-                // show dialog to confirm delete
-                alertDialogDeleteTeam = new AlertDialog.Builder(getContext()).create();
-                alertDialogDeleteTeam.setTitle("Are you sure you want to delete this team?");
-                alertDialogDeleteTeam.setCancelable(false);
+                    // show dialog to confirm delete
+                    alertDialogDeleteTeam = new AlertDialog.Builder(getContext()).create();
+                    alertDialogDeleteTeam.setTitle("Are you sure you want to delete this team?");
+                    alertDialogDeleteTeam.setCancelable(false);
 
-                alertDialogDeleteTeam.setButton(AlertDialog.BUTTON_POSITIVE, "DELETE", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mFragmentListener.onAllTeamDelete(dataModel.getId(), adapter, dataModels);
+                    alertDialogDeleteTeam.setButton(AlertDialog.BUTTON_POSITIVE, "DELETE", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mFragmentListener.onAllTeamDelete(dataModel.getId(), adapter, dataModels);
+                        }
+                    });
+
+                    alertDialogDeleteTeam.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            alertDialogDeleteTeam.dismiss();
+                        }
+                    });
+
+                    if(!((Activity) getContext()).isFinishing()) {
+                        alertDialogDeleteTeam.show();
                     }
-                });
 
-                alertDialogDeleteTeam.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        alertDialogDeleteTeam.dismiss();
-                    }
-                });
-
-                if(!((Activity) getContext()).isFinishing()) {
-                    alertDialogDeleteTeam.show();
+                    return true;
                 }
+            });
+        }
 
-                return true;
-            }
-        });
 
         isLoaded = true;
 

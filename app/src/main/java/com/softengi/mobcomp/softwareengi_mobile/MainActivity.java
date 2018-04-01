@@ -204,12 +204,6 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
 
     @Override
     public void onSubmitPlan() {
-        InputMethodManager inputManager = (InputMethodManager)
-                getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
-
-        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                InputMethodManager.HIDE_NOT_ALWAYS);
-
         // create a new plan
         PlanAction.postCreatePlans(getApplicationContext(),
                 (EditText) findViewById(R.id.etPlanCreateTitle),
