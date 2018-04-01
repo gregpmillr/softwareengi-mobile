@@ -14,6 +14,9 @@ import android.widget.TextView;
 
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 
+/**
+ * Fragment representing a profile
+ */
 public class ProfileFragment extends Fragment {
 
     private EditText etProfileEmail, etProfileLanguage;
@@ -21,18 +24,42 @@ public class ProfileFragment extends Fragment {
     private Button btnLogout, btnProfileUpdate;
     private CheckBox chkProfileCoach;
 
+    /**
+     * Interface for MainActivity to implement
+     */
     public interface onProfileListener {
+        /**
+         * Updates a profile
+         * @param username Username of user
+         * @param email New or old email
+         * @param language New or old language
+         * @param coach New or old coach value
+         */
         void updateProfile(TextView username, EditText email, EditText language, CheckBox coach);
+
+        /**
+         * Loads profile data
+         * @param tvTotalSteps Total steps
+         * @param tvTotalPlans Total plans
+         * @param tvTotalTeams Total teams
+         * @param tvRecentSteps Total steps. Past 7 days
+         * @param tvRecentPlans Total plans. Past 7 days
+         */
         void loadProfile(TextView tvTotalSteps, TextView tvTotalPlans, TextView tvTotalTeams,
                          TextView tvRecentSteps, TextView tvRecentPlans);
+
+        /**
+         * Logs the user out
+         */
         void logout();
     }
 
     onProfileListener mProfileListener;
 
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
+    /**
+     * Required default constructor
+     */
+    public ProfileFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,7 +89,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         tvProfileUsername.setText(SharedPrefManager.getInstance(getContext()).getUsername());
         etProfileEmail.setText(SharedPrefManager.getInstance(getContext()).getEmail());
         chkProfileCoach.setChecked(Boolean.valueOf(SharedPrefManager.getInstance(getContext()).getCoach()));
@@ -81,8 +107,6 @@ public class ProfileFragment extends Fragment {
                 mProfileListener.updateProfile(tvProfileUsername, etProfileEmail, etProfileLanguage, chkProfileCoach);
             }
         });
-
-
     }
 
     @Override

@@ -9,11 +9,13 @@ import android.widget.EditText;
 
 import com.softengi.mobcomp.softwareengi_mobile.Actions.AuthAction;
 
+/**
+ * Activity used to register users
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText etUsername, etEmail, etPassword, etLanguage;
     private CheckBox chkCoach;
-    private Button btnSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +27,13 @@ public class RegisterActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         etLanguage = findViewById(R.id.etLanguage);
         chkCoach   = findViewById(R.id.chkCoach);
-        btnSubmit  = findViewById(R.id.btnSubmit);
+        Button btnSubmit = findViewById(R.id.btnSubmit);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                // register the user
                 AuthAction.postRegister(
                         getApplicationContext(), etUsername, etEmail,
                         etPassword, etLanguage, chkCoach

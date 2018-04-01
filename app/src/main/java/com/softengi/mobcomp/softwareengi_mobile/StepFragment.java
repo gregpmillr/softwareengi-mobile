@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
@@ -24,12 +25,15 @@ import com.softengi.mobcomp.softwareengi_mobile.Utils.StepDetector;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.StepListener;
 
 import java.util.LinkedList;
+
+/**
+ * Fragment representing a step
+ */
 public class StepFragment extends Fragment implements SensorEventListener, StepListener {
 
     private StepDetector simpleStepDetector;
     private SensorManager sensorManager;
     private Sensor accel;
-
     private int planId = 0;
     private int requiredSteps = 100;
     private int totalSteps = 0;
@@ -37,13 +41,10 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
     private TextView tvStep, tvPace, tvPlanDescription;
     private Button btnStartPause;
     private Button btnStop;
-
     private Chronometer mChronometer;
-
     private GraphView gvPace, gvStep;
     private LineGraphSeries<DataPoint> paceEntries, stepEntries;
     private int xGraph;
-
     private int numSteps = 0;
     private long lastPause = 0;
     private int pausedSteps = 0;
@@ -51,9 +52,10 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
     private LinkedList<Integer> timestamps;
     String pace;
 
-    public StepFragment() {
-        // Required empty public constructor
-    }
+    /**
+     * Required empty constructor
+     */
+    public StepFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -170,13 +172,17 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
             @Override
             public void onClick(View view) {
 
-                if (numSteps > 0) {
-                    StepAction.postSteps(
-                            getActivity().getApplicationContext(),
-                            numSteps,
-                            planId
-                    );
-                }
+                    if(numSteps > 0) {
+                        StepAction.postSteps(
+                                getActivity().getApplicationContext(),
+                                numSteps,
+                                planId
+                        );
+                    } else {
+                        Toast.makeText(getContext(), "You haven't taken any steps yet!", Toast.LENGTH_SHORT).show();
+                    }
+
+
 
                 xGraph = -1;
                 paceEntries.resetData(new DataPoint[]{});

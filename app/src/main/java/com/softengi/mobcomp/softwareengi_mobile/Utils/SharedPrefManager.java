@@ -3,26 +3,39 @@ package com.softengi.mobcomp.softwareengi_mobile.Utils;
 import com.auth0.android.jwt.JWT;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
+/**
+ * Manages all actions for shared preferences to ensure that there is never
+ * more than one instance of Shared Preferences at one time.
+ */
 public class SharedPrefManager {
+
     // constants
-    public static final String SHARED_PREF_NAME = "softwareengisharedpref";
-    public static final String KEY_USERNAME = "keyusername";
-    public static final String KEY_EMAIL = "keyemail";
-    public static final String KEY_COACH = "keycoach";
-    public static final String KEY_LANGUAGE = "keylanguage";
-    public static final String KEY_PASSWORD= "keypassword";
-    public static final String KEY_ID = "keyid";
-    public static final String KEY_REMEMBER_ME = "keyrememberme";
+    private static final String SHARED_PREF_NAME = "softwareengisharedpref";
+    private static final String KEY_USERNAME = "keyusername";
+    private static final String KEY_EMAIL = "keyemail";
+    private static final String KEY_COACH = "keycoach";
+    private static final String KEY_LANGUAGE = "keylanguage";
+    private static final String KEY_PASSWORD= "keypassword";
+    private static final String KEY_ID = "keyid";
+    private static final String KEY_REMEMBER_ME = "keyrememberme";
 
     private static SharedPrefManager mInstance;
     private static Context mCtx;
 
+    /**
+     * Constructor
+     * @param context Application context
+     */
     private SharedPrefManager(Context context) {
         this.mCtx = context;
     }
 
+    /**
+     * Gets the instance of Shared Preferences for the context
+     * @param context Application context
+     * @return the SharedPrefManager for the context
+     */
     public static SharedPrefManager getInstance(Context context) {
         if(mInstance == null) {
             mInstance = new SharedPrefManager(context);
@@ -57,41 +70,73 @@ public class SharedPrefManager {
         return sharedPreferences.getString(KEY_USERNAME, null) != null;
     }
 
+    /**
+     * Get the username of the logged in user
+     * @return The username of the logged in user
+     */
     public String getUsername() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_USERNAME, "No username exists");
     }
 
+    /**
+     * Get the email of the logged in user
+     * @return The email of the logged in uer
+     */
     public String getEmail() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_EMAIL, "No email exists");
     }
 
+    /**
+     * Get the coach value of the logged in user
+     * @return The coach vlaue of the logged in user
+     */
     public String getCoach() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return String.valueOf(sharedPreferences.getBoolean(KEY_COACH, false));
     }
 
+    /**
+     * Get the language of the logged in uer
+     * @return The language of the logged in user
+     */
     public String getLanguage() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_LANGUAGE, "No language exists");
     }
 
+    /**
+     * Get the password of the logged in user
+     * @return The password of the logged in user
+     */
     public String getPassword() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_PASSWORD, "No password exists");
     }
 
+    /**
+     * Get whether the logged in user is a coach or not
+     * @return Boolean of if the logged in user is a coach
+     */
     public boolean isUserCoach() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(KEY_COACH, false);
     }
 
+    /**
+     * Check if the user wants the app to remember their credentials
+     * @return Boolean for remembering the user
+     */
     public boolean getRememberMe() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(KEY_REMEMBER_ME, false);
     }
 
+    /**
+     * Set the user to remember their credentials or not
+     * @param flag Boolean value to remember credentials or not
+     */
     public void setRememberMe(boolean flag) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -99,6 +144,10 @@ public class SharedPrefManager {
         editor.apply();
     }
 
+    /**
+     * Set the password of the user
+     * @param password Password of user to save
+     */
     public void setPassword(String password) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -106,6 +155,10 @@ public class SharedPrefManager {
         editor.apply();
     }
 
+    /**
+     * Get the Id of the current user
+     * @return Id of current user
+     */
     public int getId() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getInt(KEY_ID, 0);

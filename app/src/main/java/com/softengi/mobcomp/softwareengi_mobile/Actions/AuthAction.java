@@ -16,6 +16,9 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
+/**
+ * This class handles logging in and registering users.
+ */
 public class AuthAction {
 
     /**

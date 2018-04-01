@@ -25,15 +25,44 @@ import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import java.util.ArrayList;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment representing a plan
  */
 public class PlansFragment extends Fragment {
 
+    /**
+     * Interface for MainActivity to implement
+     */
     public interface onPlansFragmentLoad {
+        /**
+         * Loads plans into the adapter
+         * @param hmAdapter Adapter to load plans
+         * @param data ArrayList of data models
+         */
         void loadPlansAdapter(ArrayListPlanAdapter hmAdapter, ArrayList<PlanDataModel> data);
+
+        /**
+         * Creates a plan
+         */
         void onCreatePlan();
+
+        /**
+         * Gets plan detail
+         * @param dataModel Data model of plan
+         */
         void onPlanDetail(PlanDataModel dataModel);
+
+        /**
+         * Lodas all plans into adapter
+         * @param adapter Adapter to laod
+         * @param teamDataModels ArrayList of data models
+         */
         void loadAllTeamsAdapter(ArrayListTeamAdapter adapter, ArrayList<TeamDataModel> teamDataModels);
+
+        /**
+         * Assigns plans to all team members
+         * @param planDataModel Plan to add users to
+         * @param teamDataModel Team to add models to
+         */
         void massAssignTeam(PlanDataModel planDataModel, TeamDataModel teamDataModel);
     }
 
@@ -48,14 +77,14 @@ public class PlansFragment extends Fragment {
     AlertDialog listTeamsAlertDialog;
     ListView lvMassTeams;
 
-    public PlansFragment() {
-        // Required empty public constructor
-    }
+    /**
+     * Required default constructor
+     */
+    public PlansFragment() {}
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         try {
             mFragmentListener = (onPlansFragmentLoad) context;
         } catch (ClassCastException e) {
@@ -133,8 +162,8 @@ public class PlansFragment extends Fragment {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             TeamDataModel teamDataModel = teamDataModels.get(position);
-                            Toast.makeText(getContext(),"TEST",Toast.LENGTH_SHORT).show();
                             mFragmentListener.massAssignTeam(planDataModel, teamDataModel);
+                            listTeamsAlertDialog.dismiss();
                         }
                     });
 
@@ -143,8 +172,6 @@ public class PlansFragment extends Fragment {
                 }
             });
         }
-
-
     }
 
 }

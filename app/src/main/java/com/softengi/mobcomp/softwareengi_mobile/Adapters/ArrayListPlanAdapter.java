@@ -8,22 +8,33 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.softengi.mobcomp.softwareengi_mobile.DataModels.PlanDataModel;
 import com.softengi.mobcomp.softwareengi_mobile.R;
 
 import java.util.ArrayList;
 
+/**
+ * List adapter for Plans.
+ */
 public class ArrayListPlanAdapter extends ArrayAdapter<PlanDataModel> implements View.OnClickListener {
 
+    // member variables
     private ArrayList<PlanDataModel> mData;
     private Context mCtx;
 
+    /**
+     * ViewHolder for UI elements
+     */
     private static class ViewHolder {
         TextView txtTitle;
     }
 
+    /**
+     * Constructor for this adapter
+     * @param data DataModels used to populate the adapter
+     * @param ctx Context of application
+     */
     public ArrayListPlanAdapter(ArrayList<PlanDataModel> data, Context ctx) {
         super(ctx, R.layout.plan_row_item, data);
         mData = data;

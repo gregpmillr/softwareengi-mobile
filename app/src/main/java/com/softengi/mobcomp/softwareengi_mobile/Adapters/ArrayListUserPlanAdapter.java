@@ -13,17 +13,28 @@ import com.softengi.mobcomp.softwareengi_mobile.DataModels.UserPlanProgressDataM
 import com.softengi.mobcomp.softwareengi_mobile.R;
 
 import java.util.ArrayList;
-
+/**
+ * List adapter for plans.
+ */
 public class ArrayListUserPlanAdapter extends ArrayAdapter<UserPlanProgressDataModel> implements View.OnClickListener{
 
+    // member variables
     private ArrayList<UserPlanProgressDataModel> mData;
     private Context mCtx;
 
+    /**
+     * ViewHolder for UI elements
+     */
     private static class ViewHolder {
         TextView txtUsername;
         TextView txtContributedSteps;
     }
 
+    /**
+     * Constructor for this adapter
+     * @param data DataModels used to populate the adapter
+     * @param ctx Context of application
+     */
     public ArrayListUserPlanAdapter(ArrayList<UserPlanProgressDataModel> data, Context ctx) {
         super(ctx, R.layout.user_plan_progress_row_item, data);
         mData = data;

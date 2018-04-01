@@ -4,15 +4,18 @@ package com.softengi.mobcomp.softwareengi_mobile.Utils;
  * Class used for filtering accelerometer values to only detect for step-like sensor changes
  */
 public class SensorFilter {
-    private SensorFilter() {
-    }
+
+    /**
+     * Default constructor
+     */
+    private SensorFilter() {}
 
     /**
      * Add all values of the array into a single variable to return
-     * @param array
-     * @return
+     * @param array array of values aggregated
+     * @return aggregated valued
      */
-    public static float sum(float[] array) {
+    static float sum(float[] array) {
         float retval = 0;
         for (int i = 0; i < array.length; i++) {
             retval += array[i];
@@ -22,9 +25,9 @@ public class SensorFilter {
 
     /**
      * Gets the difference between multiplication of two array indexes
-     * @param arrayA
-     * @param arrayB
-     * @return
+     * @param arrayA First array
+     * @param arrayB Second array
+     * @return the difference between multiplication of two array indexes
      */
     public static float[] cross(float[] arrayA, float[] arrayB) {
         float[] retArray = new float[3];
@@ -36,10 +39,10 @@ public class SensorFilter {
 
     /**
      * Used for normalization. Takes a square root out of sum of squares.
-     * @param array
-     * @return
+     * @param array Array to normalize
+     * @return The sum of squares
      */
-    public static float norm(float[] array) {
+    static float norm(float[] array) {
         float retval = 0;
         for (int i = 0; i < array.length; i++) {
             retval += array[i] * array[i];
@@ -49,19 +52,19 @@ public class SensorFilter {
 
     /**
      * Add all multiplication between two arrays
-     * @param a
-     * @param b
-     * @return
+     * @param a First array
+     * @param b Second array
+     * @return The multiplied array
      */
-    public static float dot(float[] a, float[] b) {
+    static float dot(float[] a, float[] b) {
         float retval = a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
         return retval;
     }
 
     /**
      * Normalization
-     * @param a
-     * @return
+     * @param a Array to normalize
+     * @return Normalized array
      */
     public static float[] normalize(float[] a) {
         float[] retval = new float[a.length];

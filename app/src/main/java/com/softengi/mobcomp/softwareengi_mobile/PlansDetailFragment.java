@@ -1,7 +1,6 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,18 +14,48 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.softengi.mobcomp.softwareengi_mobile.Actions.StepAction;
-import com.softengi.mobcomp.softwareengi_mobile.Utils.StepParser;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.ListParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Fragment representing the detail of a plan
+ */
 public class PlansDetailFragment extends Fragment {
 
+    /**
+     * Interface for MainActivity to implement
+     */
     public interface onPlansDetail {
+        /**
+         * Deletes a plan
+         * @param planId Id of plan to delete
+         */
         void deletePlan(String planId);
+
+        /**
+         * Updates a plan
+         * @param title New or old title of plan
+         * @param requiredSteps New or old required steps of plan
+         * @param planId Id of plan
+         */
         void updatePlan(EditText title, EditText requiredSteps, String planId);
+
+        /**
+         * Navigates to the steps of a plan
+         * @param planId Id of plan
+         * @param title Title of plan
+         * @param requiredSteps Required steps of plan
+         * @param totalSteps Total steps of plan
+         */
         void toStepFragment(String planId, String title, String requiredSteps, String totalSteps);
+
+        /**
+         * Gets progress of a plan for all users associated with that plan
+         * @param planId Id of plan
+         */
         void toUserPlanProgress(String planId);
     }
 
@@ -44,9 +73,10 @@ public class PlansDetailFragment extends Fragment {
 
     onPlansDetail plansDetail;
 
-    public PlansDetailFragment() {
-        // Required empty public constructor
-    }
+    /**
+     * Required empty constructor
+     */
+    public PlansDetailFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,14 +100,12 @@ public class PlansDetailFragment extends Fragment {
         btnToStep = v.findViewById(R.id.btnToStep);
         gvStep = v.findViewById(R.id.gvGraph);
         btnToUserPlanProgress = v.findViewById(R.id.btnToUserPlanProgress);
-
         return v;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         try {
             plansDetail = (PlansDetailFragment.onPlansDetail) context;
         } catch (ClassCastException e) {
@@ -88,7 +116,6 @@ public class PlansDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         etPlanDetailTitle.setText(mPlanTitle);
         etPlanDetailRequiredSteps.setText(mPlanRequiredSteps);
 
@@ -121,7 +148,6 @@ public class PlansDetailFragment extends Fragment {
         });
 
         stepEntries = new LineGraphSeries<>(new DataPoint[]{new DataPoint(0,0)});
-
         gvStep.addSeries(stepEntries);
         gvStep.getViewport().setXAxisBoundsManual(true);
         gvStep.getViewport().setYAxisBoundsManual(true);
@@ -131,12 +157,12 @@ public class PlansDetailFragment extends Fragment {
         gvStep.getViewport().setMaxY(100);
         gvStep.getViewport().setScrollable(true);
         gvStep.getViewport().setScalableY(true);
-
         stepEntries.setDrawDataPoints(true);
         stepEntries.setDataPointsRadius(10);
         stepEntries.setThickness(8);
 
-        StepAction.getStepsByPlan(getActivity(), mPlanId, new StepParser() {
+        // gets all steps by the plan
+        StepAction.getStepsByPlan(getActivity(), mPlanId, new ListParser() {
             @Override
             public void onSuccessResponse(JSONArray response) {
                 updateGraph(response);
@@ -144,36 +170,13 @@ public class PlansDetailFragment extends Fragment {
         });
     }
 
+    /**
+     * Updates the graph for plan progress
+     * @param response JSONArray value
+     */
     private void updateGraph(JSONArray response) {
         try {
             int steps;
-
-            /*
-            //for dates
-            TimeZone tz = TimeZone.getTimeZone("UTC");
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            df.setTimeZone(tz);
-            Date d;
-            try {
-                for (int i = 0; i < response.length(); i++) {
-                    JSONObject jsonObj = response.getJSONObject(i);
-                    steps = jsonObj.getInt("steps");
-                    d = df.parse(jsonObj.getString("updated_at"));
-                    totalSteps += steps;
-                    stepEntries.appendData(new DataPoint(d, steps), true, 99999);
-                }
-                gvStep.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-                //gvStep.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of the space
-                gvStep.getGridLabelRenderer().setHumanRounding(false);
-
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            */
-
-
-            //for non-dates
             int i;
             for (i = 0; i < response.length(); i++) {
                 JSONObject jsonObj = response.getJSONObject(i);

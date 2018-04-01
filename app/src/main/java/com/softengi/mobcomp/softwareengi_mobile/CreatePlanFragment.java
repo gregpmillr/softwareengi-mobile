@@ -9,24 +9,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-
+/**
+ * Fragment used to create a plan.
+ */
 public class CreatePlanFragment extends Fragment {
 
+    /**
+     * Interface for MainActivity to implement
+     */
     public interface onCreateFragmentLoad {
+        /**
+         * Submits a new plan
+         */
         void onSubmitPlan();
     }
 
     onCreateFragmentLoad fragmentLoad;
     Button btnSubmitPlan;
 
-    public CreatePlanFragment() {
-        // Required empty public constructor
-    }
+    /**
+     * Required default constructor
+     */
+    public CreatePlanFragment() {}
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         try {
             fragmentLoad = (onCreateFragmentLoad) context;
         } catch (ClassCastException e) {
@@ -40,21 +48,17 @@ public class CreatePlanFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_create_plan, container, false);
         btnSubmitPlan = v.findViewById(R.id.btnSubmitPlan);
-
         return v;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
         btnSubmitPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fragmentLoad.onSubmitPlan();
             }
         });
-
     }
 }

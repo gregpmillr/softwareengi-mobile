@@ -14,15 +14,27 @@ import com.softengi.mobcomp.softwareengi_mobile.R;
 
 import java.util.ArrayList;
 
+/**
+ * List adapter for teams.
+ */
 public class ArrayListTeamAdapter extends ArrayAdapter<TeamDataModel> implements View.OnClickListener {
 
+    // member variables
     private ArrayList<TeamDataModel> mData;
     private Context mCtx;
 
+    /**
+     * ViewHolder for UI elements
+     */
     private static class ViewHolder {
         TextView txtName;
     }
 
+    /**
+     * Constructor for this adapter
+     * @param data DataModels used to populate the adapter
+     * @param ctx Context of application
+     */
     public ArrayListTeamAdapter(ArrayList<TeamDataModel> data, Context ctx) {
         super(ctx, R.layout.plan_row_item, data);
         mData = data;

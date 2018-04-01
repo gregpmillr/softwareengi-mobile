@@ -1,10 +1,13 @@
 package com.softengi.mobcomp.softwareengi_mobile.Utils;
 
 /**
- * Created by br239 on 2018-03-06.
+ * Listens for steps
  */
-
 public interface StepListener {
 
-    public void step(long timeNs);
+    /**
+     * Called when a sep is taken
+     * @param timeNs Time in n
+     */
+    void step(long timeNs);
 }
