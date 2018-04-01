@@ -7,14 +7,16 @@ import android.content.Intent;
 import android.support.v4.app.NotificationManagerCompat;
 
 /**
- * Created by amaral on 06/03/18,
+ * Used to broadcast a daily notification.
  * from https://stackoverflow.com/questions/34517520/how-to-give-notifications-on-android-on-specific-time.
  */
-
 public class DailyNotificationIntentService extends IntentService {
 
     private static final int NOTIFICATION_ID = 3;
 
+    /**
+     * Constructor
+     */
     public DailyNotificationIntentService() {
         super("DailyNotificationIntentService");
     }

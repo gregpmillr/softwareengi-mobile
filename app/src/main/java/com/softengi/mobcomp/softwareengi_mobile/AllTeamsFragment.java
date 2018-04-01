@@ -25,19 +25,56 @@ import com.softengi.mobcomp.softwareengi_mobile.Utils.TeamsLoader;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the Tab for displaying all teams. From here, the user
+ * can create a new team (if they're a coach), view teams, and delete teams.
+ */
 public class AllTeamsFragment extends Fragment {
 
+    /**
+     * Interface for MainActivity to implement
+     */
     public interface onAllTeamsFragmentLoad {
+        /**
+         * Loads all teams
+         * @param adapter Adapter for ListView
+         * @param data ArrayList of data models
+         */
         void loadAllTeamsAdapter(ArrayListTeamAdapter adapter, ArrayList<TeamDataModel> data);
+
+        /**
+         * Creates a team
+         * @param name new team name
+         * @param selectedUsers members of the team
+         * @param teamLoader Loader of data to display
+         */
         void onCreateTeam(String name, ArrayList<String> selectedUsers, TeamsLoader teamLoader);
+
+        /**
+         * Shows the detail of a team
+         * @param dataModel Model of Team to display
+         * @param TAG Tag of Fragment
+         */
         void onTeamDetail(TeamDataModel dataModel, String TAG);
+
+        /**
+         * Gets users to populate the ListView
+         * @param lvUsers ListView to populate
+         */
         void getUsers(ListView lvUsers);
+
+        /**
+         * Deletes a team
+         * @param teamId Id of team to delete
+         * @param adapter Adapter to re-populate data
+         * @param data ArrayList of data models
+         */
         void onAllTeamDelete(String teamId, ArrayListTeamAdapter adapter, ArrayList<TeamDataModel> data);
     }
 
     onAllTeamsFragmentLoad mFragmentListener;
-    ArrayList<TeamDataModel> dataModels = new ArrayList<>();;
-    ArrayList<String> selectedUsers = new ArrayList<String>();
+    ArrayList<TeamDataModel> dataModels = new ArrayList<>();
+    ArrayList<String> selectedUsers = new ArrayList<>();
     ListView lvTeams, lvUsers;
     Button btnCreateTeam;
     AlertDialog alertDialog;
@@ -49,14 +86,14 @@ public class AllTeamsFragment extends Fragment {
     private boolean isLoaded = false;
     AlertDialog alertDialogDeleteTeam;
 
-    public AllTeamsFragment() {
-        // Required empty public constructor
-    }
+    /**
+     * Required empty default constructor
+     */
+    public AllTeamsFragment() {}
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         try {
             mFragmentListener = (onAllTeamsFragmentLoad) context;
         } catch (ClassCastException e) {
@@ -70,24 +107,20 @@ public class AllTeamsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_teams_all, container, false);
         btnCreateTeam = view.findViewById(R.id.btnCreateTeam);
         lvTeams       = view.findViewById(R.id.lvAllTeams);
-
-        if(SharedPrefManager.getInstance(getContext()).getCoach() != "true") {
+        if(!SharedPrefManager.getInstance(getContext()).getCoach().equals("true")) {
             btnCreateTeam.setVisibility(View.GONE);
         }
-
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        // fill data here
-        adapter = new ArrayListTeamAdapter(dataModels, getActivity().getApplicationContext());
+        // fill data
+        adapter = new ArrayListTeamAdapter(dataModels, getContext());
         mFragmentListener.loadAllTeamsAdapter(adapter, dataModels);
-
         lvTeams.setAdapter(adapter);
-
+        // guide through the process of creating a team
         btnCreateTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,7 +130,6 @@ public class AllTeamsFragment extends Fragment {
                 alertDialog.setTitle("Create a team");
                 alertDialog.setCancelable(false);
                 etTeamCreateName = ad.findViewById(R.id.etTeamCreateName);
-
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "NEXT", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -1,6 +1,5 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.design.widget.TabLayout;
@@ -30,12 +29,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * Activity representing actions for teams
+ */
 public class TeamsActivity extends AppCompatActivity  implements AllTeamsFragment.onAllTeamsFragmentLoad,
         YourTeamsFragment.onYourTeamsFragmentLoad {
 
     private static final String TAG = "TeamsActivity";
-    private SectionsPageAdapter mSectionsPageAdapter;
-    private ViewPager mViewPager;
     AlertDialog alertDialog;
     AlertDialog listUsersAlertDialog;
     ListView  lvUsers;
@@ -45,8 +45,7 @@ public class TeamsActivity extends AppCompatActivity  implements AllTeamsFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teams);
 
-        mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
-        mViewPager = findViewById(R.id.container);
+        ViewPager mViewPager = findViewById(R.id.container);
         setupViewPager(mViewPager);
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -129,11 +128,7 @@ public class TeamsActivity extends AppCompatActivity  implements AllTeamsFragmen
     public void onTeamDetail(final TeamDataModel dataModel, final String TAG) {
         Toast.makeText(getApplicationContext(), "CLICKED", Toast.LENGTH_SHORT).show();
         EditText etTeamCreateName;
-        // USE A DIALOG TO SHOW THE TEAM.
-        // THE DIALOG WILL HAVE BUTTONS TO CLOSE, JOIN, OR VIEW MEMBERS
-
         alertDialog = new AlertDialog.Builder(TeamsActivity.this).create();
-
         View ad = this.getLayoutInflater().inflate(R.layout.alertdialog_create_team, null);
         alertDialog.setTitle("Team Information");
         alertDialog.setCancelable(false);
@@ -200,6 +195,7 @@ public class TeamsActivity extends AppCompatActivity  implements AllTeamsFragmen
 
     @Override
     public void onYourTeamDelete(String teamId, final ArrayListTeamAdapter adapter, final ArrayList<TeamDataModel> data) {
+        // deletes a team
         TeamAction.postDeleteTeam(getApplicationContext(),teamId, new SuccessListener() {
             @Override
             public void successful() {
@@ -210,13 +206,14 @@ public class TeamsActivity extends AppCompatActivity  implements AllTeamsFragmen
 
     @Override
     public void getUsers(final ListView lvUsers) {
+        // gets a lit of users
         UserAction.getListOfUsers(getApplicationContext(), new ListParser() {
             @Override
             public void onSuccessResponse(JSONArray data) {
                 String[] users = new String[data.length()];
 
                 for(int i=0;i<data.length();i++) {
-                    JSONObject jsonObj = null;
+                    JSONObject jsonObj;
                     try {
                         jsonObj = data.getJSONObject(i);
                         users[i] = jsonObj.getString("username");
@@ -225,7 +222,7 @@ public class TeamsActivity extends AppCompatActivity  implements AllTeamsFragmen
                     }
                 }
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, users);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, users);
                 lvUsers.setAdapter(adapter);
             }
         });
@@ -233,6 +230,7 @@ public class TeamsActivity extends AppCompatActivity  implements AllTeamsFragmen
 
     @Override
     public void onAllTeamDelete(String teamId, final ArrayListTeamAdapter adapter, final ArrayList<TeamDataModel> data) {
+        // deletes a team
         TeamAction.postDeleteTeam(getApplicationContext(),teamId, new SuccessListener() {
             @Override
             public void successful() {
@@ -242,13 +240,14 @@ public class TeamsActivity extends AppCompatActivity  implements AllTeamsFragmen
     }
 
     public void getUsersInTeam(final ListView lvUsers, String teamId) {
+        // gets a lit of users in a team
         TeamAction.getListOfUsersInTeam(getApplicationContext(), teamId, new ListParser() {
             @Override
             public void onSuccessResponse(JSONArray data) {
                 String[] users = new String[data.length()];
 
                 for(int i=0;i<data.length();i++) {
-                    JSONObject jsonObj = null;
+                    JSONObject jsonObj;
                     try {
                         jsonObj = data.getJSONObject(i);
                         users[i] = jsonObj.getString("username");
@@ -257,7 +256,7 @@ public class TeamsActivity extends AppCompatActivity  implements AllTeamsFragmen
                     }
                 }
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, users);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, users);
                 lvUsers.setAdapter(adapter);
             }
         });

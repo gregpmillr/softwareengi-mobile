@@ -2,6 +2,7 @@ package com.softengi.mobcomp.softwareengi_mobile;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,21 +15,33 @@ import com.softengi.mobcomp.softwareengi_mobile.DataModels.UserPlanProgressDataM
 
 import java.util.ArrayList;
 
+/**
+ * Fragment representing a all user progress on a plan
+ */
 public class UserPlanProgressFragment  extends Fragment {
 
+    /**
+     * Interface for TeamsActivity to implement
+     */
     public interface onUserPlanProgressFragmentLoad {
+        /**
+         * Loads progress of all users for the chosen plan
+         * @param adapter To populate UI data
+         * @param data ArrayList of data models
+         * @param planId Id of plan
+         */
         void loadUserPlanProgressAdapter(ArrayListUserPlanAdapter adapter, ArrayList<UserPlanProgressDataModel> data, String planId);
     }
 
     onUserPlanProgressFragmentLoad mFragmentListener;
     ArrayList<UserPlanProgressDataModel> dataModels;
     ListView lvUserPlanProgress;
-    private ArrayListUserPlanAdapter adapter;
     private String mPlanId;
 
-    public UserPlanProgressFragment() {
-        // required empty public constructor
-    }
+    /**
+     * Required empty constructor
+     */
+    public UserPlanProgressFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,7 +63,7 @@ public class UserPlanProgressFragment  extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_user_plan_progress, container, false);
@@ -64,7 +77,7 @@ public class UserPlanProgressFragment  extends Fragment {
 
         dataModels = new ArrayList<>();
         // fill data
-        adapter = new ArrayListUserPlanAdapter(dataModels, getContext());
+        ArrayListUserPlanAdapter adapter = new ArrayListUserPlanAdapter(dataModels, getContext());
 
         lvUserPlanProgress.setAdapter(adapter);
         lvUserPlanProgress.setClickable(false);

@@ -10,14 +10,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.softengi.mobcomp.softwareengi_mobile.Actions.AuthAction;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 
+/**
+ * Handles logging in the user. This Activity supports remembering the User's credentials
+ * through Shared Preferences. Credentials are validated.
+ */
 public class LoginActivity extends AppCompatActivity {
 
-    private Button btnLogin, btnRegister;
     private CheckBox chkRememberMe;
     private EditText etUsername;
     private EditText etPassword;
@@ -27,12 +29,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        btnLogin      = findViewById(R.id.btnLogin);
-        btnRegister   = findViewById(R.id.btnRegister);
+        Button btnLogin = findViewById(R.id.btnLogin);
+        Button btnRegister = findViewById(R.id.btnRegister);
         etUsername    = findViewById(R.id.etUsername);
         etPassword    = findViewById(R.id.etPassword);
         chkRememberMe = findViewById(R.id.chkRememberMe);
-
         final Context context = getApplicationContext();
 
         // check if user wants to load their previous data

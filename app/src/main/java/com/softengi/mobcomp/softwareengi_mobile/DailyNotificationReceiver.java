@@ -5,18 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
- * Created by amaral on 06/03/18,
+ * Used to broadcast notifcations for the user's device.
  * from https://stackoverflow.com/questions/34517520/how-to-give-notifications-on-android-on-specific-time.
  */
-
 public class DailyNotificationReceiver extends BroadcastReceiver {
 
-    public DailyNotificationReceiver() {
-    }
+    /**
+     * Default empty constructor
+     */
+    public DailyNotificationReceiver() {}
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
         Intent intenty = new Intent(context, DailyNotificationIntentService.class);
         context.startService(intenty);
     }
