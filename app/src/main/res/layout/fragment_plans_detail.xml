@@ -70,7 +70,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/blueborder_transparent_background"
+                android:background="@drawable/turquoise_button"
                 android:textColor="@color/colorTurquoise"
                 android:fontFamily="sans-serif-smallcaps"
                 android:text="@string/to_step" />
@@ -83,7 +83,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/blueborder_transparent_background"
+                android:background="@drawable/turquoise_button"
                 android:textColor="@color/colorTurquoise"
                 android:fontFamily="sans-serif-smallcaps"
                 android:text="@string/to_user_plan_progress" />
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/blueborder_transparent_background"
+                android:background="@drawable/turquoise_button"
                 android:layout_weight="1"
                 android:text="@string/update"
                 android:textColor="@color/colorTurquoise"
@@ -118,7 +118,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/blueborder_transparent_background"
+                android:background="@drawable/turquoise_button"
                 android:text="@string/delete"
                 android:textColor="@color/colorTurquoise"
                 android:fontFamily="sans-serif-smallcaps"/>
