@@ -29,8 +29,8 @@ import com.softengi.mobcomp.softwareengi_mobile.UserPlanProgressFragment.onUserP
 import com.softengi.mobcomp.softwareengi_mobile.PlansDetailFragment.onPlansDetail;
 import com.softengi.mobcomp.softwareengi_mobile.Actions.PlanAction;
 import com.softengi.mobcomp.softwareengi_mobile.Adapters.ArrayListPlanAdapter;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.DetailParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.ListParser;
-import com.softengi.mobcomp.softwareengi_mobile.Utils.ProfileParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SuccessListener;
 
@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
                             TextView tvRecentSteps, TextView tvRecentPlans) {
         ProfileAction.getProfile(getApplicationContext(), tvTotalSteps, tvTotalPlans, tvTotalTeams,
                 tvRecentPlans,
-                tvRecentSteps, new ProfileParser() {
+                tvRecentSteps, new DetailParser() {
             @Override
             public void onSuccessResponse(JSONObject response) {
                 // stub

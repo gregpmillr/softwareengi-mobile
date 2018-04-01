@@ -3,8 +3,8 @@ package com.softengi.mobcomp.softwareengi_mobile.Actions;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.softengi.mobcomp.softwareengi_mobile.Utils.ListParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
-import com.softengi.mobcomp.softwareengi_mobile.Utils.StepParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallbackArray;
 
@@ -49,7 +49,7 @@ public class StepAction {
      * @param planId Id of plan
      * @param callback Success callack
      */
-    public static void getStepsByPlan(final Context ctx, String planId, final StepParser callback) {
+    public static void getStepsByPlan(final Context ctx, String planId, final ListParser callback) {
         String username = SharedPrefManager.getInstance(ctx).getUsername();
 
         // create the request

@@ -1,7 +1,6 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,7 +14,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.softengi.mobcomp.softwareengi_mobile.Actions.StepAction;
-import com.softengi.mobcomp.softwareengi_mobile.Utils.StepParser;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.ListParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -136,7 +135,7 @@ public class PlansDetailFragment extends Fragment {
         stepEntries.setDataPointsRadius(10);
         stepEntries.setThickness(8);
 
-        StepAction.getStepsByPlan(getActivity(), mPlanId, new StepParser() {
+        StepAction.getStepsByPlan(getActivity(), mPlanId, new ListParser() {
             @Override
             public void onSuccessResponse(JSONArray response) {
                 updateGraph(response);

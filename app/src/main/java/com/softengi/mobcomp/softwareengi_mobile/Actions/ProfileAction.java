@@ -6,7 +6,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.softengi.mobcomp.softwareengi_mobile.Utils.ProfileParser;
+import com.softengi.mobcomp.softwareengi_mobile.Utils.DetailParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SuccessListener;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
@@ -67,7 +67,7 @@ public class ProfileAction {
                                   final TextView tvTotalTeams,
                                   final TextView tvRecentPlans,
                                   final TextView tvRecentSteps,
-                                  final ProfileParser callback) {
+                                  final DetailParser callback) {
 
         // create the request
         RequestAction.createGetRequest(ctx, url.concat(SharedPrefManager.getInstance(ctx).getUsername()), new VolleyCallback() {
