@@ -1,6 +1,9 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,6 +24,7 @@ public class YourTeamsFragment extends Fragment {
     public interface onYourTeamsFragmentLoad {
         void loadYourTeamsAdapter(ArrayListTeamAdapter adapter, ArrayList<TeamDataModel> data);
         void onTeamDetail(TeamDataModel dataModel, String TAG);
+        void onYourTeamDelete(String teamId, ArrayListTeamAdapter adapter, ArrayList<TeamDataModel> data);
     }
 
     public static final String TAG = "YourTeamsFragment";
@@ -29,6 +33,7 @@ public class YourTeamsFragment extends Fragment {
     ListView lvTeams;
     private ArrayListTeamAdapter adapter;
     private boolean isLoaded = false;
+    AlertDialog alertDialog;
 
     public YourTeamsFragment() {
         // Required empty public constructor
@@ -69,6 +74,38 @@ public class YourTeamsFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 TeamDataModel dataModel = dataModels.get(position);
                 mFragmentListener.onTeamDetail(dataModel, TAG);
+            }
+        });
+
+        lvTeams.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final TeamDataModel dataModel = dataModels.get(position);
+
+                // show dialog to confirm delete
+                alertDialog = new AlertDialog.Builder(getContext()).create();
+                alertDialog.setTitle("Are you sure you want to delete this team?");
+                alertDialog.setCancelable(false);
+
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "DELETE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mFragmentListener.onYourTeamDelete(dataModel.getId(), adapter, dataModels);
+                    }
+                });
+
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                if(!((Activity) getContext()).isFinishing()) {
+                    alertDialog.show();
+                }
+
+                return true;
             }
         });
 
