@@ -29,8 +29,8 @@ public class PlanValidator {
             valid = false;
         }
 
-        if(TextUtils.isEmpty(requiredSteps.getText().toString())) {
-            requiredSteps.setError("Please enter required steps");
+        if(TextUtils.isEmpty(requiredSteps.getText().toString()) || requiredSteps.getText().toString().equals("0")) {
+            requiredSteps.setError("Please enter the required steps. A plan cannot have zero required steps.");
             valid = false;
         }
 
@@ -62,8 +62,8 @@ public class PlanValidator {
             valid = false;
         }
 
-        if(TextUtils.isEmpty(requiredSteps.getText().toString())) {
-            requiredSteps.setError("Please enter the required steps");
+        if(TextUtils.isEmpty(requiredSteps.getText().toString()) || requiredSteps.getText().toString().equals("0")) {
+            requiredSteps.setError("Please enter the required steps. A plan cannot have zero required steps.");
             requiredSteps.requestFocus();
             valid = false;
         }

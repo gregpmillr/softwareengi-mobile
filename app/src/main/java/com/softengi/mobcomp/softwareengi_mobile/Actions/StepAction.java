@@ -9,6 +9,7 @@ import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallbackArray;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +39,13 @@ public class StepAction {
         RequestAction.createPostRequest(ctx, map, url, new VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject result) {
-                Toast.makeText(ctx, "Saved steps successfully", Toast.LENGTH_SHORT).show();
+                try {
+                    if(result.getString("completed").equals("true")) {
+                        Toast.makeText(ctx, "Congrats! You've completed the plan.", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

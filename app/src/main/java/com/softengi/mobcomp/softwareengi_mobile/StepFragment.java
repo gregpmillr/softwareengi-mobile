@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
@@ -171,13 +172,17 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
             @Override
             public void onClick(View view) {
 
-                if (numSteps > 0) {
-                    StepAction.postSteps(
-                            getActivity().getApplicationContext(),
-                            numSteps,
-                            planId
-                    );
-                }
+                    if(numSteps > 0) {
+                        StepAction.postSteps(
+                                getActivity().getApplicationContext(),
+                                numSteps,
+                                planId
+                        );
+                    } else {
+                        Toast.makeText(getContext(), "You haven't taken any steps yet!", Toast.LENGTH_SHORT).show();
+                    }
+
+
 
                 xGraph = -1;
                 paceEntries.resetData(new DataPoint[]{});
