@@ -7,16 +7,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Greg on 3/20/2018.
+ * This class validates plan requests. Each request returns a HashMap which is
+ * used in the subsequent HTTP request.
  */
-
 public class PlanValidator {
 
     /**
      * Validates a new plan
-     * @param title title of the plan
-     * @param requiredSteps steps required to complete the plan
-     * @return
+     * @param title Title of the plan
+     * @param requiredSteps Steps required to complete the plan
+     * @return HashMap of values for the HTTP request
      */
     public static Map<String, String> validatePlan(EditText title, EditText requiredSteps) {
 
