@@ -162,8 +162,8 @@ public class PlansFragment extends Fragment {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             TeamDataModel teamDataModel = teamDataModels.get(position);
-                            Toast.makeText(getContext(),"TEST",Toast.LENGTH_SHORT).show();
                             mFragmentListener.massAssignTeam(planDataModel, teamDataModel);
+                            listTeamsAlertDialog.dismiss();
                         }
                     });
 
