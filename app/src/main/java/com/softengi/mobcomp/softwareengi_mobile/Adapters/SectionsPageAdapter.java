@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Adapter for tabs which displays teams.
+ * Adapter for tabs which displays ALL/YOUR teams.
  */
 public class SectionsPageAdapter extends FragmentPagerAdapter {
 
