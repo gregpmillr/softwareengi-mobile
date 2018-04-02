@@ -77,7 +77,6 @@ public class TeamAction {
                 }
             }
         });
-
     }
 
     /**
@@ -93,7 +92,6 @@ public class TeamAction {
         map.put("name", name);
         map.put("coach", SharedPrefManager.getInstance(ctx).getUsername());
         map.put("selectedUsers", new Gson().toJson(selectedUsers));
-
         // create the request
         RequestAction.createPostRequest(ctx, map, url, new VolleyCallback() {
             @Override
@@ -115,7 +113,6 @@ public class TeamAction {
         Map<String, String> map = new HashMap<>();
         map.put("username", username);
         map.put("teamId", teamId);
-
         // create the request
         RequestAction.createPostRequest(ctx, map, url.concat("join"), new VolleyCallback() {
             @Override
@@ -135,7 +132,6 @@ public class TeamAction {
         // add the request body
         Map<String, String> map = new HashMap<>();
         map.put("teamId", teamId);
-
         // create the request
         RequestAction.createPostRequest(ctx, map, url.concat("delete"), new VolleyCallback() {
             @Override
@@ -153,7 +149,6 @@ public class TeamAction {
      * @param callback Callback to handle array response
      */
     public static void getListOfUsersInTeam(final Context ctx, final String teamId, final ListParser callback) {
-
         // create the request
         RequestAction.createGetRequestArray(ctx, url.concat(teamId).concat("/members"), new VolleyCallbackArray() {
             @Override
@@ -162,7 +157,6 @@ public class TeamAction {
                 callback.onSuccessResponse(result);
             }
         });
-
     }
 
     /**

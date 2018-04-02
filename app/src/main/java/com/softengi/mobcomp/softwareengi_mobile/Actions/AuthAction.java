@@ -1,12 +1,15 @@
 package com.softengi.mobcomp.softwareengi_mobile.Actions;
 import android.content.Context;
-import android.content.Intent;import android.widget.CheckBox;
+import android.content.Intent;
+import android.text.TextUtils;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 
 import com.softengi.mobcomp.softwareengi_mobile.MainActivity;
 import com.softengi.mobcomp.softwareengi_mobile.LoginActivity;
+import com.softengi.mobcomp.softwareengi_mobile.R;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
 import com.softengi.mobcomp.softwareengi_mobile.Validations.AuthValidator;
@@ -14,6 +17,7 @@ import com.softengi.mobcomp.softwareengi_mobile.Validations.AuthValidator;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -57,64 +61,49 @@ public class AuthAction {
     /**
     * Get the response from the POST request to register users
     * @param ctx Context of application
-    * @param etUsername EditText of username
-    * @param etEmail EditText of email
-    * @param etPassword EditText of password
-    * @param etLanguage EditText of language
-    * @param chkCoach CheckBox of coach
+    * @param username EditText of username
+    * @param email EditText of email
+    * @param password Password for userz
+    * @param language Language for user
+    * @param coach Checkbox of coach
     */
-    public static void postRegister(
-            final Context ctx,
-            EditText etUsername,
-            EditText etEmail,
-            EditText etPassword,
-            EditText etLanguage,
-            CheckBox chkCoach
-    ) {
+    public static void postRegister(final Context ctx, String username, String email, String password,
+            String language,
+            String coach) {
 
         String urlExtension = "users";
-
-        Map<String, String> map = AuthValidator.validateRegister(
-                etUsername,
-                etEmail,
-                etPassword,
-                etLanguage,
-                chkCoach
-        );
-
-        if(map != null) {
-            // create the API request and save the returned token into shared preferences
-            RequestAction.createPostRequest(
-                    ctx,
-                    map,
-                    urlExtension,
-                    new VolleyCallback() {
-                        @Override
-                        public void onSuccessResponse(JSONObject response) {
-
-                            // successful response
-                            Toast.makeText(ctx, "Success!",
-                                    Toast.LENGTH_SHORT).show();
-
-                            try {
-                                SharedPrefManager.getInstance(ctx).userLogin(
-                                        response.getString("token")
-                                );
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                            Intent intent = new Intent(ctx, LoginActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            ctx.startActivity(intent);
-
+        // add the request body
+        // construct map to send back to user
+        Map<String, String> map = new HashMap<String,String>();
+        map.put("username",username);
+        map.put("email",email);
+        map.put("password",password);
+        map.put("language",language);
+        map.put("coach",coach);
+        // create the API request and save the returned token into shared preferences
+        RequestAction.createPostRequest(
+                ctx,
+                map,
+                urlExtension,
+                new VolleyCallback() {
+                    @Override
+                    public void onSuccessResponse(JSONObject response) {
+                        // successful response
+                        Toast.makeText(ctx, "Success!",
+                                Toast.LENGTH_SHORT).show();
+                        try {
+                            SharedPrefManager.getInstance(ctx).userLogin(
+                                    response.getString("token")
+                            );
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+                        Intent intent = new Intent(ctx, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        ctx.startActivity(intent);
                     }
-            );
-        } else {
-            Toast.makeText(ctx, "Unable to login", Toast.LENGTH_LONG).show();
-        }
-
+                }
+        );
     }
 
     /**
@@ -123,52 +112,43 @@ public class AuthAction {
      * @param username Username for user credentials
      * @param password Password for user credentials
      */
-    public static void postLogin(final Context ctx, EditText username, EditText password, CheckBox rememberMe) {
+    public static void postLogin(final Context ctx, String username, String password, String rememberMe) {
 
         String urlExtension = "auth";
 
         // check if the user wants to save the credentials entered
-        if(rememberMe.isChecked()) {
+        if(String.valueOf(rememberMe).equals("true")) {
             SharedPrefManager.getInstance(ctx).setRememberMe(true);
-            SharedPrefManager.getInstance(ctx).setPassword(password.getText().toString());
+            SharedPrefManager.getInstance(ctx).setPassword(password);
         } else {
             SharedPrefManager.getInstance(ctx).setRememberMe(false);
         }
 
-        // store all inputs into HashMap
-        Map<String, String> map = AuthValidator.validateLogin(username, password);
-
-        if(map != null) {
-            // create the API request and save the returned token into shared preferences
-            RequestAction.createPostRequest(
-                    ctx,
-                    map,
-                    urlExtension,
-                    new VolleyCallback() {
-                        @Override
-                        public void onSuccessResponse(JSONObject response) {
-
-                                // successful response
-                                Toast.makeText(ctx, "Success!",
-                                        Toast.LENGTH_SHORT).show();
-
-                                try {
-                                    SharedPrefManager.getInstance(ctx)
-                                            .userLogin(response.getString("token"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                            Intent intent = new Intent(ctx, MainActivity.class);
-                            ctx.startActivity(intent);
-
+        // construct map to send back to user
+        Map<String, String> map = new HashMap<>();
+        map.put("username",username);
+        map.put("password",password);
+        // create the API request and save the returned token into shared preferences
+        RequestAction.createPostRequest(
+                ctx,
+                map,
+                urlExtension,
+                new VolleyCallback() {
+                    @Override
+                    public void onSuccessResponse(JSONObject response) {
+                        // successful response
+                        Toast.makeText(ctx, "Success!",
+                                Toast.LENGTH_SHORT).show();
+                        try {
+                            SharedPrefManager.getInstance(ctx)
+                                    .userLogin(response.getString("token"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+                        Intent intent = new Intent(ctx, MainActivity.class);
+                        ctx.startActivity(intent);
                     }
-            );
-        } else {
-            Toast.makeText(ctx, "Unable to login", Toast.LENGTH_LONG).show();
-        }
-
+                }
+        );
     }
-
 }

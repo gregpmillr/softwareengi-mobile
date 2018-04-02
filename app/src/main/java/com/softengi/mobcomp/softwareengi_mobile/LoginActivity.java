@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -46,8 +47,21 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                 AuthAction.postLogin(
-                        context, etUsername, etPassword, chkRememberMe);
+                // store all inputs into HashMap
+                boolean valid = true;
+                String username = etUsername.getText().toString();
+                String password = etPassword.getText().toString();
+                String rememberMe = String.valueOf(chkRememberMe.isChecked());
+                // validate
+                if(TextUtils.isEmpty(username)) {
+                    etUsername.setError("Please enter your username");
+                    valid = false;
+                }
+                if(TextUtils.isEmpty(password)) {
+                    etPassword.setError("Please enter your password");
+                    valid = false;
+                }
+                if(valid) { AuthAction.postLogin(context, username, password, rememberMe); }
             }
         });
 

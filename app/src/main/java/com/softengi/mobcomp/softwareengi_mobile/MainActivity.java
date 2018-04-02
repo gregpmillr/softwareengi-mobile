@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
@@ -39,6 +40,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents the entry point after logging in. Handles all CRUD actions, along with
@@ -203,44 +206,49 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
     }
 
     @Override
-    public void onSubmitPlan() {
+    public void onSubmitPlan(String title, String requiredSteps ) {
         // create a new plan
         PlanAction.postCreatePlans(getApplicationContext(),
-                (EditText) findViewById(R.id.etPlanCreateTitle),
-                (EditText) findViewById(R.id.etPlanCreateRequiredSteps),
+                title,
+                requiredSteps,
                 new SuccessListener() {
                     @Override
                     public void successful() {
-
                         PlansFragment fragment = new PlansFragment();
                         setFragment(fragment);
-
                     }
                 }
         );
     }
 
     @Override
-    public void updateProfile(TextView username, EditText email, EditText language, CheckBox coach) {
+    public void updateProfile(String username, String email, String language, String coach) {
         // update a profile
-        ProfileAction.postUpdate(getApplicationContext(), username, email, language, coach, new SuccessListener() {
-            @Override
-            public void successful() {
-                Toast.makeText(getApplicationContext(), R.string.updated, Toast.LENGTH_SHORT).show();
-            }
-        });
+        ProfileAction.postUpdate(getApplicationContext(),
+                username,
+                email,
+                language,
+                coach
+        );
     }
 
     @Override
-    public void loadProfile(TextView tvTotalSteps, TextView tvTotalPlans, TextView tvTotalTeams,
-                            TextView tvRecentSteps, TextView tvRecentPlans) {
+    public void loadProfile(final TextView tvTotalSteps, final TextView tvTotalPlans, final TextView tvTotalTeams,
+                            final TextView tvRecentSteps, final TextView tvRecentPlans) {
         // get a profile
-        ProfileAction.getProfile(getApplicationContext(), tvTotalSteps, tvTotalPlans, tvTotalTeams,
-                tvRecentPlans,
-                tvRecentSteps, new DetailParser() {
+        ProfileAction.getProfile(getApplicationContext(), new DetailParser() {
             @Override
-            public void onSuccessResponse(JSONObject response) {
-
+            public void onSuccessResponse(JSONObject result) {
+                // tvTotalSteps.setText();
+                try {
+                    tvTotalSteps.setText(result.getString("total_steps"));
+                    tvTotalPlans.setText(result.getString("total_plans"));
+                    tvTotalTeams.setText(result.getString("total_teams"));
+                    tvRecentPlans.setText(result.getString("recent_plans"));
+                    tvRecentSteps.setText(result.getString("recent_steps"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -267,9 +275,12 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
     }
 
     @Override
-    public void updatePlan(EditText title, EditText requiredSteps, String planId) {
+    public void updatePlan(String title, String requiredSteps, String planId) {
         // update a plan
-        PlanAction.postUpdate(getApplicationContext(), title, requiredSteps, planId, new SuccessListener() {
+        PlanAction.postUpdate(getApplicationContext(),
+                title,
+                requiredSteps,
+                planId, new SuccessListener() {
             @Override
             public void successful() {
                 Toast.makeText(getApplicationContext(), R.string.updated, Toast.LENGTH_SHORT).show();

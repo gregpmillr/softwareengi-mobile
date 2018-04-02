@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public class PlansDetailFragment extends Fragment {
          * @param requiredSteps New or old required steps of plan
          * @param planId Id of plan
          */
-        void updatePlan(EditText title, EditText requiredSteps, String planId);
+        void updatePlan(String title, String requiredSteps, String planId);
 
         /**
          * Navigates to the steps of a plan
@@ -122,7 +123,21 @@ public class PlansDetailFragment extends Fragment {
         btnPlanDetailUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                plansDetail.updatePlan(etPlanDetailTitle, etPlanDetailRequiredSteps, mPlanId);
+                boolean isValid = true;
+                String title = etPlanDetailTitle.getText().toString();
+                String requiredSteps = etPlanDetailRequiredSteps.getText().toString();
+                // validate
+                if(TextUtils.isEmpty(title)) {
+                    etPlanDetailTitle.setError("Please enter a title");
+                    isValid = false;
+                }
+                if(TextUtils.isEmpty(requiredSteps) || requiredSteps.equals("0")) {
+                    etPlanDetailRequiredSteps.setError("Please enter the required steps. A plan cannot have zero required steps.");
+                    isValid = false;
+                }
+                if(isValid) {
+                    plansDetail.updatePlan(title, requiredSteps, mPlanId);
+                }
             }
         });
 

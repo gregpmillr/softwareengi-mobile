@@ -64,7 +64,6 @@ public class StepAction {
             @Override
             public void onSuccessResponse(JSONArray result) {
                 callback.onSuccessResponse(result);
-                Toast.makeText(ctx, "Steps receieved successfully", Toast.LENGTH_SHORT).show();
             }
         });
     }

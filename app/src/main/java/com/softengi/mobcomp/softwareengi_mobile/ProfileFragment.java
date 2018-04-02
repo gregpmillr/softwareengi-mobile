@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class ProfileFragment extends Fragment {
          * @param language New or old language
          * @param coach New or old coach value
          */
-        void updateProfile(TextView username, EditText email, EditText language, CheckBox coach);
+        void updateProfile(String username, String email, String language, String coach);
 
         /**
          * Loads profile data
@@ -104,7 +105,27 @@ public class ProfileFragment extends Fragment {
         btnProfileUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProfileListener.updateProfile(tvProfileUsername, etProfileEmail, etProfileLanguage, chkProfileCoach);
+                String username = tvProfileUsername.getText().toString();
+                String email = etProfileEmail.getText().toString();
+                String language = etProfileLanguage.getText().toString();
+                String coach = String.valueOf(chkProfileCoach.isChecked());
+                boolean valid = true;
+                if(TextUtils.isEmpty(tvProfileUsername.getText().toString())) {
+                    tvProfileUsername.setError("Please enter your username");
+                    tvProfileUsername.requestFocus();
+                    valid = false;
+                }
+                if(TextUtils.isEmpty(etProfileEmail.getText().toString())) {
+                    etProfileEmail.setError("Please enter your email");
+                    etProfileEmail.requestFocus();
+                    valid = false;
+                }
+                if(TextUtils.isEmpty(etProfileLanguage.getText().toString())) {
+                    etProfileLanguage.setError("Please enter your language");
+                    etProfileLanguage.requestFocus();
+                    valid = false;
+                }
+                if(valid) {mProfileListener.updateProfile(username, email, language, coach);}
             }
         });
     }
