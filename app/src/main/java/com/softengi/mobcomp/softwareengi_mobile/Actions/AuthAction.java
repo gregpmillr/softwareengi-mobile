@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.softengi.mobcomp.softwareengi_mobile.MainActivity;
 import com.softengi.mobcomp.softwareengi_mobile.LoginActivity;
+import com.softengi.mobcomp.softwareengi_mobile.R;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
 import com.softengi.mobcomp.softwareengi_mobile.Validations.AuthValidator;
@@ -14,6 +15,7 @@ import com.softengi.mobcomp.softwareengi_mobile.Validations.AuthValidator;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -57,64 +59,53 @@ public class AuthAction {
     /**
     * Get the response from the POST request to register users
     * @param ctx Context of application
-    * @param etUsername EditText of username
-    * @param etEmail EditText of email
-    * @param etPassword EditText of password
-    * @param etLanguage EditText of language
-    * @param chkCoach CheckBox of coach
+    * @param username EditText of username
+    * @param email EditText of email
+    * @param password Password for userz
+    * @param language Language for user
+    * @param coach Checkbox of coach
     */
-    public static void postRegister(
-            final Context ctx,
-            EditText etUsername,
-            EditText etEmail,
-            EditText etPassword,
-            EditText etLanguage,
-            CheckBox chkCoach
-    ) {
+    public static void postRegister(final Context ctx, String username, String email, String password,
+            String language,
+            String coach) {
 
         String urlExtension = "users";
+        // add the request body
+        // construct map to send back to user
+        Map<String, String> map = new HashMap<String,String>();
+        map.put("username",username);
+        map.put("email",email);
+        map.put("password",password);
+        map.put("language",language);
+        map.put("coach",coach);
+        // create the API request and save the returned token into shared preferences
+        RequestAction.createPostRequest(
+                ctx,
+                map,
+                urlExtension,
+                new VolleyCallback() {
+                    @Override
+                    public void onSuccessResponse(JSONObject response) {
 
-        Map<String, String> map = AuthValidator.validateRegister(
-                etUsername,
-                etEmail,
-                etPassword,
-                etLanguage,
-                chkCoach
-        );
+                        // successful response
+                        Toast.makeText(ctx, "Success!",
+                                Toast.LENGTH_SHORT).show();
 
-        if(map != null) {
-            // create the API request and save the returned token into shared preferences
-            RequestAction.createPostRequest(
-                    ctx,
-                    map,
-                    urlExtension,
-                    new VolleyCallback() {
-                        @Override
-                        public void onSuccessResponse(JSONObject response) {
-
-                            // successful response
-                            Toast.makeText(ctx, "Success!",
-                                    Toast.LENGTH_SHORT).show();
-
-                            try {
-                                SharedPrefManager.getInstance(ctx).userLogin(
-                                        response.getString("token")
-                                );
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                            Intent intent = new Intent(ctx, LoginActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            ctx.startActivity(intent);
-
+                        try {
+                            SharedPrefManager.getInstance(ctx).userLogin(
+                                    response.getString("token")
+                            );
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    }
-            );
-        } else {
-            Toast.makeText(ctx, "Unable to login", Toast.LENGTH_LONG).show();
-        }
 
+                        Intent intent = new Intent(ctx, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        ctx.startActivity(intent);
+
+                    }
+                }
+        );
     }
 
     /**
