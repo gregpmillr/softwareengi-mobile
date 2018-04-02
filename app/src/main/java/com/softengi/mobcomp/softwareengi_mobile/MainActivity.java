@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
@@ -39,6 +40,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents the entry point after logging in. Handles all CRUD actions, along with
@@ -205,30 +208,50 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
     @Override
     public void onSubmitPlan() {
         // create a new plan
-        PlanAction.postCreatePlans(getApplicationContext(),
-                (EditText) findViewById(R.id.etPlanCreateTitle),
-                (EditText) findViewById(R.id.etPlanCreateRequiredSteps),
-                new SuccessListener() {
-                    @Override
-                    public void successful() {
+        boolean isValid = true;
 
-                        PlansFragment fragment = new PlansFragment();
-                        setFragment(fragment);
+        EditText etTitle = findViewById(R.id.etPlanCreateTitle);
+        EditText etRequiredSteps = findViewById(R.id.etPlanCreateRequiredSteps);
 
+        // validate
+        if(TextUtils.isEmpty(etTitle.getText().toString())) {
+            etTitle.setError("Please enter a title");
+            etTitle.requestFocus();
+            isValid = false;
+        }
+
+        if(TextUtils.isEmpty(etRequiredSteps.getText().toString()) || etRequiredSteps.getText().toString().equals("0")) {
+            etRequiredSteps.setError("Please enter the required steps. A plan cannot have zero required steps.");
+            etTitle.requestFocus();
+            isValid = false;
+        }
+
+        if(isValid) {
+            PlanAction.postCreatePlans(getApplicationContext(),
+                    etTitle.getText().toString(),
+                    etRequiredSteps.getText().toString(),
+                    new SuccessListener() {
+                        @Override
+                        public void successful() {
+
+                            PlansFragment fragment = new PlansFragment();
+                            setFragment(fragment);
+
+                        }
                     }
-                }
-        );
+            );
+        }
     }
 
     @Override
-    public void updateProfile(TextView username, EditText email, EditText language, CheckBox coach) {
-        // update a profile
-        ProfileAction.postUpdate(getApplicationContext(), username, email, language, coach, new SuccessListener() {
-            @Override
-            public void successful() {
-                Toast.makeText(getApplicationContext(), R.string.updated, Toast.LENGTH_SHORT).show();
-            }
-        });
+    public void updateProfile(String username, String email, String language, String coach) {
+            // update a profile
+            ProfileAction.postUpdate(getApplicationContext(),
+                    username,
+                    email,
+                    language,
+                    coach
+            );
     }
 
     @Override
@@ -268,13 +291,34 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
 
     @Override
     public void updatePlan(EditText title, EditText requiredSteps, String planId) {
-        // update a plan
-        PlanAction.postUpdate(getApplicationContext(), title, requiredSteps, planId, new SuccessListener() {
-            @Override
-            public void successful() {
-                Toast.makeText(getApplicationContext(), R.string.updated, Toast.LENGTH_SHORT).show();
-            }
-        });
+        // create a new plan
+        boolean isValid = true;
+
+        // validate
+        if(TextUtils.isEmpty(title.getText().toString())) {
+            title.setError("Please enter a title");
+            title.requestFocus();
+            isValid = false;
+        }
+
+        if(TextUtils.isEmpty(requiredSteps.getText().toString()) || requiredSteps.getText().toString().equals("0")) {
+            requiredSteps.setError("Please enter the required steps. A plan cannot have zero required steps.");
+            requiredSteps.requestFocus();
+            isValid = false;
+        }
+
+        if(isValid) {
+            // update a plan
+            PlanAction.postUpdate(getApplicationContext(),
+                    title.getText().toString(),
+                    requiredSteps.getText().toString(),
+                    planId, new SuccessListener() {
+                @Override
+                public void successful() {
+                    Toast.makeText(getApplicationContext(), R.string.updated, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     @Override

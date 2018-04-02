@@ -1,7 +1,6 @@
 package com.softengi.mobcomp.softwareengi_mobile.Actions;
 
 import android.content.Context;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.softengi.mobcomp.softwareengi_mobile.Utils.DetailParser;
@@ -10,7 +9,6 @@ import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SuccessListener;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallbackArray;
-import com.softengi.mobcomp.softwareengi_mobile.Validations.PlanValidator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,34 +33,22 @@ public class PlanAction {
      * @param requiredSteps Plan required steps
      * @param onSuccess Success callback
      */
-    public static void postCreatePlans(final Context ctx, EditText title, EditText requiredSteps, final SuccessListener onSuccess) {
+    public static void postCreatePlans(final Context ctx, String title, String requiredSteps, final SuccessListener onSuccess) {
 
         // validate the plan
-        Map<String, String> map = PlanValidator.validatePlan(
-                title,
-                requiredSteps);
+        Map<String, String> map = new HashMap<>();
+        map.put("title",title);
+        map.put("required_steps", requiredSteps);
+        map.put("username", String.valueOf(SharedPrefManager.getInstance(ctx).getUsername()));
 
-        // ensure valid
-        if(map != null) {
-            map.put("username", String.valueOf(SharedPrefManager.getInstance(ctx).getUsername()));
-
-            // if logged in user is a coach, then assign a coachId to this plan.
-            if(SharedPrefManager.getInstance(ctx).getCoach().equals("true")) {
-                map.put("coachId", String.valueOf(SharedPrefManager.getInstance(ctx).getId()));
+        // create the request
+        RequestAction.createPostRequest(ctx, map, url, new VolleyCallback() {
+            @Override
+            public void onSuccessResponse(JSONObject result) {
+                Toast.makeText(ctx, "Saved plan successfully", Toast.LENGTH_SHORT).show();
+                onSuccess.successful();
             }
-
-            // create the request
-            RequestAction.createPostRequest(ctx, map, url, new VolleyCallback() {
-                @Override
-                public void onSuccessResponse(JSONObject result) {
-                    Toast.makeText(ctx, "Saved plan successfully", Toast.LENGTH_SHORT).show();
-                    onSuccess.successful();
-                }
-            });
-        } else {
-            Toast.makeText(ctx, "Unable to create new plan", Toast.LENGTH_LONG).show();
-        }
-
+        });
     }
 
     /**
@@ -73,21 +59,20 @@ public class PlanAction {
      * @param planId Id of plan to update
      * @param onSuccess Success callback
      */
-    public static void postUpdate(final Context ctx, EditText title, EditText requiredSteps, String planId, final SuccessListener onSuccess) {
+    public static void postUpdate(final Context ctx, String title, String requiredSteps, String planId, final SuccessListener onSuccess) {
+        // validate the plan
+        Map<String, String> map = new HashMap<>();
+        map.put("plan_id", planId);
+        map.put("new_title",title);
+        map.put("new_required_steps",requiredSteps);
 
-        Map<String, String> map = PlanValidator.validateUpdatePlan(title, requiredSteps, planId);
-
-        if(map != null) {
-            // create the request
-            RequestAction.createPostRequest(ctx, map, url.concat("update"), new VolleyCallback() {
-                @Override
-                public void onSuccessResponse(JSONObject result) {
-                    onSuccess.successful();
-                }
-            });
-        } else {
-            Toast.makeText(ctx, "Unable to create new plan", Toast.LENGTH_LONG).show();
-        }
+        // create the request
+        RequestAction.createPostRequest(ctx, map, url.concat("update"), new VolleyCallback() {
+            @Override
+            public void onSuccessResponse(JSONObject result) {
+                onSuccess.successful();
+            }
+        });
     }
 
     /**
