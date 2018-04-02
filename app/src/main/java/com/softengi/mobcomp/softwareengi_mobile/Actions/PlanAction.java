@@ -104,7 +104,6 @@ public class PlanAction {
      * @param callback Success callback
      */
     public static void getListOfPlans(final Context ctx, String username, final ListParser callback) {
-
         // create the request
         RequestAction.createGetRequestArray(ctx, url.concat(username+"/list"), new VolleyCallbackArray() {
             @Override
@@ -113,7 +112,6 @@ public class PlanAction {
                 callback.onSuccessResponse(result);
             }
         });
-
     }
 
     /**
@@ -123,7 +121,6 @@ public class PlanAction {
      * @param callback Success callback
      */
     public static void getPlan(final Context ctx, int planId, final DetailParser callback) {
-
         // create the request
         RequestAction.createGetRequest(ctx, url.concat(String.valueOf(planId)), new VolleyCallback() {
             @Override
@@ -135,7 +132,6 @@ public class PlanAction {
                 }
             }
         });
-
     }
 
     /**
@@ -150,7 +146,6 @@ public class PlanAction {
             @Override
             public void onSuccessResponse(JSONArray result) {
                 callback.onSuccessResponse(result);
-                Toast.makeText(ctx, "List received successfully", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -1,13 +1,11 @@
 package com.softengi.mobcomp.softwareengi_mobile.Actions;
 
 import android.content.Context;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.softengi.mobcomp.softwareengi_mobile.R;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.DetailParser;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.SharedPrefManager;
-import com.softengi.mobcomp.softwareengi_mobile.Utils.SuccessListener;
 import com.softengi.mobcomp.softwareengi_mobile.Utils.VolleyCallback;
 
 import org.json.JSONException;
@@ -51,20 +49,9 @@ public class ProfileAction {
     /**
      * Gets a profile
      * @param ctx Context of application
-     * @param tvTotalSteps Total steps of all users
-     * @param tvTotalPlans Total plans of all users
-     * @param tvTotalTeams Total teams of all users
-     * @param tvRecentPlans Recent plans (past 7 days)
-     * @param tvRecentSteps Recent steps (past 7 days)
      * @param callback Success callback
      */
-    public static void getProfile(final Context ctx, final TextView tvTotalSteps,
-                                  final TextView tvTotalPlans,
-                                  final TextView tvTotalTeams,
-                                  final TextView tvRecentPlans,
-                                  final TextView tvRecentSteps,
-                                  final DetailParser callback) {
-
+    public static void getProfile(final Context ctx, final DetailParser callback) {
         // create the request
         RequestAction.createGetRequest(ctx, url.concat(SharedPrefManager.getInstance(ctx).getUsername()), new VolleyCallback() {
             @Override

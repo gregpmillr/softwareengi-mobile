@@ -236,9 +236,7 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
     public void loadProfile(final TextView tvTotalSteps, final TextView tvTotalPlans, final TextView tvTotalTeams,
                             final TextView tvRecentSteps, final TextView tvRecentPlans) {
         // get a profile
-        ProfileAction.getProfile(getApplicationContext(), tvTotalSteps, tvTotalPlans, tvTotalTeams,
-                tvRecentPlans,
-                tvRecentSteps, new DetailParser() {
+        ProfileAction.getProfile(getApplicationContext(), new DetailParser() {
             @Override
             public void onSuccessResponse(JSONObject result) {
                 // tvTotalSteps.setText();
@@ -277,35 +275,17 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
     }
 
     @Override
-    public void updatePlan(EditText title, EditText requiredSteps, String planId) {
-        // create a new plan
-        boolean isValid = true;
-
-        // validate
-        if(TextUtils.isEmpty(title.getText().toString())) {
-            title.setError("Please enter a title");
-            title.requestFocus();
-            isValid = false;
-        }
-
-        if(TextUtils.isEmpty(requiredSteps.getText().toString()) || requiredSteps.getText().toString().equals("0")) {
-            requiredSteps.setError("Please enter the required steps. A plan cannot have zero required steps.");
-            requiredSteps.requestFocus();
-            isValid = false;
-        }
-
-        if(isValid) {
-            // update a plan
-            PlanAction.postUpdate(getApplicationContext(),
-                    title.getText().toString(),
-                    requiredSteps.getText().toString(),
-                    planId, new SuccessListener() {
-                @Override
-                public void successful() {
-                    Toast.makeText(getApplicationContext(), R.string.updated, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+    public void updatePlan(String title, String requiredSteps, String planId) {
+        // update a plan
+        PlanAction.postUpdate(getApplicationContext(),
+                title,
+                requiredSteps,
+                planId, new SuccessListener() {
+            @Override
+            public void successful() {
+                Toast.makeText(getApplicationContext(), R.string.updated, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
