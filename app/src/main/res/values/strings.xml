@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Software Engineering</string>
-    <string name="main_et_username">Enter Your Username</string>
-    <string name="main_et_password">Enter Your Password</string>
-    <string name="main_et_email">Enter Your Email</string>
+    <string name="main_et_username">Username</string>
+    <string name="main_et_password">Password</string>
+    <string name="main_et_email">Email</string>
     <string name="main_chk_coach">Are you a coach?</string>
-    <string name="main_et_language">Enter Your Language</string>
+    <string name="main_et_language">Language</string>
     <string name="main_btn_login">Login</string>
     <string name="main_btn_register">Register</string>
     <string name="profile_title">Login</string>
@@ -21,8 +21,8 @@
     <string name="lblProfileInformation">Information</string>
     <string name="profile_tv_username">HI, %1$s</string>
     <string name="stepmonitor_plan_description">Plan: %1$s</string>
-    <!--<string name="base_api_url">http://142.134.23.52:8000/</string>-->
-    <string name="base_api_url">http://192.168.2.10:8000/</string>
+    <string name="base_api_url">http://142.134.23.52:8000/</string>
+    <!--<string name="base_api_url">http://192.168.2.10:8000/</string>-->
     <string name="create">CREATE</string>
     <string name="etPlanCreateRequiredSteps">Required Steps</string>
     <string name="etPlanCreateTitle">Title</string>

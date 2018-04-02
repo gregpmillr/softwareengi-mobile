@@ -15,13 +15,14 @@
 
     <Button
         android:id="@+id/btnCreatePlan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:text="@string/create"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/turquoise_button"
-        android:textColor="@color/colorTurquoise"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/transparent_button_background"
+        android:backgroundTint="@color/button_turquoise_state"
+        android:textColor="@color/button_turquoise_text_state"
         android:fontFamily="sans-serif-smallcaps"
         android:layout_margin="10dp" />
 
