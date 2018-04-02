@@ -206,64 +206,51 @@ public class MainActivity extends AppCompatActivity implements onPlansFragmentLo
     }
 
     @Override
-    public void onSubmitPlan() {
+    public void onSubmitPlan(String title, String requiredSteps ) {
         // create a new plan
-        boolean isValid = true;
-
-        EditText etTitle = findViewById(R.id.etPlanCreateTitle);
-        EditText etRequiredSteps = findViewById(R.id.etPlanCreateRequiredSteps);
-
-        // validate
-        if(TextUtils.isEmpty(etTitle.getText().toString())) {
-            etTitle.setError("Please enter a title");
-            etTitle.requestFocus();
-            isValid = false;
-        }
-
-        if(TextUtils.isEmpty(etRequiredSteps.getText().toString()) || etRequiredSteps.getText().toString().equals("0")) {
-            etRequiredSteps.setError("Please enter the required steps. A plan cannot have zero required steps.");
-            etTitle.requestFocus();
-            isValid = false;
-        }
-
-        if(isValid) {
-            PlanAction.postCreatePlans(getApplicationContext(),
-                    etTitle.getText().toString(),
-                    etRequiredSteps.getText().toString(),
-                    new SuccessListener() {
-                        @Override
-                        public void successful() {
-
-                            PlansFragment fragment = new PlansFragment();
-                            setFragment(fragment);
-
-                        }
+        PlanAction.postCreatePlans(getApplicationContext(),
+                title,
+                requiredSteps,
+                new SuccessListener() {
+                    @Override
+                    public void successful() {
+                        PlansFragment fragment = new PlansFragment();
+                        setFragment(fragment);
                     }
-            );
-        }
+                }
+        );
     }
 
     @Override
     public void updateProfile(String username, String email, String language, String coach) {
-            // update a profile
-            ProfileAction.postUpdate(getApplicationContext(),
-                    username,
-                    email,
-                    language,
-                    coach
-            );
+        // update a profile
+        ProfileAction.postUpdate(getApplicationContext(),
+                username,
+                email,
+                language,
+                coach
+        );
     }
 
     @Override
-    public void loadProfile(TextView tvTotalSteps, TextView tvTotalPlans, TextView tvTotalTeams,
-                            TextView tvRecentSteps, TextView tvRecentPlans) {
+    public void loadProfile(final TextView tvTotalSteps, final TextView tvTotalPlans, final TextView tvTotalTeams,
+                            final TextView tvRecentSteps, final TextView tvRecentPlans) {
         // get a profile
         ProfileAction.getProfile(getApplicationContext(), tvTotalSteps, tvTotalPlans, tvTotalTeams,
                 tvRecentPlans,
                 tvRecentSteps, new DetailParser() {
             @Override
-            public void onSuccessResponse(JSONObject response) {
-
+            public void onSuccessResponse(JSONObject result) {
+                // tvTotalSteps.setText();
+                try {
+                    tvTotalSteps.setText(result.getString("total_steps"));
+                    tvTotalPlans.setText(result.getString("total_plans"));
+                    tvTotalTeams.setText(result.getString("total_teams"));
+                    tvRecentPlans.setText(result.getString("recent_plans"));
+                    tvRecentSteps.setText(result.getString("recent_steps"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

@@ -88,11 +88,9 @@ public class AuthAction {
                 new VolleyCallback() {
                     @Override
                     public void onSuccessResponse(JSONObject response) {
-
                         // successful response
                         Toast.makeText(ctx, "Success!",
                                 Toast.LENGTH_SHORT).show();
-
                         try {
                             SharedPrefManager.getInstance(ctx).userLogin(
                                     response.getString("token")
@@ -100,11 +98,9 @@ public class AuthAction {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                         Intent intent = new Intent(ctx, LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         ctx.startActivity(intent);
-
                     }
                 }
         );

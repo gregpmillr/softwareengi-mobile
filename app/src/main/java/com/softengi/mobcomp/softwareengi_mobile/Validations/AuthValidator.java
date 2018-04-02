@@ -1,10 +1,7 @@
 package com.softengi.mobcomp.softwareengi_mobile.Validations;
 
-import android.text.TextUtils;
-import android.widget.CheckBox;
 import android.widget.EditText;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**

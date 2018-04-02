@@ -70,13 +70,6 @@ public class ProfileAction {
             @Override
             public void onSuccessResponse(JSONObject result) {
                 try {
-                    // tvTotalSteps.setText();
-                    tvTotalSteps.setText(result.getString("total_steps"));
-                    tvTotalPlans.setText(result.getString("total_plans"));
-                    tvTotalTeams.setText(result.getString("total_teams"));
-                    tvRecentPlans.setText(result.getString("recent_plans"));
-                    tvRecentSteps.setText(result.getString("recent_steps"));
-
                     callback.onSuccessResponse(result);
                 } catch (JSONException e) {
                     e.printStackTrace();
