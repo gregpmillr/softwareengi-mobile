@@ -3,6 +3,11 @@ package com.softengi.mobcomp.softwareengi_mobile;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import junit.framework.Assert;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,20 +32,36 @@ public class StepMonitorInstrumentedTest {
             new IntentsTestRule<>(LoginActivity.class);
 
     @Test
-    public void TEST(){
-        /*
-        String user = "greg";
-        String password = "password";
-        // type user
-        onView(withId(R.id.etUsername))
-                .perform(typeText(user), closeSoftKeyboard());
-        // type password
-        onView(withId(R.id.etPassword))
-                .perform(typeText(password), closeSoftKeyboard());
-        // press login button
-        onView(withId(R.id.btnLogin))
-                .perform(click());
-        intended(hasComponent(ListOfPlanActivity.class.getName()));
-        */
+    public void TestStepFragment(){
+
+    }
+
+    @Test
+    public void testTotalStepCalculation() {
+        JSONArray array = new JSONArray();
+        JSONObject item = new JSONObject();
+        try {
+            item.put("steps", 8);
+            array.put(item);
+            item = new JSONObject();
+            item.put("steps", 8);
+            array.put(item);
+            item = new JSONObject();
+            item.put("steps", 2);
+            array.put(item);
+            item = new JSONObject();
+            item.put("steps", 3);
+            array.put(item);
+            item = new JSONObject();
+            item.put("steps", 20);
+            array.put(item);
+            item = new JSONObject();
+            item.put("steps", 4);
+            array.put(item);
+        } catch(JSONException e) {
+            e.printStackTrace();
+        }
+
+        Assert.assertEquals(45, PlansDetailFragment.getTotalSteps(array));
     }
 }

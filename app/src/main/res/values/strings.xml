@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Software Engineering</string>
+    <string name="app_name">Fitness App</string>
     <string name="main_et_username">Username</string>
     <string name="main_et_password">Password</string>
     <string name="main_et_email">Email</string>

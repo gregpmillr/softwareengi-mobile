@@ -106,7 +106,7 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
             @Override
             public void onChronometerTick(Chronometer chronometer)
             {
-                calculatePace();
+                updatePace();
             }
         });
 
@@ -224,19 +224,24 @@ public class StepFragment extends Fragment implements SensorEventListener, StepL
         stepEntries.appendData(new DataPoint(totalSteps, totalSteps), false, requiredSteps);
     }
 
-    private void calculatePace() {
+    private void updatePace() {
         //pace change on every seconds passed
         if (timestamps.size() >= 5) {
             timestamps.removeFirst();
         }
         timestamps.addLast(numSteps);
+
+        double pace = calculatePace(timestamps);
+        xGraph++;
+
+        paceEntries.appendData(new DataPoint(xGraph, pace), false, 10);
+        tvPace.setText(pace + " " + getString(R.string.pace));
+    }
+
+    public static double calculatePace(LinkedList<Integer> timestamps) {
         double firstStep = timestamps.getFirst();
         double lastStep = timestamps.getLast();
         double diffStep = lastStep - firstStep;
-        double pace = diffStep / timestamps.size();
-
-        xGraph++;
-        paceEntries.appendData(new DataPoint(xGraph, pace), false, 10);
-        tvPace.setText(pace + " " + getString(R.string.pace));
+        return diffStep / timestamps.size();
     }
 }
