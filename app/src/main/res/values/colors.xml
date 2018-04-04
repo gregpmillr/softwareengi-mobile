@@ -12,5 +12,5 @@
     <color name="colorDarkGrey">#939393</color>
     <color name="colorWhiteTransparent">#80ffffff</color>
     <color name="text_shadow_white">#FFFFFF</color>
-    <color name="colorFadedWhite">#66FFFFFF</color>
+    <color name="colorFadedWhite">#4DFFFFFF</color>
 </resources>

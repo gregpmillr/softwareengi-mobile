@@ -6,7 +6,7 @@
     <string name="main_chk_coach">Are you a coach?</string>
     <string name="main_et_language">Language</string>
     <string name="main_btn_login">Login</string>
-    <string name="main_btn_register">Register</string>
+    <string name="main_btn_register">Sign Up</string>
     <string name="profile_title">Login</string>
     <string name="profile_btn_logout">Logout</string>
     <string name="profile_btn_update">Update</string>

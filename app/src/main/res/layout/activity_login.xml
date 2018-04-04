@@ -96,32 +96,43 @@
         android:layout_centerHorizontal="true"
         android:padding="10dp"/>
 
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15sp"
-        android:text="@string/main_btn_login"
-        android:background="@drawable/transparent_button_background"
-        android:backgroundTint="@color/button_turquoise_state"
-        android:fontFamily="sans-serif"
-        android:textStyle="bold"
-        android:layout_above="@id/btnRegister"
-        android:textColor="@color/button_turquoise_text_state" />
-
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
+    <LinearLayout
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15sp"
-        android:text="@string/main_btn_register"
-        android:background="@drawable/transparent_button_background"
-        android:fontFamily="sans-serif"
-        android:textStyle="bold"
-        android:textColor="@color/colorWhite"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="15sp"
+            android:text="@string/main_btn_login"
+            android:background="@drawable/transparent_button_background"
+            android:backgroundTint="@color/button_turquoise_state"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:textColor="@color/button_turquoise_text_state" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="15sp"
+            android:text="@string/main_btn_register"
+            android:background="@drawable/transparent_button_background"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:textColor="@color/colorWhite"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

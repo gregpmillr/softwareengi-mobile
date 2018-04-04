@@ -146,7 +146,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rlProfile"
-        android:layout_above="@id/btnProfileUpdate"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
@@ -293,34 +292,42 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnProfileUpdate"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_above="@id/btnLogout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:text="@string/update"
-        android:background="@drawable/transparent_button_background"
-        android:backgroundTint="@color/button_turquoise_state"
-        android:textColor="@color/button_turquoise_text_state"
-        android:fontFamily="sans-serif-smallcaps"/>
-
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
+    <LinearLayout
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:text="@string/profile_btn_logout"
-        android:background="@drawable/transparent_button_background"
-        android:backgroundTint="@color/button_turquoise_state"
-        android:textColor="@color/button_turquoise_text_state"
-        android:fontFamily="sans-serif-smallcaps" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btnProfileUpdate"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="15sp"
+            android:layout_weight="1"
+            android:text="@string/update"
+            android:background="@drawable/transparent_button_background"
+            android:backgroundTint="@color/button_turquoise_state"
+            android:textColor="@color/button_turquoise_text_state"
+            android:fontFamily="sans-serif-smallcaps"/>
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="15sp"
+            android:layout_weight="1"
+            android:text="@string/profile_btn_logout"
+            android:background="@drawable/transparent_button_background"
+            android:backgroundTint="@color/button_turquoise_state"
+            android:textColor="@color/button_turquoise_text_state"
+            android:fontFamily="sans-serif-smallcaps" />
+
+    </LinearLayout>
 
 </RelativeLayout>
