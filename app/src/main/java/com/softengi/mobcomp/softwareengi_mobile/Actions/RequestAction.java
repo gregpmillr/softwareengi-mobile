@@ -27,6 +27,9 @@ import java.util.Map;
  * in this class and ready to be sent to the server. All requests
  * contain the parameters or body values for the request, dependent
  * upon if GET or POST request.
+ *
+ * Uses Volley
+ * @see <a href="https://developer.android.com/training/volley/index.html">Volley documentation
  */
 class RequestAction {
 

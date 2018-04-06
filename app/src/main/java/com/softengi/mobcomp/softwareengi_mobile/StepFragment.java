@@ -28,6 +28,9 @@ import java.util.LinkedList;
 
 /**
  * Fragment representing a step
+ *
+ * Uses GraphView
+ * @see <a href="http://www.android-graphview.org/">Graph View documentation
  */
 public class StepFragment extends Fragment implements SensorEventListener, StepListener {
 

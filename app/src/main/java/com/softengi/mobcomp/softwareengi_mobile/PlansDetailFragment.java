@@ -23,6 +23,9 @@ import org.json.JSONObject;
 
 /**
  * Fragment representing the detail of a plan
+ *
+ * Uses GraphView
+ * @see <a href="http://www.android-graphview.org/">Graph View documentation
  */
 public class PlansDetailFragment extends Fragment {
 
