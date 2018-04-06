@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
@@ -16,6 +17,7 @@ import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Instrumented test for updating user profile.
@@ -31,39 +33,42 @@ public class UpdateInstrumentedTest {
 
     @Test
     public void testUpdateProfile() throws Exception {
-        /*
-        String loginUsername = "greg";
-        String loginPassword = "password";
-        String newUsername   = "updated greg";
+
+        String loginUsername = "test";
+        String loginPassword = "miller";
         String newEmail      = "updatedemail@gmail.com";
         String newLanguage   = "Spanish";
 
-        // type user
         onView(withId(R.id.etUsername))
-                .perform(typeText(loginUsername), closeSoftKeyboard());
+                .perform(clearText(), typeText(loginUsername), closeSoftKeyboard());
         // type password
         onView(withId(R.id.etPassword))
-                .perform(typeText(loginPassword), closeSoftKeyboard());
+                .perform(clearText(), typeText(loginPassword), closeSoftKeyboard());
         // press login button
         onView(withId(R.id.btnLogin))
                 .perform(click());
-        // make sure profile is reached
-        intended(hasComponent(ProfileActivity.class.getName()));
-        // type user
-        onView(withId(R.id.etProfileUsername))
-                .perform(typeText(newUsername), closeSoftKeyboard());
-        // type user
+        //wait for it to log in
+        try {
+            Thread.sleep(3000);
+        } catch(InterruptedException e) {
+            e.printStackTrace();
+        }
+        intended(hasComponent(MainActivity.class.getName()));
+        onView(withId(R.id.tvProfileUsername)).check(matches(withText(loginUsername)));
+
+        // type new email
         onView(withId(R.id.etProfileEmail))
-                .perform(typeText(newEmail), closeSoftKeyboard());
+                .perform(clearText(), typeText(newEmail), closeSoftKeyboard());
         // check coach
         onView(withId(R.id.chkCoach)).check(matches(isNotChecked()));
         // type user
         onView(withId(R.id.etProfileLanguage))
-                .perform(typeText(newLanguage), closeSoftKeyboard());
-        // press login button
-        //onView(withId(R.id.btnUpdateProfile))
-                //.perform(click());
-                */
+                .perform(clearText(), typeText(newLanguage), closeSoftKeyboard());
+
+        onView(withId(R.id.btnProfileUpdate))
+                .perform(click());
+
+        onView(withId(R.id.etProfileEmail)).check(matches(withText(newEmail)));
 
     }
 

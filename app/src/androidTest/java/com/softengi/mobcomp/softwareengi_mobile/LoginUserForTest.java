@@ -1,13 +1,5 @@
 package com.softengi.mobcomp.softwareengi_mobile;
 
-import android.support.test.espresso.intent.rule.IntentsTestRule;
-import android.support.test.runner.AndroidJUnit4;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -20,25 +12,27 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
- * Instrumented test for logging out.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * Class used for logging in during the espresso test
  */
-@RunWith(AndroidJUnit4.class)
-public class LogoutInstrumentedTest {
-
-    @Rule
-    public IntentsTestRule<LoginActivity> intentsTestRule =
-            new IntentsTestRule<>(LoginActivity.class);
-
-    @Test
-    public void testLogout() throws Exception {
-        LoginUserForTest.login();
-
-        // check user text
-        onView(withId(R.id.btnLogout))
+public class LoginUserForTest {
+    public static void login() {
+        String user = "greg";
+        String password = "password";
+        // type user
+        onView(withId(R.id.etUsername))
+                .perform(clearText(), typeText(user), closeSoftKeyboard());
+        // type password
+        onView(withId(R.id.etPassword))
+                .perform(clearText(), typeText(password), closeSoftKeyboard());
+        // press login button
+        onView(withId(R.id.btnLogin))
                 .perform(click());
-        intended(hasComponent(LoginActivity.class.getName()));
-
+        try {
+            Thread.sleep(3000);
+        } catch(InterruptedException e) {
+            e.printStackTrace();
+        }
+        intended(hasComponent(MainActivity.class.getName()));
+        onView(withId(R.id.tvProfileUsername)).check(matches(withText(user)));
     }
 }
