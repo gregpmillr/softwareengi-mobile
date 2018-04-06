@@ -34,9 +34,9 @@ public class RegisterInstrumentedTest {
 
     @Test
     public void testAthleteRegister() throws Exception {
-        String username = "greg";
-        String email = "gregpmillr@gmail.com";
-        String password = "miller";
+        String username = "test";
+        String email = "test@gmail.com";
+        String password = "password";
         String language = "English";
 
         // press login button
@@ -67,9 +67,9 @@ public class RegisterInstrumentedTest {
 
     @Test
     public void testCoachRegister() throws Exception {
-        String username = "greg";
-        String email = "gregpmillr@gmail.com";
-        String password = "miller";
+        String username = "testCoach";
+        String email = "testCoach@gmail.com";
+        String password = "password";
         String language = "English";
 
         // press login button

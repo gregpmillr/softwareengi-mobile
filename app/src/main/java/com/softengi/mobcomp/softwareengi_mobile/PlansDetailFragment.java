@@ -181,6 +181,7 @@ public class PlansDetailFragment extends Fragment {
             @Override
             public void onSuccessResponse(JSONArray response) {
                 updateGraph(response);
+                totalSteps = getTotalSteps(response);
             }
         });
     }
@@ -189,7 +190,7 @@ public class PlansDetailFragment extends Fragment {
      * Updates the graph for plan progress
      * @param response JSONArray value
      */
-    private void updateGraph(JSONArray response) {
+    public void updateGraph(JSONArray response) {
         try {
             int steps;
             int i;
@@ -197,7 +198,6 @@ public class PlansDetailFragment extends Fragment {
                 JSONObject jsonObj = response.getJSONObject(i);
                 steps = jsonObj.getInt("steps");
                 stepEntries.appendData(new DataPoint(i+1, steps), true, 99999);
-                totalSteps += steps;
             }
             gvStep.getViewport().setMinX(0);
             gvStep.getViewport().setMaxX(i);
@@ -206,4 +206,18 @@ public class PlansDetailFragment extends Fragment {
         }
     }
 
+    public static int getTotalSteps(JSONArray response) {
+        int steps;
+        int totalSteps = 0;
+        try {
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject jsonObj = response.getJSONObject(i);
+                steps = jsonObj.getInt("steps");
+                totalSteps += steps;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return totalSteps;
+    }
 }

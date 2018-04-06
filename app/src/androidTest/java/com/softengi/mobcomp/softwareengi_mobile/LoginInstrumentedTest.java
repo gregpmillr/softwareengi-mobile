@@ -8,15 +8,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
- * Instrumented test for loggin in.
+ * Instrumented test for logging in.
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
@@ -29,19 +32,6 @@ public class LoginInstrumentedTest {
 
     @Test
     public void validateGoodPassword() throws Exception {
-        String user = "No username Exists";
-        String password = "pass";
-        // type user
-        onView(withId(R.id.etUsername))
-                .perform(typeText(user), closeSoftKeyboard());
-        // type password
-        onView(withId(R.id.etPassword))
-                .perform(typeText(password), closeSoftKeyboard());
-        // press login button
-        onView(withId(R.id.btnLogin))
-                .perform(click());
-        // check user text
-        onView(withId(R.id.etUsername))
-                .check(matches(withText(user)));
+       LoginUserForTest.login();
     }
 }
